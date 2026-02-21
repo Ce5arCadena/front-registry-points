@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<LoginPage/>}/>
+        <Route index element={<Navigate to='/auth/admin'/>}/>
 
         <Route path='auth' element={<AuthLayout/>}>
           <Route index element={<LoginPage/>}/>

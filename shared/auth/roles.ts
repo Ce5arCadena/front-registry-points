@@ -8,7 +8,10 @@ export const ROLES = {
         ]
     },
     TEACHER: {
-        defaultRoute: '/admin/home'
+        defaultRoute: '/admin/home',
+        routes: [
+            
+        ]
     } 
 };
 
