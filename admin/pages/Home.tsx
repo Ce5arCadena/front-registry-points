@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
 import TableList from "../components/TableList";
 import toast, { Toaster } from "react-hot-toast";
-import type { School, SchoolsInterface } from "../../shared/interfaces";
+import type { School, SchoolsInterface } from "../../shared/interfaces/schools";
 
 const Home = () => {
   const [schools, setSchools] = useState<School[]>([]);
@@ -10,9 +10,8 @@ const Home = () => {
   const getSchools = async () => {
     try {
       const responseSchools = await useApi<SchoolsInterface>('/schools');
-
-      if (responseSchools.status === 200 && responseSchools.data?.schools?.length > 0) {
-        setSchools(responseSchools.data.schools);
+      if (responseSchools.ok && responseSchools.data?.length > 0) {
+        setSchools(responseSchools.data);
       } else {
         setSchools([]);
       };

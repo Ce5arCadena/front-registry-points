@@ -19,9 +19,11 @@ function App() {
           <Route path='register' element={<RegisterPage/>}/>
         </Route>
 
-        <Route path='admin/*' element={<ProtectedRoute>
-          <AdminLayout/>
-        </ProtectedRoute>}>
+        <Route path='admin/*' element={
+            <ProtectedRoute>
+              <AdminLayout/>
+            </ProtectedRoute>
+          }>
           <Route index element={<Home/>}/>
           <Route path='home' element={<Home/>}/>
         </Route>

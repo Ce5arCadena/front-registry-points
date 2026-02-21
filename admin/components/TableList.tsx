@@ -1,7 +1,7 @@
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
-import type { School } from "../../shared/interfaces";
+import type { School } from "../../shared/interfaces/schools";
 
 const TableList = ({ schools } : { schools: School[] }) => {
     return (
@@ -18,7 +18,7 @@ const TableList = ({ schools } : { schools: School[] }) => {
                 <tbody>
                     {
                         schools.length > 0 && schools.map((school) => (
-                            <tr className="bg-gray-800 text-light-bg" key={school.id}>
+                            <tr className="bg-gray-800 text-center text-light-bg" key={school.id}>
                                 <td className="p-2">
                                     <span>{school.id}</span>
                                 </td>
@@ -26,7 +26,7 @@ const TableList = ({ schools } : { schools: School[] }) => {
                                     {school.name}
                                 </td>
                                 <td className="p-2">
-                                    {new Date(school.created).toLocaleDateString('es-ES', { 
+                                    {new Date(school.created_at).toLocaleDateString('es-ES', { 
                                         year: 'numeric', 
                                         month: 'long', 
                                         day: 'numeric' 
