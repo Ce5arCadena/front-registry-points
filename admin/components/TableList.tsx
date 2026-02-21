@@ -40,6 +40,16 @@ const TableList = ({ schools } : { schools: School[] }) => {
                             </tr>
                         )) 
                     }
+
+                    {
+                        schools.length <= 0 && (
+                            <tr className="text-center">
+                                <td colSpan={4} className="p-2">
+                                    No hay colegios para mostrar.
+                                </td>
+                            </tr>
+                        )
+                    }
                 </tbody>
             </table>
         </div>
