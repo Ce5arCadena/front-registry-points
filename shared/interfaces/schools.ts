@@ -1,7 +1,7 @@
 export interface SchoolsInterface {
     data:    School[];
     links:   Links;
-    ok: number;
+    ok:      number;
     meta:    Meta;
     message: string;
 }
@@ -54,4 +54,11 @@ export interface FormSchoolData{
     name: string;
     email: string;
     password: string;
+}
+
+// Creación de colegio
+export interface CreateSchool {
+    ok:      number;
+    message: string;
+    data:    School;
 }

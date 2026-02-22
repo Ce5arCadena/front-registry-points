@@ -36,12 +36,14 @@ const Home = () => {
             Agregar Colegio
           </button>
         </div>
-        <TableList schools={schools}/>
+        <TableList 
+          schools={schools}
+        />
 
         {/* Modal de agregar colegio */}
         {
           showModalAddSchool && (
-            <ModalAddSchool/>
+            <ModalAddSchool setSchools={setSchools}/>
           )
         }
       </div>

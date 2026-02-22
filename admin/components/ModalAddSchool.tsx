@@ -1,30 +1,59 @@
-import { useState } from "react";
+import toast from "react-hot-toast";
+import React, { useState } from "react";
+import { useApi } from "../../utils/useApi";
 import { RiLockPasswordLine } from "react-icons/ri";
+import Loading from "../../shared/components/Loading";
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
 import { MdOutlineMail, MdOutlineSchool } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import type { FormSchoolData } from "../../shared/interfaces/schools";
+import type { CreateSchool, FormSchoolData, School } from "../../shared/interfaces/schools";
 
-export const ModalAddSchool = () => {
+export const ModalAddSchool = ({ setSchools } : { setSchools: React.Dispatch<React.SetStateAction<School[]>> }) => {
   const {
     watch,
     handleSubmit,
     formState: {errors},
+    reset,
     register
   } = useForm<FormSchoolData>({
     mode: 'onChange'
   });
   
+  const [loading, setLoading] = useState(false);
+  
   const passwordValue = watch('password');
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit: SubmitHandler<FormSchoolData> = async(values) => {
-    console.log(values)
+    setLoading(true);
+    try {
+      const responseSchool = await useApi<CreateSchool>('/schools', 'POST', values);
+      toast(responseSchool.message, {
+        icon: responseSchool.ok ? "✅" : "❌"
+      });
+      if (!responseSchool.ok) return;
+
+      setSchools((prevSchools) => {
+        return [
+          ...prevSchools,
+          responseSchool.data as School
+        ];
+      });
+      reset();
+    } catch (error) {
+      console.log(error);
+      toast.error('Ocurrió un error al realizar la petición', {
+        duration: 4000,
+        position: 'top-right'
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="absolute bg-dark-bg-secondary/80 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
+    <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
       <h2 className='text-2xl'>Agregar Colegio</h2>
       <form className='w-[30%] flex flex-col gap-2' onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         {/* Nombre */}
@@ -144,6 +173,15 @@ export const ModalAddSchool = () => {
           </button>
         </div>
       </form>
+
+      {
+        loading && (
+          <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
+            <Loading/>
+            <span>Por favor, espera.</span>
+          </div>
+        )
+      }
     </div>
   )
 }
