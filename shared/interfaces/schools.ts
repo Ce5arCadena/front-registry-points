@@ -48,3 +48,10 @@ interface Link {
     page:   number | null;
     active: boolean;
 }
+
+// Formulario agregar
+export interface FormSchoolData{
+    name: string;
+    email: string;
+    password: string;
+}
