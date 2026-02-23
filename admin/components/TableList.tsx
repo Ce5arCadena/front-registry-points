@@ -1,9 +1,22 @@
+import { useSetAtom } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import type { School } from "../../shared/interfaces/schools";
+import { ActionSchool, SchoolAtom } from "../store/AdminStore";
 
-const TableList = ({ schools } : { schools: School[] }) => {
+const TableList = (
+    { 
+        schools,
+        setShowModalAddSchool
+    } : { 
+        schools: School[] ,
+        setShowModalAddSchool: (value: boolean) => void
+    }
+) => {
+    const setSchool = useSetAtom(SchoolAtom);
+    const setActionSchool = useSetAtom(ActionSchool);
+
     return (
         <div className="h-full">
             <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -33,8 +46,21 @@ const TableList = ({ schools } : { schools: School[] }) => {
                                     })}
                                 </td>
                                 <td className="flex gap-1 justify-center p-2">
-                                    <IoEyeOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"/>
-                                    <RiEdit2Line className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"/>
+                                    <IoEyeOutline 
+                                        className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                                        onClick={() => { 
+                                            setSchool(school);
+                                            setActionSchool("view");
+                                        }}
+                                    />
+                                    <RiEdit2Line 
+                                        className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                                        onClick={() => { 
+                                            setSchool(school);
+                                            setActionSchool("edit");
+                                            setShowModalAddSchool(true);
+                                        }}
+                                    />
                                     <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"/>
                                 </td>
                             </tr>

@@ -1,11 +1,15 @@
+import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
 import TableList from "../components/TableList";
 import toast, { Toaster } from "react-hot-toast";
+import { ActionSchool } from "../store/AdminStore";
 import { ModalAddSchool } from "../components/ModalAddSchool";
+import { ModalViewSchool } from "../components/ModalViewSchool";
 import type { School, SchoolsInterface } from "../../shared/interfaces/schools";
 
 const Home = () => {
+  const schoolAction = useAtomValue(ActionSchool);
   const [schools, setSchools] = useState<School[]>([]);
   const [showModalAddSchool, setShowModalAddSchool] = useState(false);
 
@@ -38,6 +42,7 @@ const Home = () => {
         </div>
         <TableList 
           schools={schools}
+          setShowModalAddSchool={setShowModalAddSchool}
         />
 
         {/* Modal de agregar colegio */}
@@ -47,6 +52,13 @@ const Home = () => {
               setSchools={setSchools}
               setShowModalAddSchool={setShowModalAddSchool}
             />
+          )
+        }
+
+        {/* Modal detalle del colegio */}
+        {
+          schoolAction === "view" && (
+            <ModalViewSchool/>
           )
         }
       </div>

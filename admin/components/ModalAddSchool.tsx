@@ -1,14 +1,21 @@
 import toast from "react-hot-toast";
-import React, { useState } from "react";
 import { useApi } from "../../utils/useApi";
+import { useAtom, useAtomValue } from "jotai";
+import React, { useEffect, useState } from "react";
 import { RiLockPasswordLine } from "react-icons/ri";
 import Loading from "../../shared/components/Loading";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form"
+import { ActionSchool, SchoolAtom } from "../store/AdminStore";
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
 import { MdOutlineMail, MdOutlineSchool } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import type { CreateSchool, FormSchoolData, School } from "../../shared/interfaces/schools";
+
+const TypesMessage = {
+  edit: "Editar ",
+  create: "Crear "
+}
 
 export const ModalAddSchool = (
   { 
@@ -20,6 +27,9 @@ export const ModalAddSchool = (
     setShowModalAddSchool: (value: boolean) => void 
   }
 ) => {
+  const [schoolAction, setSchoolAction] = useAtom(ActionSchool);
+  const schoolAtomValue = useAtomValue(SchoolAtom);
+
   const {
     watch,
     handleSubmit,
@@ -30,6 +40,7 @@ export const ModalAddSchool = (
     mode: 'onChange'
   });
   
+
   const [loading, setLoading] = useState(false);
   
   const passwordValue = watch('password');
@@ -38,7 +49,6 @@ export const ModalAddSchool = (
   const onSubmit: SubmitHandler<FormSchoolData> = async(values) => {
     setLoading(true);
     try {
-      console.log(values)
       const responseSchool = await useApi<CreateSchool>('/schools/', 'POST', values);
       toast(responseSchool.message, {
         icon: responseSchool.ok ? "✅" : "❌"
@@ -53,7 +63,6 @@ export const ModalAddSchool = (
       });
       reset();
     } catch (error) {
-      console.log(error);
       toast.error('Ocurrió un error al realizar la petición', {
         duration: 4000,
         position: 'top-right'
@@ -63,6 +72,16 @@ export const ModalAddSchool = (
     }
   };
 
+  useEffect(() => {
+    if (schoolAction === "edit") {
+      reset({
+        password: "",
+        name: schoolAtomValue?.name,
+        email: schoolAtomValue?.user.email,
+      });
+    }
+  }, [schoolAction]);
+
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
       <IoCloseCircleOutline 
@@ -70,11 +89,17 @@ export const ModalAddSchool = (
         onClick={
           () => {
             reset();
-            setShowModalAddSchool(false)
+            setSchoolAction("create");
+            setShowModalAddSchool(false);
           }
         }
       /> 
-      <h2 className='text-2xl'>Agregar Colegio</h2>
+      <h2 className='text-2xl'>
+        {
+          TypesMessage[schoolAction as keyof typeof TypesMessage]
+        }
+        Colegio
+      </h2>
       <form className='w-[30%] flex flex-col gap-2' onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         {/* Nombre */}
         <div>
