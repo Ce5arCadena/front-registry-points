@@ -5,6 +5,7 @@ export const useApi = async <T>(pathUrl: string = '', method = 'GET', body = {})
         const options: RequestInit = {
             method,
             headers: {
+                'Accept': 'aplication/json',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }

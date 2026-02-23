@@ -3,13 +3,23 @@ import React, { useState } from "react";
 import { useApi } from "../../utils/useApi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import Loading from "../../shared/components/Loading";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
 import { MdOutlineMail, MdOutlineSchool } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import type { CreateSchool, FormSchoolData, School } from "../../shared/interfaces/schools";
 
-export const ModalAddSchool = ({ setSchools } : { setSchools: React.Dispatch<React.SetStateAction<School[]>> }) => {
+export const ModalAddSchool = (
+  { 
+    setSchools,
+    setShowModalAddSchool 
+  } : 
+  { 
+    setSchools: React.Dispatch<React.SetStateAction<School[]>>,
+    setShowModalAddSchool: (value: boolean) => void 
+  }
+) => {
   const {
     watch,
     handleSubmit,
@@ -28,7 +38,8 @@ export const ModalAddSchool = ({ setSchools } : { setSchools: React.Dispatch<Rea
   const onSubmit: SubmitHandler<FormSchoolData> = async(values) => {
     setLoading(true);
     try {
-      const responseSchool = await useApi<CreateSchool>('/schools', 'POST', values);
+      console.log(values)
+      const responseSchool = await useApi<CreateSchool>('/schools/', 'POST', values);
       toast(responseSchool.message, {
         icon: responseSchool.ok ? "✅" : "❌"
       });
@@ -54,6 +65,15 @@ export const ModalAddSchool = ({ setSchools } : { setSchools: React.Dispatch<Rea
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
+      <IoCloseCircleOutline 
+        className="text-2xl absolute right-2 top-2 cursor-pointer"
+        onClick={
+          () => {
+            reset();
+            setShowModalAddSchool(false)
+          }
+        }
+      /> 
       <h2 className='text-2xl'>Agregar Colegio</h2>
       <form className='w-[30%] flex flex-col gap-2' onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         {/* Nombre */}

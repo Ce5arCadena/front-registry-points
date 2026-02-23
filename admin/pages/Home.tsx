@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
-      <Toaster/>
+      <Toaster position="top-right"/>
       <div className="rounded-lg shadow p-6 h-full flex flex-col gap-2">
         <div className="bg-dark-bg-elevated border-l-8 rounded-r-md flex items-center justify-between p-2 rounded-l-xl border-primary">
           <h1 className="text-2xl font-bold">Lista de Colegios inscritos</h1>
@@ -43,7 +43,10 @@ const Home = () => {
         {/* Modal de agregar colegio */}
         {
           showModalAddSchool && (
-            <ModalAddSchool setSchools={setSchools}/>
+            <ModalAddSchool 
+              setSchools={setSchools}
+              setShowModalAddSchool={setShowModalAddSchool}
+            />
           )
         }
       </div>
