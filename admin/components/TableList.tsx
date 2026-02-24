@@ -51,6 +51,7 @@ const TableList = (
                                         onClick={() => { 
                                             setSchool(school);
                                             setActionSchool("view");
+                                            setShowModalAddSchool(true);
                                         }}
                                     />
                                     <RiEdit2Line 
@@ -61,7 +62,13 @@ const TableList = (
                                             setShowModalAddSchool(true);
                                         }}
                                     />
-                                    <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"/>
+                                    <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                                        onClick={() => { 
+                                            setSchool(school);
+                                            setActionSchool("delete");
+                                            setShowModalAddSchool(true);
+                                        }}
+                                    />
                                 </td>
                             </tr>
                         )) 

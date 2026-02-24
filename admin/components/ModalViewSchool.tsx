@@ -1,8 +1,12 @@
 import { useAtomValue, useSetAtom } from 'jotai';
-import { ActionSchool, SchoolAtom } from '../store/AdminStore';
 import { IoCloseCircleOutline } from 'react-icons/io5';
+import { ActionSchool, SchoolAtom } from '../store/AdminStore';
 
-export const ModalViewSchool = () => {
+export const ModalViewSchool = ({
+    setShowModalAddSchool
+} : {
+    setShowModalAddSchool : (value: boolean) => void
+}) => {
     const setSchoolAction = useSetAtom(ActionSchool);
     const schoolAtomValue = useAtomValue(SchoolAtom);
 
@@ -11,7 +15,8 @@ export const ModalViewSchool = () => {
             <IoCloseCircleOutline 
                 className="text-2xl absolute right-2 top-2 cursor-pointer"
                 onClick={() => {
-                    setSchoolAction("create");
+                    setSchoolAction("");
+                    setShowModalAddSchool(false);
                 }}
             />
 

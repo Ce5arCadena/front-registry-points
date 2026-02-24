@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ActionSchool } from "../store/AdminStore";
 import { ModalAddSchool } from "../components/ModalAddSchool";
 import { ModalViewSchool } from "../components/ModalViewSchool";
+import { ModalDeleteSchool } from "../components/ModalDeleteSchool";
 import type { School, SchoolsInterface } from "../../shared/interfaces/schools";
 
 const Home = () => {
@@ -47,7 +48,7 @@ const Home = () => {
 
         {/* Modal de agregar colegio */}
         {
-          showModalAddSchool && (
+          showModalAddSchool && (schoolAction !== "view" && schoolAction !== "delete") && (
             <ModalAddSchool 
               setSchools={setSchools}
               setShowModalAddSchool={setShowModalAddSchool}
@@ -58,7 +59,18 @@ const Home = () => {
         {/* Modal detalle del colegio */}
         {
           schoolAction === "view" && (
-            <ModalViewSchool/>
+            <ModalViewSchool
+              setShowModalAddSchool={setShowModalAddSchool}
+            />
+          )
+        }
+
+        {/* Modal eliminar colegio */}
+        { 
+          schoolAction === "delete" && (
+            <ModalDeleteSchool
+              setShowModalAddSchool={setShowModalAddSchool}
+            />
           )
         }
       </div>
