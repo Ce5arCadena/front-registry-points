@@ -27,8 +27,8 @@ export const ModalAddSchool = (
     setShowModalAddSchool: (value: boolean) => void 
   }
 ) => {
-  const [schoolAction, setSchoolAction] = useAtom(ActionSchool);
   const schoolAtomValue = useAtomValue(SchoolAtom);
+  const [schoolAction, setSchoolAction] = useAtom(ActionSchool);
 
   const {
     watch,
@@ -39,7 +39,6 @@ export const ModalAddSchool = (
   } = useForm<FormSchoolData>({
     mode: 'onChange'
   });
-  
 
   const [loading, setLoading] = useState(false);
   
@@ -47,21 +46,53 @@ export const ModalAddSchool = (
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit: SubmitHandler<FormSchoolData> = async(values) => {
+    if (Object.values(values).every(value => value === "")) {
+      toast.error("Debes enviar al menos un campo.");
+      return;
+    }
+
     setLoading(true);
+    const METHOD = schoolAction === "edit" ? "PATCH" : "POST";
+    const URL = schoolAction === "edit" ? `/schools/${schoolAtomValue?.id}` : "/schools";
+
+    if (schoolAction === "edit") {
+      let newData = Object.entries(values).map(([key, value]) => {
+        if (value !== "") {
+          return {
+            [key]: value
+          }
+        }
+
+        return null
+      }).filter(value => value !== null);
+      values = Object.assign({}, ...newData);
+    }
+
     try {
-      const responseSchool = await useApi<CreateSchool>('/schools/', 'POST', values);
+      const responseSchool = await useApi<CreateSchool>(URL, METHOD, values);
       toast(responseSchool.message, {
         icon: responseSchool.ok ? "✅" : "❌"
       });
       if (!responseSchool.ok) return;
 
-      setSchools((prevSchools) => {
-        return [
-          ...prevSchools,
-          responseSchool.data as School
-        ];
-      });
-      reset();
+      if (schoolAction === "edit") {
+        setSchools((prevSchools) => {
+          const schools = prevSchools.filter(school => school.id !== schoolAtomValue?.id);
+
+          return [
+            ...schools,
+            responseSchool.data as School
+          ];
+        });
+      } else {
+        setSchools((prevSchools) => {
+          return [
+            ...prevSchools,
+            responseSchool.data as School
+          ];
+        });
+        reset();
+      }
     } catch (error) {
       toast.error('Ocurrió un error al realizar la petición', {
         duration: 4000,
@@ -115,7 +146,7 @@ export const ModalAddSchool = (
               type="text"
               {...register('name', {
                 required: {
-                  value: true,
+                  value: schoolAction === "edit" ? false : true,
                   message: 'El nombre es requerido.'
                 }
               })} 
@@ -145,7 +176,7 @@ export const ModalAddSchool = (
               autoComplete="off"
               {...register('email', {
                 required: {
-                  value: true,
+                  value: schoolAction === "edit" ? false : true,
                   message: 'El correo es requerido.'
                 },
                 pattern: {
@@ -179,7 +210,7 @@ export const ModalAddSchool = (
               type={showPassword ? 'text' : 'password'} 
               {...register('password', {
                 required: {
-                  value: true,
+                  value: schoolAction === "edit" ? false : true,
                   message: 'La contraseña es requerida.'
                 },
                 pattern: {
@@ -214,7 +245,9 @@ export const ModalAddSchool = (
           <button className="
             text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary
           ">
-            Agregar
+            {
+              schoolAction === "edit" ? "Editar" : "Agregar"
+            }
           </button>
         </div>
       </form>
