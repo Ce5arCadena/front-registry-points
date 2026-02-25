@@ -57,7 +57,7 @@ export interface FormSchoolData{
 }
 
 // Creación de colegio
-export interface CreateSchool {
+export interface SchoolResponse {
     ok:      number;
     message: string;
     data:    School;

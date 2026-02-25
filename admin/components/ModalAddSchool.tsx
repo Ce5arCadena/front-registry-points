@@ -10,7 +10,7 @@ import { ActionSchool, SchoolAtom } from "../store/AdminStore";
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
 import { MdOutlineMail, MdOutlineSchool } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import type { CreateSchool, FormSchoolData, School } from "../../shared/interfaces/schools";
+import type { SchoolResponse, FormSchoolData, School } from "../../shared/interfaces/schools";
 
 const TypesMessage = {
   edit: "Editar ",
@@ -69,7 +69,7 @@ export const ModalAddSchool = (
     }
 
     try {
-      const responseSchool = await useApi<CreateSchool>(URL, METHOD, values);
+      const responseSchool = await useApi<SchoolResponse>(URL, METHOD, values);
       toast(responseSchool.message, {
         icon: responseSchool.ok ? "✅" : "❌"
       });

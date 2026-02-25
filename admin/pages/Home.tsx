@@ -4,15 +4,39 @@ import { useApi } from "../../utils/useApi";
 import TableList from "../components/TableList";
 import toast, { Toaster } from "react-hot-toast";
 import { ActionSchool } from "../store/AdminStore";
+import Loading from "../../shared/components/Loading";
 import { ModalAddSchool } from "../components/ModalAddSchool";
 import { ModalViewSchool } from "../components/ModalViewSchool";
 import { ModalDeleteSchool } from "../components/ModalDeleteSchool";
-import type { School, SchoolsInterface } from "../../shared/interfaces/schools";
+import type { School, SchoolResponse, SchoolsInterface } from "../../shared/interfaces/schools";
 
 const Home = () => {
+  const [loading, setLoading] = useState(false);
+
   const schoolAction = useAtomValue(ActionSchool);
   const [schools, setSchools] = useState<School[]>([]);
   const [showModalAddSchool, setShowModalAddSchool] = useState(false);
+
+  const deleteSchool = async (id: number) => {
+    setLoading(true);
+    try {
+      const URL = `/schools/${id}`;
+      const responseSchools = await useApi<SchoolResponse>(URL, 'DELETE');
+      toast(responseSchools.message, {
+        icon: responseSchools.ok ? "✅" : "❌"
+      });
+
+      if (responseSchools.ok) {
+        setSchools(() => {
+          return schools.filter(school => school.id !== id);
+        });
+      };
+    } catch (error) {
+      toast.error('Ha ocurrido un error al eliminar el colegio. Comuniquese.');
+    } finally {
+      setLoading(false);
+    };
+  };
 
   const getSchools = async () => {
     try {
@@ -70,7 +94,17 @@ const Home = () => {
           schoolAction === "delete" && (
             <ModalDeleteSchool
               setShowModalAddSchool={setShowModalAddSchool}
+              deleteSchool={deleteSchool}
             />
+          )
+        }
+
+        {
+          loading && (
+            <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
+              <Loading/>
+              <span>Por favor, espera.</span>
+            </div>
           )
         }
       </div>

@@ -3,8 +3,10 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { ActionSchool, SchoolAtom } from '../store/AdminStore';
 
 export const ModalDeleteSchool = ({
+    deleteSchool,
     setShowModalAddSchool
 } : {
+    deleteSchool: (id: number) => void,
     setShowModalAddSchool : (value: boolean) => void
 }) => {
     const setSchoolAction = useSetAtom(ActionSchool);
@@ -38,7 +40,13 @@ export const ModalDeleteSchool = ({
 
                 <div className='flex gap-2 justify-center'>
                     <button 
-                        className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-warning hover:text-warning">
+                        className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-warning hover:text-warning"
+                        onClick={() => {
+                            deleteSchool(Number(schoolAtomValue?.id));
+                            setSchoolAction("");
+                            setShowModalAddSchool(false);
+                        }}
+                    >
                         Eliminar
                     </button>
 
