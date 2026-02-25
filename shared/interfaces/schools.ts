@@ -61,4 +61,5 @@ export interface SchoolResponse {
     ok:      number;
     message: string;
     data:    School;
+    errors?: [] | ""
 }

@@ -70,7 +70,9 @@ export const ModalAddSchool = (
 
     try {
       const responseSchool = await useApi<SchoolResponse>(URL, METHOD, values);
-      toast(responseSchool.message, {
+
+      const message = responseSchool.errors && responseSchool.errors.length > 0 ? responseSchool.errors.join(" - ") : responseSchool.message;
+      toast(message, {
         icon: responseSchool.ok ? "✅" : "❌"
       });
       if (!responseSchool.ok) return;
