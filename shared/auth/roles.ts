@@ -3,8 +3,16 @@ export const ROLES = {
         defaultRoute: '/admin/home',
         routes: [
             '/admin/home',
-            '/admin/create/school',
-            '/admin/edit/school'
+            '/admin/schools',
+            '/admin/grades',
+        ]
+    },
+    SCHOOL: {
+        defaultRoute: '/school/home',
+        routes: [
+            '/school/home',
+            '/school/grades',
+            '/school/teachers'
         ]
     },
     TEACHER: {
