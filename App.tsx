@@ -3,8 +3,8 @@ import Home from './admin/pages/Home';
 import AuthLayout from './auth/layouts/AuthLayout';
 import { LoginPage } from './auth/pages/LoginPage';
 import RegisterPage from './auth/pages/RegisterPage';
-import { HomeGrade } from './grades/pages/HomeGrade';
 import AdminLayout from './admin/layouts/AdminLayout';
+import { HomeCourse } from './grades/pages/HomeCourse';
 import { HomeSchool } from './schools/pages/HomeSchool';
 import { SchoolLayout } from './shared/layouts/SchoolLayout';
 import ProtectedRoute from './auth/components/ProtectedRoute';
@@ -38,7 +38,7 @@ function App() {
         }>
           <Route index element={<HomeSchool/>}/>
           <Route path='home' element={<HomeSchool/>}/>
-          <Route path='grades' element={<HomeGrade/>}/>
+          <Route path='courses' element={<HomeCourse/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>

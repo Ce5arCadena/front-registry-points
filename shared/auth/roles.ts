@@ -20,7 +20,7 @@ export const ROLES = {
             {
                 default: false,
                 label: "Cursos",
-                url: '/school/grades',
+                url: '/school/courses',
             },
         ]
     },

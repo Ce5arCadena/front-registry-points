@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router';
 import { BsPeople } from 'react-icons/bs';
-import { ROLES } from '../../shared/auth/roles';
 import { type NavItem } from '../interfaces';
+import { ROLES } from '../../shared/auth/roles';
 
 export const SidebarSchool = () => {
   return (
