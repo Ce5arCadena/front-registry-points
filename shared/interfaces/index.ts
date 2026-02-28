@@ -53,3 +53,20 @@ export interface JwtPayload {
     iat:    number;
     exp:    number;
 }
+
+// Routes
+
+export interface RolesInterface {
+    SCHOOL: SimpleRoute;
+}
+
+export interface SimpleRoute {
+    defaultRoute: string;
+    routes: NavItem[]
+}
+
+export interface NavItem {
+    url: string,
+    label: string,
+    default: boolean,
+}

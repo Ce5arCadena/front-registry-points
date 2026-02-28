@@ -3,6 +3,7 @@ import Home from './admin/pages/Home';
 import AuthLayout from './auth/layouts/AuthLayout';
 import { LoginPage } from './auth/pages/LoginPage';
 import RegisterPage from './auth/pages/RegisterPage';
+import { HomeGrade } from './grades/pages/HomeGrade';
 import AdminLayout from './admin/layouts/AdminLayout';
 import { HomeSchool } from './schools/pages/HomeSchool';
 import { SchoolLayout } from './shared/layouts/SchoolLayout';
@@ -36,6 +37,8 @@ function App() {
           </ProtectedRoute>
         }>
           <Route index element={<HomeSchool/>}/>
+          <Route path='home' element={<HomeSchool/>}/>
+          <Route path='grades' element={<HomeGrade/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>

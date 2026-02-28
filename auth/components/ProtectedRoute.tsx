@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children} : {children: React.ReactNode}) => {
         return <Navigate to='/auth/login' />;
     };
     
-    const canNavigate = ROLES[rol as RoleKey].routes.some(route => pathname.startsWith(route));
+    const canNavigate = ROLES[rol as RoleKey].routes.some((route) => pathname.startsWith(route.url));
     if (!canNavigate) {
         return <Navigate to={ROLES[rol as RoleKey].defaultRoute} />;
     };

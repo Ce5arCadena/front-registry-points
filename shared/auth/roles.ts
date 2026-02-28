@@ -2,23 +2,36 @@ export const ROLES = {
     SUPERADMIN: {
         defaultRoute: '/admin/home',
         routes: [
-            '/admin/home',
-            '/admin/schools',
-            '/admin/grades',
+            {
+                default: true,
+                label: "Home",
+                url: '/admin/home',
+            },
         ]
     },
     SCHOOL: {
         defaultRoute: '/school/home',
         routes: [
-            '/school/home',
-            '/school/grades',
-            '/school/teachers'
+            {
+                default: true,
+                label: "Home",
+                url: '/school/home',
+            },
+            {
+                default: false,
+                label: "Cursos",
+                url: '/school/grades',
+            },
         ]
     },
     TEACHER: {
-        defaultRoute: '/admin/home',
+        defaultRoute: '/teacher/home',
         routes: [
-            
+            {
+                default: true,
+                label: "Home",
+                url: '/teacher/home',
+            },
         ]
     } 
 };
