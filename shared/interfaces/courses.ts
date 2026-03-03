@@ -6,6 +6,13 @@ export interface CoursesInterface {
     message: string;
 }
 
+export interface CreateCourseInterface {
+    ok: number;
+    message: string;
+    data?: Course
+    errors?: string[]
+}
+
 export interface Course {
     id:       number;
     name:     string;

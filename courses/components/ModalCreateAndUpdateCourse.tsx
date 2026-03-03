@@ -4,9 +4,11 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { type FormCourseData } from "../../shared/interfaces/courses";
 
 export const ModalCreateAndUpdateCourse = ({
+  onSubmitCourse,
   setActionModal
 }: {
-  setActionModal: (value: string) => void
+  onSubmitCourse: (values: FormCourseData) => Promise<boolean>,
+  setActionModal: (value: string) => void,
 }) => {
   const {
     watch,
@@ -18,8 +20,9 @@ export const ModalCreateAndUpdateCourse = ({
     mode: 'onChange'
   });
 
-  const onSubmit: SubmitHandler<FormCourseData> = (values) => {
-    console.log(values);
+  const onSubmit: SubmitHandler<FormCourseData> = async (values) => {
+    const success = await onSubmitCourse(values);
+    if (success) reset();
   };
 
   return (

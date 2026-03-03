@@ -9,7 +9,8 @@ export const HomeCourse = () => {
     courses,
     loading,
     actionModal,
-    setActionModal
+    setActionModal,
+    onSubmitCourse
   } = useCourses();
 
   return (
@@ -35,6 +36,7 @@ export const HomeCourse = () => {
           actionModal === "create" && (
             <ModalCreateAndUpdateCourse 
               setActionModal={setActionModal}
+              onSubmitCourse={onSubmitCourse}
             />
           )
         }
