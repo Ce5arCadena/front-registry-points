@@ -5,6 +5,7 @@ import { type Course, type CoursesInterface } from "../../shared/interfaces/cour
 
 export const useCourses = () => {
     const [loading, setloading] = useState(false);
+    const [actionModal, setActionModal] = useState("");
     const [courses, setCourses] = useState<Course[]>([]);
 
     const getCourses = async() => {
@@ -27,6 +28,8 @@ export const useCourses = () => {
     return {
         loading,
         courses,
-        getCourses
+        getCourses,
+        actionModal,
+        setActionModal
     };
 }

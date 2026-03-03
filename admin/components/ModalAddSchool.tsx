@@ -153,7 +153,7 @@ export const ModalAddSchool = (
                 }
               })} 
               className="block w-full pl-9 pr-3 py-2.5 bg-dark-bg-secondary border text-dark-text text-sm rounded-lg focus:ring-1 focus:ring-secondary focus:border-secring-secondary outline-none placeholder:text-dark-text-secondary transition-all" 
-              placeholder="Instritución El Libertador"
+              placeholder="Institución El Libertador"
             />
           </div>
           {

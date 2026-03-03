@@ -54,3 +54,8 @@ interface Link {
     page:   number | null;
     active: boolean;
 }
+
+// Fourmulario crear o editar
+export interface FormCourseData {
+    name: string
+}

@@ -2,11 +2,14 @@ import { Toaster } from "react-hot-toast";
 import { useCourses } from "../hooks/useCourses"
 import Loading from "../../shared/components/Loading";
 import { ListCourses } from "../components/ListCourses";
+import { ModalCreateAndUpdateCourse } from "../components/ModalCreateAndUpdateCourse";
 
 export const HomeCourse = () => {
   const {
     courses,
-    loading
+    loading,
+    actionModal,
+    setActionModal
   } = useCourses();
 
   return (
@@ -17,7 +20,7 @@ export const HomeCourse = () => {
           <h1 className="text-2xl font-bold">Lista de Cursos</h1>
 
           <button 
-            // onClick={() => setShowModalAddSchool(!showModalAddSchool)}
+            onClick={() => setActionModal("create")}
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary">
             Agregar Curso
           </button>
@@ -27,6 +30,14 @@ export const HomeCourse = () => {
         <ListCourses 
           courses={courses}
         />
+
+        {
+          actionModal === "create" && (
+            <ModalCreateAndUpdateCourse 
+              setActionModal={setActionModal}
+            />
+          )
+        }
 
         {
           loading && (
