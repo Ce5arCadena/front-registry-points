@@ -1,13 +1,17 @@
-import { IoEyeOutline } from "react-icons/io5";
-import { type Course } from "../../shared/interfaces/courses"
 import { RiEdit2Line } from "react-icons/ri";
+import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { type Course } from "../../shared/interfaces/courses"
 
 export const ListCourses = (
   {
-    courses
+    courses,
+    setCourse,
+    setActionModal,
   }: {
-    courses: Course[]
+    courses: Course[],
+    setCourse: (course: Course) => void,
+    setActionModal: (value: string) => void
   }
 ) => {
   return (
@@ -34,17 +38,15 @@ export const ListCourses = (
                   <IoEyeOutline
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setSchool(school);
-                      // setActionSchool("view");
-                      // setShowModalAddSchool(true);
+                      setCourse(course);
+                      setActionModal("view");
                     }}
                   />
                   <RiEdit2Line
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setSchool(school);
-                      // setActionSchool("edit");
-                      // setShowModalAddSchool(true);
+                      setCourse(course);
+                      setActionModal("edit");
                     }}
                   />
                   <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"

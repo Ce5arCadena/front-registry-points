@@ -12,6 +12,8 @@ import { useApi } from "../../utils/useApi";
 export const useCourses = () => {
   const [loading, setloading] = useState(false);
   const [actionModal, setActionModal] = useState("");
+
+  const [course, setCourse] = useState<Course | null>();
   const [courses, setCourses] = useState<Course[]>([]);
 
   const getCourses = async () => {
@@ -28,34 +30,24 @@ export const useCourses = () => {
     };
   };
 
-  const onSubmitCourse = async (values: FormCourseData) => {
-    const responseCreate = await createCourse(values);
-    if (responseCreate) {
-      setCourses((prevCourses) => ([
-        ...prevCourses,
-        responseCreate
-      ]));
-
-      return true;
-    };
-    
-    return false;
-  };
-
-  const createCourse = async (data: FormCourseData): Promise<undefined | Course> => {
+  const createCourse = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
     try {
-      const responseCourses = await useApi<CreateCourseInterface>('/grades', 'POST', data);
-      if (responseCourses.ok !== 200 && responseCourses.errors) {
-        const errors = responseCourses.errors?.join(" ");
+      const responseCourse = await useApi<CreateCourseInterface>(url, method, data);
+      if (responseCourse.ok !== 200 && responseCourse.errors) {
+        const errors = responseCourse.errors?.join(" ");
         toast.error(errors);
-        return undefined;
+        return false;
       };
 
-      return responseCourses.data;
+      toast.success(responseCourse.message);
+      const newCourses = courses.filter(course => course.id !== responseCourse.data?.id);
+      setCourses([...newCourses, responseCourse.data as Course]);
+      setCourse(null);
+      return true;
     } catch (error) {
       toast.error('Ha ocurrido un error al crear el curso. Comuniquese.');
-      return undefined;
+      return false;
     } finally {
       setloading(false);
     };
@@ -66,11 +58,13 @@ export const useCourses = () => {
   }, []);
 
   return {
+    course,
     loading,
     courses,
+    setCourse,
     getCourses,
     actionModal,
-    setActionModal,
-    onSubmitCourse
+    createCourse,
+    setActionModal
   };
 }

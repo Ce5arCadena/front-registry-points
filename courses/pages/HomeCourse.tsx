@@ -6,11 +6,13 @@ import { ModalCreateAndUpdateCourse } from "../components/ModalCreateAndUpdateCo
 
 export const HomeCourse = () => {
   const {
-    courses,
+    course,
     loading,
+    courses,
+    setCourse,
     actionModal,
     setActionModal,
-    onSubmitCourse
+    createCourse
   } = useCourses();
 
   return (
@@ -21,7 +23,10 @@ export const HomeCourse = () => {
           <h1 className="text-2xl font-bold">Lista de Cursos</h1>
 
           <button 
-            onClick={() => setActionModal("create")}
+            onClick={() => {
+              setCourse(null);
+              setActionModal("create");
+            }}
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary">
             Agregar Curso
           </button>
@@ -30,13 +35,16 @@ export const HomeCourse = () => {
         {/* Lista de cursos */}
         <ListCourses 
           courses={courses}
+          setCourse={setCourse}
+          setActionModal={setActionModal}
         />
 
         {
-          actionModal === "create" && (
+          (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdateCourse 
+              course={course}
               setActionModal={setActionModal}
-              onSubmitCourse={onSubmitCourse}
+              createCourse={createCourse}
             />
           )
         }
@@ -45,7 +53,11 @@ export const HomeCourse = () => {
           loading && (
             <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
               <Loading/>
-              <span>Listando cursos...</span>
+              <span>
+                {
+                  loading && actionModal !== "" ? <>Por favor, espere...</> : <>Listando los cursos.</>
+                }
+              </span>
             </div>
           )
         }

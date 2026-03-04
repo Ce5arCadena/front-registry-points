@@ -1,35 +1,50 @@
+import { useEffect } from "react";
 import { MdOutlineSchool } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { type FormCourseData } from "../../shared/interfaces/courses";
+import { type Course, type FormCourseData } from "../../shared/interfaces/courses";
 
 export const ModalCreateAndUpdateCourse = ({
-  onSubmitCourse,
+  course,
+  createCourse,
   setActionModal
 }: {
-  onSubmitCourse: (values: FormCourseData) => Promise<boolean>,
+  course: Course | null | undefined,
+  createCourse: (values: FormCourseData, method: string, url: string) => Promise<boolean>,
   setActionModal: (value: string) => void,
 }) => {
   const {
-    watch,
+    reset,
+    register,
     handleSubmit,
     formState: { errors },
-    reset,
-    register
   } = useForm<FormCourseData>({
     mode: 'onChange'
   });
 
   const onSubmit: SubmitHandler<FormCourseData> = async (values) => {
-    const success = await onSubmitCourse(values);
-    if (success) reset();
+    const method = course ? 'PUT' : 'POST';
+    const url = course ? `/grades/${course.id}` : '/grades';
+    const success = await createCourse(values, method, url);
+    console.log(success);
+    if (success) {
+      reset();
+      setActionModal("");
+    };
   };
+
+  useEffect(() => {
+    if (course) {
+      reset({ name: course.name });
+    };
+  }, [course]);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
       <IoCloseCircleOutline
         className="text-2xl absolute right-2 top-2 cursor-pointer"
         onClick={() => {
+          reset();
           setActionModal("");
         }}
       />
@@ -52,7 +67,6 @@ export const ModalCreateAndUpdateCourse = ({
               type="text"
               {...register('name', {
                 required: {
-                  // value: schoolAction === "edit" ? false : true,
                   value: true,
                   message: 'El nombre es requerido.'
                 }
@@ -72,10 +86,9 @@ export const ModalCreateAndUpdateCourse = ({
           <button className="
             text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary
           ">
-            {/* {
-              schoolAction === "edit" ? "Editar" : "Agregar"
-            } */}
-            Registrar
+            {
+              course ? "Editar" : "Agregar"
+            }
           </button>
         </div>
       </form>
