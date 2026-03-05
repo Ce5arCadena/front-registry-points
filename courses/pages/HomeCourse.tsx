@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast";
 import { useCourses } from "../hooks/useCourses"
 import Loading from "../../shared/components/Loading";
 import { ListCourses } from "../components/ListCourses";
+import { ModalViewCourse } from "../components/ModalViewCourse";
 import { ModalCreateAndUpdateCourse } from "../components/ModalCreateAndUpdateCourse";
 
 export const HomeCourse = () => {
@@ -46,6 +47,15 @@ export const HomeCourse = () => {
               setActionModal={setActionModal}
               createCourse={createCourse}
             />
+          )
+        }
+
+        {
+          actionModal === "view" && (
+            <ModalViewCourse
+              course={course}
+              setActionModal={setActionModal}
+            /> 
           )
         }
 

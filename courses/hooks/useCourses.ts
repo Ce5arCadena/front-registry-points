@@ -13,8 +13,8 @@ export const useCourses = () => {
   const [loading, setloading] = useState(false);
   const [actionModal, setActionModal] = useState("");
 
-  const [course, setCourse] = useState<Course | null>();
   const [courses, setCourses] = useState<Course[]>([]);
+  const [course, setCourse] = useState<Course | null>();
 
   const getCourses = async () => {
     setloading(true);
