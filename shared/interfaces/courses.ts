@@ -6,7 +6,7 @@ export interface CoursesInterface {
     message: string;
 }
 
-export interface CreateCourseInterface {
+export interface ResponseCourseInterface {
     ok: number;
     message: string;
     data?: Course

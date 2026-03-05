@@ -51,9 +51,8 @@ export const ListCourses = (
                   />
                   <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setSchool(school);
-                      // setActionSchool("delete");
-                      // setShowModalAddSchool(true);
+                      setCourse(course);
+                      setActionModal("delete");
                     }}
                   />
                 </td>

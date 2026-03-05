@@ -17,10 +17,18 @@ export const useApi = async <T>(pathUrl: string = '', method = 'GET', body = {})
 
         const response = await fetch(`${urlBase}${pathUrl}`, options);
         const data = await response.json();
-        data.ok = response.ok;
-        return data;
+        console.log(response)
+
+        if (response.ok) {
+            data.ok = response.ok;
+            return data;
+        }
+
+        throw new Error('');
+
     } catch (error) {
-        console.log(error);
-        throw new Error('Ocurrió un error al realizar la petición');  
+        localStorage.removeItem('rol');  
+        localStorage.removeItem('token');  
+        throw new Error('Ocurrió un error al realizar la petición');
     };
 };

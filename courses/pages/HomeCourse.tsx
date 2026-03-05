@@ -3,6 +3,7 @@ import { useCourses } from "../hooks/useCourses"
 import Loading from "../../shared/components/Loading";
 import { ListCourses } from "../components/ListCourses";
 import { ModalViewCourse } from "../components/ModalViewCourse";
+import { ModalDeleteCourse } from "../components/ModalDeleteCourse";
 import { ModalCreateAndUpdateCourse } from "../components/ModalCreateAndUpdateCourse";
 
 export const HomeCourse = () => {
@@ -12,8 +13,9 @@ export const HomeCourse = () => {
     courses,
     setCourse,
     actionModal,
-    setActionModal,
-    createCourse
+    deleteCourse,
+    createCourse,
+    setActionModal
   } = useCourses();
 
   return (
@@ -55,6 +57,16 @@ export const HomeCourse = () => {
             <ModalViewCourse
               course={course}
               setActionModal={setActionModal}
+            /> 
+          )
+        }
+
+        {
+          actionModal === "delete" && (
+            <ModalDeleteCourse
+              course={course}
+              setActionModal={setActionModal}
+              deleteCourse={deleteCourse}
             /> 
           )
         }
