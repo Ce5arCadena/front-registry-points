@@ -30,7 +30,7 @@ export const HomeCourse = () => {
               setCourse(null);
               setActionModal("create");
             }}
-            className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary">
+            className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
             Agregar Curso
           </button>
         </div>

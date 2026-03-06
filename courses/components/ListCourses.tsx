@@ -1,7 +1,8 @@
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdNavigateNext } from "react-icons/md";
 import { type Course } from "../../shared/interfaces/courses"
+import { GrFormPrevious } from "react-icons/gr";
 
 export const ListCourses = (
   {
@@ -14,6 +15,7 @@ export const ListCourses = (
     setActionModal: (value: string) => void
   }
 ) => {
+  console.log(courses)
   return (
     <div className="h-full">
       <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -71,6 +73,18 @@ export const ListCourses = (
           }
         </tbody>
       </table>
+
+      <div className="flex mt-2">
+        <button className="rounded-md py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg text-white bg-slate-800 hover:bg-slate-700 focus:text-white        disabled:opacity-50 disabled:shadow-none ml-2 cursor-pointer">
+          <GrFormPrevious />
+        </button>
+        <button className="min-w-9 rounded-md bg-slate-800 py-2 px-3 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:opacity-50 disabled:shadow-none ml-2">
+          1
+        </button>
+        <button className="rounded-md py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg text-white bg-slate-800 hover:bg-slate-700 focus:text-white        disabled:opacity-50 disabled:shadow-none ml-2 cursor-pointer">
+          <MdNavigateNext />
+        </button>
+      </div>
     </div>
   )
 }
