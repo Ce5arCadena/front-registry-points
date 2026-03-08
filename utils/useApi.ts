@@ -17,15 +17,10 @@ export const useApi = async <T>(pathUrl: string = '', method = 'GET', body = {})
 
         const response = await fetch(`${urlBase}${pathUrl}`, options);
         const data = await response.json();
-        console.log(response)
 
-        if (response.ok) {
-            data.ok = response.ok;
-            return data;
-        }
-
-        throw new Error('');
-
+        // TODO: Ver que pasa cuando vence el token, o que se borre del localstorage y ejecutar alguna acción 
+        data.ok = response.ok;
+        return data;
     } catch (error) {
         localStorage.removeItem('rol');  
         localStorage.removeItem('token');  

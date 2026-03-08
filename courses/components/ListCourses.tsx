@@ -1,8 +1,8 @@
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
-import { MdDeleteOutline, MdNavigateNext } from "react-icons/md";
-import { type Course } from "../../shared/interfaces/courses"
 import { GrFormPrevious } from "react-icons/gr";
+import { MdDeleteOutline, MdNavigateNext } from "react-icons/md";
+import { type Course, type CoursesInterface } from "../../shared/interfaces/courses";
 
 export const ListCourses = (
   {
@@ -10,12 +10,11 @@ export const ListCourses = (
     setCourse,
     setActionModal,
   }: {
-    courses: Course[],
+    courses: CoursesInterface,
     setCourse: (course: Course) => void,
     setActionModal: (value: string) => void
   }
 ) => {
-  console.log(courses)
   return (
     <div className="h-full">
       <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -28,7 +27,7 @@ export const ListCourses = (
         </thead>
         <tbody>
           {
-            courses.length > 0 && courses.map((course) => (
+            courses.data && courses.data.length > 0 && courses.data.map((course) => (
               <tr className="bg-gray-800 text-center text-light-bg" key={course.id}>
                 <td className="p-2">
                   <span>{course.id}</span>
@@ -63,7 +62,7 @@ export const ListCourses = (
           }
 
           {
-            courses.length <= 0 && (
+            courses.data && courses.data.length <= 0 && (
               <tr className="text-center">
                 <td colSpan={3} className="p-2">
                   No hay cursos para mostrar.

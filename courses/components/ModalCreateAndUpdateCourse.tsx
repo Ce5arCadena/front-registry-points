@@ -24,7 +24,7 @@ export const ModalCreateAndUpdateCourse = ({
 
   const onSubmit: SubmitHandler<FormCourseData> = async (values) => {
     const method = course ? 'PUT' : 'POST';
-    const url = course ? `/courses/${course.id}` : '/grades';
+    const url = course ? `/courses/${course.id}` : '/courses';
     const success = await createCourse(values, method, url);
 
     if (success) {

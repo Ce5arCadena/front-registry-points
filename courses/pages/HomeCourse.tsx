@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import { useCourses } from "../hooks/useCourses"
+import { useCourses } from "../hooks/useCourses";
 import Loading from "../../shared/components/Loading";
 import { ListCourses } from "../components/ListCourses";
 import { ModalViewCourse } from "../components/ModalViewCourse";
