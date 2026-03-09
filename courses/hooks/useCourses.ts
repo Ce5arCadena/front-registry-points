@@ -22,13 +22,16 @@ export const useCourses = () => {
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
   const [perPage, setPerPage] = useState(2);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalCourses, setTotalCourses] = useState(0);
 
   const getCourses = async () => {
     setloading(true);
     try {
       const responseCourses = await useApi<CoursesInterface>('/courses');
       console.log(responseCourses)
+      setTotalCourses(responseCourses.meta.total);
       setCurrentPage(responseCourses.meta.current_page);
       setCourses(responseCourses.data);
     } catch (error) {
@@ -44,6 +47,7 @@ export const useCourses = () => {
     if (!courses) return [];
     setStart((currentPage - 1) * perPage + 1);
     setEnd(Math.min(currentPage * perPage, courses.length));
+    setTotalPages(Math.ceil(courses.length / perPage));
 
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
@@ -116,10 +120,13 @@ export const useCourses = () => {
     courses,
     setCourse,
     getCourses,
+    totalPages,
     dataCourses,
     actionModal,
     createCourse,
+    totalCourses,
     deleteCourse,
-    setActionModal
+    setActionModal,
+    setCurrentPage,
   };
 }

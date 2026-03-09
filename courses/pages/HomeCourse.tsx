@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import { useCourses } from "../hooks/useCourses";
 import Loading from "../../shared/components/Loading";
+import { Pagination } from "../components/Pagination";
 import { ListCourses } from "../components/ListCourses";
 import { ModalViewCourse } from "../components/ModalViewCourse";
 import { ModalDeleteCourse } from "../components/ModalDeleteCourse";
@@ -8,15 +9,20 @@ import { ModalCreateAndUpdateCourse } from "../components/ModalCreateAndUpdateCo
 
 export const HomeCourse = () => {
   const {
+    end,
+    start,
     course,
     loading,
     courses,
     setCourse,
+    totalPages,
     actionModal,
     dataCourses,
+    totalCourses,
     deleteCourse,
     createCourse,
-    setActionModal
+    setActionModal,
+    setCurrentPage
   } = useCourses();
 
   return (
@@ -42,6 +48,18 @@ export const HomeCourse = () => {
           setCourse={setCourse}
           setActionModal={setActionModal}
         />
+
+        {
+          dataCourses.length > 0 && (
+            <Pagination 
+              end={end}
+              start={start}
+              totalCourses={totalCourses}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
+          )
+        }
 
         {
           (actionModal === "create" || actionModal === "edit") && (
