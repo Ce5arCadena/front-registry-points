@@ -7,7 +7,7 @@ import {
 
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useApi } from "../../utils/useApi";
 
 export const useCourses = () => {
@@ -15,13 +15,13 @@ export const useCourses = () => {
   const [loading, setloading] = useState(false);
   const [actionModal, setActionModal] = useState("");
 
+  const [courses, setCourses] = useState<Course[]>([]);
   const [course, setCourse] = useState<Course | null>();
-  const [courses, setCourses] = useState<CoursesInterface>({} as CoursesInterface);
   
   // Paginación
+  const [end, setEnd] = useState(0);
+  const [start, setStart] = useState(0);
   const [perPage, setPerPage] = useState(2);
-  const [totalPages, setTotalPages] = useState(1);
-  const [windowSize, setWindowSize] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
 
   const getCourses = async () => {
@@ -29,14 +29,8 @@ export const useCourses = () => {
     try {
       const responseCourses = await useApi<CoursesInterface>('/courses');
       console.log(responseCourses)
-      setTotalPages(responseCourses.meta.last_page);
       setCurrentPage(responseCourses.meta.current_page);
-      const startIndex = (1 - 1) * perPage;
-      const endIndex = startIndex + perPage;
-      setCourses({
-        ...responseCourses,
-        data: responseCourses.data.slice(startIndex, endIndex)
-      });
+      setCourses(responseCourses.data);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener los cursos. Comuniquese.');
       navigate('/auth/login');
@@ -45,6 +39,17 @@ export const useCourses = () => {
       setloading(false);
     };
   };
+
+  const dataCourses = useMemo(() => {
+    if (!courses) return [];
+    setStart((currentPage - 1) * perPage + 1);
+    setEnd(Math.min(currentPage * perPage, courses.length));
+
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+
+    return courses.slice(start, end);
+  }, [currentPage, courses]);
 
   const createCourse = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
@@ -57,7 +62,7 @@ export const useCourses = () => {
       };
 
       toast.success(responseCourse.message);
-      const newCourses = courses.data.filter(course => course.id !== responseCourse.data?.id);
+      const newCourses = courses.filter(course => course.id !== responseCourse.data?.id);
       setCourses((prevData) => ({
         ...prevData,
         data: [...newCourses, responseCourse.data as Course]
@@ -104,11 +109,14 @@ export const useCourses = () => {
   }, []);
 
   return {
+    end, 
+    start,
     course,
     loading,
     courses,
     setCourse,
     getCourses,
+    dataCourses,
     actionModal,
     createCourse,
     deleteCourse,

@@ -10,7 +10,7 @@ export const ListCourses = (
     setCourse,
     setActionModal,
   }: {
-    courses: CoursesInterface,
+    courses: Course[],
     setCourse: (course: Course) => void,
     setActionModal: (value: string) => void
   }
@@ -27,7 +27,7 @@ export const ListCourses = (
         </thead>
         <tbody>
           {
-            courses.data && courses.data.length > 0 && courses.data.map((course) => (
+            courses.length > 0 && courses.map((course) => (
               <tr className="bg-gray-800 text-center text-light-bg" key={course.id}>
                 <td className="p-2">
                   <span>{course.id}</span>
@@ -62,7 +62,7 @@ export const ListCourses = (
           }
 
           {
-            courses.data && courses.data.length <= 0 && (
+            courses && courses.length <= 0 && (
               <tr className="text-center">
                 <td colSpan={3} className="p-2">
                   No hay cursos para mostrar.
@@ -73,7 +73,7 @@ export const ListCourses = (
         </tbody>
       </table>
 
-      <div className="flex mt-2">
+      {/* <div className="flex mt-2">
         <button className="rounded-md py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg text-white bg-slate-800 hover:bg-slate-700 focus:text-white        disabled:opacity-50 disabled:shadow-none ml-2 cursor-pointer">
           <GrFormPrevious />
         </button>
@@ -83,7 +83,7 @@ export const ListCourses = (
         <button className="rounded-md py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg text-white bg-slate-800 hover:bg-slate-700 focus:text-white        disabled:opacity-50 disabled:shadow-none ml-2 cursor-pointer">
           <MdNavigateNext />
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -13,6 +13,7 @@ export const HomeCourse = () => {
     courses,
     setCourse,
     actionModal,
+    dataCourses,
     deleteCourse,
     createCourse,
     setActionModal
@@ -37,7 +38,7 @@ export const HomeCourse = () => {
 
         {/* Lista de cursos */}
         <ListCourses 
-          courses={courses}
+          courses={dataCourses}
           setCourse={setCourse}
           setActionModal={setActionModal}
         />
