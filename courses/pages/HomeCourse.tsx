@@ -18,11 +18,15 @@ export const HomeCourse = () => {
     totalPages,
     actionModal,
     dataCourses,
+    currentPage,
     totalCourses,
     deleteCourse,
     createCourse,
     setActionModal,
-    setCurrentPage
+    setCurrentPage,
+    totalSectionsPages,
+    currentSectionPage,
+    setCurrentSectionPage
   } = useCourses();
 
   return (
@@ -57,6 +61,10 @@ export const HomeCourse = () => {
               totalCourses={totalCourses}
               setCurrentPage={setCurrentPage}
               totalPages={totalPages}
+              currentPage={currentPage}
+              totalSectionsPages={totalSectionsPages}
+              currentSectionPage={currentSectionPage}
+              setCurrentSectionPage={setCurrentSectionPage}
             />
           )
         }

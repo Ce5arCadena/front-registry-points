@@ -25,15 +25,17 @@ export const useCourses = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
+  const [totalSectionsPages, setTotalSectionsPages] = useState(0);
+  const [currentSectionPage, setCurrentSectionPage] = useState(1);
 
   const getCourses = async () => {
     setloading(true);
     try {
-      const responseCourses = await useApi<CoursesInterface>('/courses');
+      const responseCourses = await useApi<CoursesInterface>(`/courses?page=${currentPage}`);
       console.log(responseCourses)
       setTotalCourses(responseCourses.meta.total);
-      setCurrentPage(responseCourses.meta.current_page);
-      setCourses(responseCourses.data);
+      setTotalPages(responseCourses.meta.last_page);
+      setCourses(prev => [...prev, ...responseCourses.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener los cursos. Comuniquese.');
       navigate('/auth/login');
@@ -47,13 +49,14 @@ export const useCourses = () => {
     if (!courses) return [];
     setStart((currentPage - 1) * perPage + 1);
     setEnd(Math.min(currentPage * perPage, courses.length));
-    setTotalPages(Math.ceil(courses.length / perPage));
+    console.log(courses.length)
+    setTotalSectionsPages(Math.ceil(courses.length / perPage));
 
-    const start = (currentPage - 1) * perPage;
+    const start = (currentSectionPage - 1) * perPage;
     const end = start + perPage;
 
     return courses.slice(start, end);
-  }, [currentPage, courses]);
+  }, [currentSectionPage, courses]);
 
   const createCourse = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
@@ -112,6 +115,12 @@ export const useCourses = () => {
     getCourses();
   }, []);
 
+  useEffect(() => {
+    if (currentPage > 1) {
+      getCourses();
+    }
+  }, [currentPage]);
+
   return {
     end, 
     start,
@@ -123,10 +132,14 @@ export const useCourses = () => {
     totalPages,
     dataCourses,
     actionModal,
+    currentPage,
     createCourse,
     totalCourses,
     deleteCourse,
     setActionModal,
     setCurrentPage,
+    totalSectionsPages,
+    currentSectionPage,
+    setCurrentSectionPage
   };
 }
