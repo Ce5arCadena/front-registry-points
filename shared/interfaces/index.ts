@@ -70,3 +70,15 @@ export interface NavItem {
     label: string,
     default: boolean,
 }
+
+// Paginación evento click
+export interface PaginateClickEvent {
+  index: number | null;
+  selected: number;
+  nextSelectedPage: number;
+  event: MouseEvent;
+  isPrevious: boolean;
+  isNext: boolean;
+  isBreak: boolean;
+  isPage: boolean;
+}

@@ -13,20 +13,15 @@ export const HomeCourse = () => {
     start,
     course,
     loading,
-    courses,
+    pageCount,
     setCourse,
-    totalPages,
     actionModal,
     dataCourses,
-    currentPage,
     totalCourses,
     deleteCourse,
     createCourse,
     setActionModal,
-    setCurrentPage,
-    totalSectionsPages,
-    currentSectionPage,
-    setCurrentSectionPage
+    handlePageClick,
   } = useCourses();
 
   return (
@@ -58,13 +53,9 @@ export const HomeCourse = () => {
             <Pagination 
               end={end}
               start={start}
-              totalCourses={totalCourses}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-              currentPage={currentPage}
-              totalSectionsPages={totalSectionsPages}
-              currentSectionPage={currentSectionPage}
-              setCurrentSectionPage={setCurrentSectionPage}
+              pageCount={pageCount}
+              total={totalCourses}
+              handlePageClick={handlePageClick}
             />
           )
         }

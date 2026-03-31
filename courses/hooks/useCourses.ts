@@ -7,8 +7,9 @@ import {
 
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
-import { useEffect, useMemo, useState } from "react";
 import { useApi } from "../../utils/useApi";
+import { useEffect, useMemo, useState } from "react";
+import { type PaginateClickEvent } from "../../shared/interfaces";
 
 export const useCourses = () => {
   const navigate = useNavigate();
@@ -22,17 +23,16 @@ export const useCourses = () => {
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
   const [perPage, setPerPage] = useState(2);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
-  const [totalSectionsPages, setTotalSectionsPages] = useState(0);
-  const [currentSectionPage, setCurrentSectionPage] = useState(1);
 
   const getCourses = async () => {
     setloading(true);
     try {
       const responseCourses = await useApi<CoursesInterface>(`/courses?page=${currentPage}`);
-      console.log(responseCourses)
       setTotalCourses(responseCourses.meta.total);
       setTotalPages(responseCourses.meta.last_page);
       setCourses(prev => [...prev, ...responseCourses.data]);
@@ -47,16 +47,19 @@ export const useCourses = () => {
 
   const dataCourses = useMemo(() => {
     if (!courses) return [];
-    setStart((currentPage - 1) * perPage + 1);
-    setEnd(Math.min(currentPage * perPage, courses.length));
-    console.log(courses.length)
-    setTotalSectionsPages(Math.ceil(courses.length / perPage));
+    const endOffset = itemOffset + perPage;
+    setStart(itemOffset + 1);
+    setEnd(Math.min(itemOffset + perPage, courses.length));
+    return courses.slice(itemOffset, endOffset);
+  }, [itemOffset, courses]);
 
-    const start = (currentSectionPage - 1) * perPage;
-    const end = start + perPage;
+  const handlePageClick = (event: PaginateClickEvent) => {
+    if (!event.nextSelectedPage) return;
 
-    return courses.slice(start, end);
-  }, [currentSectionPage, courses]);
+    if (event.nextSelectedPage === pageCount - 1 && courses.length < totalCourses) setCurrentPage(prev => prev + 1);
+    const newOffset = (event.nextSelectedPage * perPage) % courses.length;
+    setItemOffset(newOffset);
+  };
 
   const createCourse = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
@@ -112,6 +115,10 @@ export const useCourses = () => {
   };
 
   useEffect(() => {
+    setPageCount(Math.ceil(courses.length / perPage));
+  }, [courses]);
+  
+  useEffect(() => {
     getCourses();
   }, []);
 
@@ -126,8 +133,8 @@ export const useCourses = () => {
     start,
     course,
     loading,
-    courses,
     setCourse,
+    pageCount,
     getCourses,
     totalPages,
     dataCourses,
@@ -137,9 +144,7 @@ export const useCourses = () => {
     totalCourses,
     deleteCourse,
     setActionModal,
+    handlePageClick,
     setCurrentPage,
-    totalSectionsPages,
-    currentSectionPage,
-    setCurrentSectionPage
   };
 }
