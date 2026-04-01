@@ -22,7 +22,7 @@ export const useCourses = () => {
   // Paginación
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
-  const [perPage, setPerPage] = useState(2);
+  const [perPage, setPerPage] = useState(8);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -73,10 +73,7 @@ export const useCourses = () => {
 
       toast.success(responseCourse.message);
       const newCourses = courses.filter(course => course.id !== responseCourse.data?.id);
-      setCourses((prevData) => ({
-        ...prevData,
-        data: [...newCourses, responseCourse.data as Course]
-      }));
+      setCourses([...newCourses, responseCourse.data as Course]);
       setCourse(null);
       setActionModal("");
       return true;
@@ -99,9 +96,9 @@ export const useCourses = () => {
         return false;
       }
 
-      // toast.success(responseDeleteCourse.message);
-      // const newCourses = courses.filter(course => course.id !== id);
-      // setCourses(newCourses);
+      toast.success(responseDeleteCourse.message);
+      const newCourses = courses.filter(course => course.id !== id);
+      setCourses(newCourses);
       setCourse(null);
       setActionModal("");
       return true;

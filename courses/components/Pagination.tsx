@@ -14,7 +14,7 @@ export const Pagination = ({
   handlePageClick: (event: any) => void,
 }) => {
   return (
-    <div className=''>
+    <div className='flex justify-between'>
       <span>Mostrando del {start} al {end} de {total} registros </span>
       <ReactPaginate
         className="flex items-center gap-1"
@@ -31,7 +31,7 @@ export const Pagination = ({
         disabledClassName="opacity-30 cursor-not-allowed"
         breakLabel="..."
         nextLabel=">"
-        pageRangeDisplayed={2}
+        pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         pageCount={pageCount}
         onClick={handlePageClick}
