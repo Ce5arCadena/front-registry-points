@@ -81,4 +81,5 @@ export interface PaginateClickEvent {
   isNext: boolean;
   isBreak: boolean;
   isPage: boolean;
+  isActive: boolean;
 }

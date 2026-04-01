@@ -54,7 +54,7 @@ export const useCourses = () => {
   }, [itemOffset, courses]);
 
   const handlePageClick = (event: PaginateClickEvent) => {
-    if (!event.nextSelectedPage) return;
+    if (event.nextSelectedPage === undefined) return;
 
     if (event.nextSelectedPage === pageCount - 1 && courses.length < totalCourses) setCurrentPage(prev => prev + 1);
     const newOffset = (event.nextSelectedPage * perPage) % courses.length;
