@@ -2,8 +2,10 @@ import { Toaster } from "react-hot-toast"
 import { useSubjects } from "../hooks/useSubjects";
 import Loading from "../../shared/components/Loading";
 import { ListSubjects } from "../components/ListSubjects";
-import { ModalCreateAndUpdateSubject } from "../components/ModalCreateAndUpdateSubject";
+import { Pagination } from "../../courses/components/Pagination";
 import { ModalDeleteSubject } from "../components/ModalDeleteSubject";
+import { ModalCreateAndUpdateSubject } from "../components/ModalCreateAndUpdateSubject";
+import { ModalViewSubject } from "../components/ModalViewSubject";
 
 export const HomeSubjectPage = () => {
   const {
@@ -47,11 +49,32 @@ export const HomeSubjectPage = () => {
         />
 
         {
+          dataSubjects.length > 0 && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalSubjects}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
+
+        {
           (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdateSubject
               subject={subject}
               setActionModal={setActionModal}
               createSubject={createSubject}
+            />
+          )
+        }
+
+        {
+          actionModal === "view" && (
+            <ModalViewSubject
+              subject={subject}
+              setActionModal={setActionModal}
             />
           )
         }

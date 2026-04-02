@@ -1,14 +1,14 @@
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
-import { useApi } from "../../utils/useApi";
-import { useState, useEffect, useMemo } from "react";
-import { type PaginateClickEvent } from "../../shared/interfaces";
 import {
   type Subject,
   type FormCourseData,
   type SubjectsInterface,
   type ResponseSubjectInterface,
 } from "../../shared/interfaces/subjects";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
+import { useApi } from "../../utils/useApi";
+import { useState, useEffect, useMemo } from "react";
+import { type PaginateClickEvent } from "../../shared/interfaces";
 
 export const useSubjects = () => {
   const navigate = useNavigate();
@@ -109,6 +109,10 @@ export const useSubjects = () => {
     const newOffset = (event.nextSelectedPage * perPage) % subjects.length;
     setItemOffset(newOffset);
   };
+
+  useEffect(() => {
+    setPageCount(Math.ceil(subjects.length / perPage));
+  }, [subjects]);
 
   useEffect(() => {
     getSubjects();
