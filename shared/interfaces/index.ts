@@ -1,3 +1,5 @@
+import { type IconType } from "react-icons";
+
 export interface LoginData {
     email: string,
     password: string
@@ -68,7 +70,8 @@ export interface SimpleRoute {
 export interface NavItem {
     url: string,
     label: string,
-    default: boolean,
+    defaultUrl: boolean,
+    IconType: IconType
 }
 
 // Paginación evento click

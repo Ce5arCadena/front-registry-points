@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MdOutlineSchool } from "react-icons/md";
+import { MdSubject } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type FormCourseData, type Subject } from "../../shared/interfaces/subjects";
@@ -60,7 +60,7 @@ export const ModalCreateAndUpdateSubject = ({
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <MdOutlineSchool className="w-4 h-4 text-dark-text-secondary" />
+              <MdSubject className="w-4 h-4 text-dark-text-secondary" />
             </div>
             <input
               id="name"

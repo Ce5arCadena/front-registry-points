@@ -1,11 +1,16 @@
+import { BsPeople } from "react-icons/bs";
+import { MdSubject } from "react-icons/md";
+import { FaChalkboardTeacher, FaHome } from "react-icons/fa";
+
 export const ROLES = {
     SUPERADMIN: {
         defaultRoute: '/admin/home',
         routes: [
             {
-                default: true,
+                defaultUrl: true,
                 label: "Home",
                 url: '/admin/home',
+                IconType: FaHome
             },
         ]
     },
@@ -13,19 +18,28 @@ export const ROLES = {
         defaultRoute: '/school/home',
         routes: [
             {
-                default: true,
+                defaultUrl: true,
                 label: "Home",
                 url: '/school/home',
+                IconType: FaHome
             },
             {
-                default: false,
+                defaultUrl: false,
                 label: "Cursos",
                 url: '/school/courses',
+                IconType: BsPeople
             },
             {
-                default: false,
+                defaultUrl: false,
                 label: "Asignaturas",
                 url: '/school/subjects',
+                IconType: MdSubject 
+            },
+            {
+                defaultUrl: false,
+                label: "Maestros",
+                url: '/school/teachers',
+                IconType: FaChalkboardTeacher 
             },
         ]
     },
@@ -33,9 +47,10 @@ export const ROLES = {
         defaultRoute: '/teacher/home',
         routes: [
             {
-                default: true,
+                defaultUrl: true,
                 label: "Home",
                 url: '/teacher/home',
+                IconType: MdSubject 
             },
         ]
     } 
