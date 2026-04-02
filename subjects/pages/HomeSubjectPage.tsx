@@ -1,6 +1,22 @@
 import { Toaster } from "react-hot-toast"
+import { useSubjects } from "../hooks/useSubjects";
+import { ListSubjects } from "../components/ListSubjects";
 
 export const HomeSubjectPage = () => {
+  const {
+    end,
+    start,
+    subject,
+    loading,
+    pageCount,
+    setSubject,
+    actionModal,
+    dataSubjects,
+    totalSubjects,
+    setActionModal,
+    handlePageClick,
+  } = useSubjects();
+
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
       <Toaster position="top-right" />
@@ -10,13 +26,20 @@ export const HomeSubjectPage = () => {
 
           <button
             onClick={() => {
-              // setCourse(null);
-              // setActionModal("create");
+              setSubject(null);
+              setActionModal("create");
             }}
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
             Agregar Asignatura
           </button>
         </div>
+
+        {/* Lista de asignaturas */}
+        <ListSubjects
+          subjects={dataSubjects}
+          setSubject={setSubject}
+          setActionModal={setActionModal}
+        />
       </div>
     </div>
   )
