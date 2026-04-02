@@ -6,6 +6,13 @@ export interface SubjectsInterface {
     message: string;
 }
 
+export interface ResponseSubjectInterface {
+    ok: number;
+    message: string;
+    data?: Subject
+    errors?: string[]
+}
+
 export interface Subject {
     id:         number;
     name:       string;
@@ -38,4 +45,9 @@ interface Link {
     label:  string;
     page:   number | null;
     active: boolean;
+}
+
+// Fourmulario crear o editar
+export interface FormCourseData {
+    name: string
 }

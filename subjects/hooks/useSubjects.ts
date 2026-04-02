@@ -3,7 +3,12 @@ import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 import { useState, useEffect, useMemo } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
-import { type Subject, type SubjectsInterface } from "../../shared/interfaces/subjects";
+import { 
+  type Subject, 
+  type FormCourseData, 
+  type SubjectsInterface, 
+  type ResponseSubjectInterface, 
+} from "../../shared/interfaces/subjects";
 
 export const useSubjects = () => {
   const navigate = useNavigate();
@@ -34,6 +39,31 @@ export const useSubjects = () => {
       toast.error('Ha ocurrido un error al obtener las asignaturas. Comuniquese.');
       navigate('/auth/login');
       return;
+    } finally {
+      setloading(false);
+    };
+  };
+
+  const createSubject = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
+    setloading(true);
+    try {
+      const responseSubject = await useApi<ResponseSubjectInterface>(url, method, data);
+      if (responseSubject.ok !== 200 && responseSubject.errors) {
+        const errors = responseSubject.errors?.join(" ");
+        toast.error(errors);
+        return false;
+      };
+
+      toast.success(responseSubject.message);
+      const newCourses = subjects.filter(course => course.id !== responseSubject.data?.id);
+      setSubjects([...newCourses, responseSubject.data as Subject]);
+      setSubject(null);
+      setActionModal("");
+      return true;
+    } catch (error) {
+      toast.error('Ha ocurrido un error al crear la asignatura. Comuniquese.');
+      navigate('/auth/login');
+      return false;
     } finally {
       setloading(false);
     };
@@ -71,6 +101,7 @@ export const useSubjects = () => {
     getSubjects,
     currentPage,
     dataSubjects,
+    createSubject,
     totalSubjects,
     setActionModal,
     setCurrentPage,
