@@ -22,6 +22,11 @@ export const ROLES = {
                 label: "Cursos",
                 url: '/school/courses',
             },
+            {
+                default: false,
+                label: "Asignaturas",
+                url: '/school/subjects',
+            },
         ]
     },
     TEACHER: {

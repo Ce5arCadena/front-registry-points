@@ -8,6 +8,7 @@ import { HomeSchool } from './schools/pages/HomeSchool';
 import { HomeCourse } from './courses/pages/HomeCourse';
 import { SchoolLayout } from './shared/layouts/SchoolLayout';
 import ProtectedRoute from './auth/components/ProtectedRoute';
+import { HomeSubjectPage } from './subjects/pages/HomeSubjectPage';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route index element={<HomeSchool/>}/>
           <Route path='home' element={<HomeSchool/>}/>
           <Route path='courses' element={<HomeCourse/>}/>
+          <Route path='subjects' element={<HomeSubjectPage/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>
