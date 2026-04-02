@@ -3,6 +3,7 @@ import { useSubjects } from "../hooks/useSubjects";
 import Loading from "../../shared/components/Loading";
 import { ListSubjects } from "../components/ListSubjects";
 import { ModalCreateAndUpdateSubject } from "../components/ModalCreateAndUpdateSubject";
+import { ModalDeleteSubject } from "../components/ModalDeleteSubject";
 
 export const HomeSubjectPage = () => {
   const {
@@ -14,6 +15,7 @@ export const HomeSubjectPage = () => {
     setSubject,
     actionModal,
     dataSubjects,
+    deleteSubject,
     createSubject,
     totalSubjects,
     setActionModal,
@@ -55,9 +57,19 @@ export const HomeSubjectPage = () => {
         }
 
         {
+          actionModal === "delete" && (
+            <ModalDeleteSubject
+              subject={subject}
+              setActionModal={setActionModal}
+              deleteSubject={deleteSubject}
+            />
+          )
+        }
+
+        {
           loading && (
             <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
-              <Loading/>
+              <Loading />
               <span>
                 {
                   loading && actionModal !== "" ? <>Por favor, espere...</> : <>Listando las asignaturas.</>

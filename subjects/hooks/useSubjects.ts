@@ -3,11 +3,11 @@ import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 import { useState, useEffect, useMemo } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
-import { 
-  type Subject, 
-  type FormCourseData, 
-  type SubjectsInterface, 
-  type ResponseSubjectInterface, 
+import {
+  type Subject,
+  type FormCourseData,
+  type SubjectsInterface,
+  type ResponseSubjectInterface,
 } from "../../shared/interfaces/subjects";
 
 export const useSubjects = () => {
@@ -55,13 +55,38 @@ export const useSubjects = () => {
       };
 
       toast.success(responseSubject.message);
-      const newCourses = subjects.filter(course => course.id !== responseSubject.data?.id);
-      setSubjects([...newCourses, responseSubject.data as Subject]);
+      const newSubjects = subjects.filter(subject => subject.id !== responseSubject.data?.id);
+      setSubjects([...newSubjects, responseSubject.data as Subject]);
       setSubject(null);
       setActionModal("");
       return true;
     } catch (error) {
       toast.error('Ha ocurrido un error al crear la asignatura. Comuniquese.');
+      navigate('/auth/login');
+      return false;
+    } finally {
+      setloading(false);
+    };
+  };
+
+  const deleteSubject = async (id: number): Promise<boolean> => {
+    setloading(true);
+    try {
+      const responseDeleteSubject = await useApi<ResponseSubjectInterface>(`/subjects/${id}`, 'DELETE');
+      if (responseDeleteSubject.ok !== 200 && responseDeleteSubject.errors) {
+        const errors = responseDeleteSubject.errors?.join(" ");
+        toast.error(errors);
+        return false;
+      }
+
+      toast.success(responseDeleteSubject.message);
+      const newSubjects = subjects.filter(subject => subject.id !== id);
+      setSubjects(newSubjects);
+      setSubject(null);
+      setActionModal("");
+      return true;
+    } catch (error) {
+      toast.error('Ha ocurrido un error al eliminar la asignatura. Comuniquese.');
       navigate('/auth/login');
       return false;
     } finally {
@@ -101,6 +126,7 @@ export const useSubjects = () => {
     getSubjects,
     currentPage,
     dataSubjects,
+    deleteSubject,
     createSubject,
     totalSubjects,
     setActionModal,
