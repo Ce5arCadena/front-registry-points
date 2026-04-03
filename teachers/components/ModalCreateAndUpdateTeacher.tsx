@@ -38,8 +38,8 @@ export const ModalCreateAndUpdateTeacher = ({
   useEffect(() => {
     if (teacher) {
       reset({
-        phone: teacher.phone,
-        document: teacher.document,
+        phone: Number(teacher.phone),
+        document: Number(teacher.document),
         full_name: teacher.full_name,
         email: teacher.email,
         password: ""
@@ -95,7 +95,7 @@ export const ModalCreateAndUpdateTeacher = ({
         </div>
 
         <div>
-          <label htmlFor="name" className="block mb-2.5 text-sm font-medium text-dark-text">
+          <label htmlFor="document" className="block mb-2.5 text-sm font-medium text-dark-text">
             N° Documento
           </label>
           <div className="relative">
@@ -103,7 +103,7 @@ export const ModalCreateAndUpdateTeacher = ({
               <FaRegIdCard className="w-4 h-4 text-dark-text-secondary" />
             </div>
             <input
-              id="name"
+              id="document"
               type="number"
               {...register('document', {
                 required: {
@@ -149,7 +149,7 @@ export const ModalCreateAndUpdateTeacher = ({
                 pattern: {
                   value: /^\d{10}$/,
                   message: "10 dígitos para el número de celular"
-                }
+                },
               })}
               className="block w-full pl-9 pr-3 py-2.5 bg-dark-bg-secondary border text-dark-text text-sm rounded-lg focus:ring-1 focus:ring-secondary focus:border-secring-secondary outline-none placeholder:text-dark-text-secondary transition-all"
               placeholder="322 000 1591"

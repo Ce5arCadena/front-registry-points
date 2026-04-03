@@ -49,15 +49,11 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseTeacher = await useApi<ResponseTeacherInterface>(url, method, data);
-      console.log(responseTeacher)
-      console.log(responseTeacher.ok)
-      console.log(responseTeacher.errors)
       if (responseTeacher.errors && Object.keys(responseTeacher.errors).length > 0) {
         const errors = responseTeacher.errors;
         const errorsFormat = Object.keys(errors).map(item => {
           return (errors as Record<string, string[]>)[item][0] + "\n ";
         }).join(" ");
-        console.log(errorsFormat)
         toast.error(errorsFormat);
         return false;
       };

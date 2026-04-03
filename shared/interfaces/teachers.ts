@@ -52,8 +52,8 @@ interface Link {
 // Fourmulario crear o editar
 export interface FormCourseData {
     full_name: string;
-    document: string;
-    phone: string;
+    document: number;
+    phone: number;
     password: string;
     email: string;
 }
