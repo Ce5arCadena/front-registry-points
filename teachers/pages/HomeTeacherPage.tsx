@@ -1,5 +1,7 @@
 import { Toaster } from "react-hot-toast"
-import { useTeachers } from "../hooks/useSubjects";
+import { useTeachers } from "../hooks/useTeachers";
+import { ModalCreateAndUpdateTeacher } from "../components/ModalCreateAndUpdateTeacher";
+import Loading from "../../shared/components/Loading";
 
 export const HomeTeacherPage = () => {
   const {
@@ -26,13 +28,36 @@ export const HomeTeacherPage = () => {
           <h1 className="text-2xl font-bold">Lista de Maestros</h1>
           <button
             onClick={() => {
-              // setSubject(null);
-              // setActionModal("create");
+              setTeacher(null);
+              setActionModal("create");
             }}
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
             Agregar Maestro
           </button>
         </div>
+
+        {
+          (actionModal === "create" || actionModal === "edit") && (
+            <ModalCreateAndUpdateTeacher
+              teacher={teacher}
+              setActionModal={setActionModal}
+              createTeacher={createTeacher}
+            />
+          )
+        }
+
+        {
+          loading && (
+            <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
+              <Loading />
+              <span>
+                {
+                  loading && actionModal !== "" ? <>Por favor, espere...</> : <>Listando los maestros.</>
+                }
+              </span>
+            </div>
+          )
+        }
       </div>
     </div>
   )

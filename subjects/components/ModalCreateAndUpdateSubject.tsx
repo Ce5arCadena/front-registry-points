@@ -56,7 +56,7 @@ export const ModalCreateAndUpdateSubject = ({
       >
         <div>
           <label htmlFor="name" className="block mb-2.5 text-sm font-medium text-dark-text">
-            Nombre del curso
+            Nombre de la asignatura
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

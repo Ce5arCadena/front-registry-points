@@ -41,7 +41,6 @@ export const LoginPage = () => {
       const rol = responseLogin.data.rol;
       navigate(ROLES[rol as RoleKey].defaultRoute);
     } catch (error) {
-      console.log(error)
       toast.error('Ocurrió un error al realizar la petición', {
         duration: 4000,
         position: 'top-right'
@@ -72,6 +71,7 @@ export const LoginPage = () => {
               <input 
                 id="email"
                 type="email"
+                autoComplete="new-password"
                 {...register('email', {
                   required: {
                     value: true,
@@ -103,6 +103,7 @@ export const LoginPage = () => {
               </div>
               <input 
                 id="password"
+                autoComplete="new-password"
                 type={showPassword ? 'text' : 'password'} 
                 {...register('password', {
                   required: {

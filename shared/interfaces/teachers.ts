@@ -10,13 +10,14 @@ export interface ResponseTeacherInterface {
     ok: number;
     message: string;
     data?: Teacher
-    errors?: string[]
+    errors?: string[] | Record<string, string[]>
 }
 
 export interface Teacher {
     id:         number;
     full_name:  string;
     document:   string;
+    email:      string;
     phone:      string;
     status:     string;
     created_at: Date;
@@ -50,5 +51,9 @@ interface Link {
 
 // Fourmulario crear o editar
 export interface FormCourseData {
-    name: string
+    full_name: string;
+    document: string;
+    phone: string;
+    password: string;
+    email: string;
 }

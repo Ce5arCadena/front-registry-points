@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 import { useState, useEffect, useMemo } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
-import { type FormCourseData } from "../../shared/interfaces/subjects";
+import { type FormCourseData } from "../../shared/interfaces/teachers";
 
 export const useTeachers = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseTeachers = await useApi<TeachersInterface>(`/teachers?page=${currentPage}`);
-      console.log(responseTeachers)
+      console.log(responseTeachers);
       setTotalTeachers(responseTeachers.meta.total);
       setTotalPages(responseTeachers.meta.last_page);
       setTeachers(prev => [...prev, ...responseTeachers.data]);
@@ -49,9 +49,16 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseTeacher = await useApi<ResponseTeacherInterface>(url, method, data);
-      if (responseTeacher.ok !== 200 && responseTeacher.errors) {
-        const errors = responseTeacher.errors?.join(" ");
-        toast.error(errors);
+      console.log(responseTeacher)
+      console.log(responseTeacher.ok)
+      console.log(responseTeacher.errors)
+      if (responseTeacher.errors && Object.keys(responseTeacher.errors).length > 0) {
+        const errors = responseTeacher.errors;
+        const errorsFormat = Object.keys(errors).map(item => {
+          return (errors as Record<string, string[]>)[item][0] + "\n ";
+        }).join(" ");
+        console.log(errorsFormat)
+        toast.error(errorsFormat);
         return false;
       };
 
@@ -62,7 +69,7 @@ export const useTeachers = () => {
       setActionModal("");
       return true;
     } catch (error) {
-      toast.error('Ha ocurrido un error al crear la asignatura. Comuniquese.');
+      toast.error('Ha ocurrido un error al crear el maestro. Comuniquese.');
       navigate('/auth/login');
       return false;
     } finally {
@@ -74,11 +81,11 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseDeleteTeacher = await useApi<ResponseTeacherInterface>(`/teachers/${id}`, 'DELETE');
-      if (responseDeleteTeacher.ok !== 200 && responseDeleteTeacher.errors) {
-        const errors = responseDeleteTeacher.errors?.join(" ");
-        toast.error(errors);
-        return false;
-      }
+      // if (responseDeleteTeacher.ok !== 200 && responseDeleteTeacher.errors) {
+      //   const errors = responseDeleteTeacher.errors?.join(" ");
+      //   toast.error(errors);
+      //   return false;
+      // }
 
       toast.success(responseDeleteTeacher.message);
       const newTeachers = teachers.filter(teacher => teacher.id !== id);
