@@ -41,7 +41,7 @@ export const ModalCreateAndUpdateTeacher = ({
         phone: Number(teacher.phone),
         document: Number(teacher.document),
         full_name: teacher.full_name,
-        email: teacher.email,
+        email: teacher.user.email,
         password: ""
       });
     };
@@ -209,7 +209,7 @@ export const ModalCreateAndUpdateTeacher = ({
               autoComplete="new-password"
               {...register('password', {
                 required: {
-                  value: true,
+                  value: !teacher ? true : false,
                   message: 'El password es requerido.'
                 },
                 pattern: {

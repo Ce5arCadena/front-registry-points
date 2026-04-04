@@ -1,7 +1,7 @@
-import { 
-  type Teacher, 
-  type TeachersInterface, 
-  type ResponseTeacherInterface, 
+import {
+  type Teacher,
+  type TeachersInterface,
+  type ResponseTeacherInterface,
 } from "../../shared/interfaces/teachers";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -47,9 +47,13 @@ export const useTeachers = () => {
 
   const createTeacher = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
-    // Validar cuando errors es un solo error, ejemplo el correo
     try {
-      const responseTeacher = await useApi<ResponseTeacherInterface>(url, method, data);
+      const cleanData = method === 'PUT'
+        ? Object.fromEntries(Object.entries(data).filter(([_, value]) => Boolean(value)))
+        : data;
+      const responseTeacher = await useApi<ResponseTeacherInterface>(url, method, cleanData);
+
+      // Mostrar errores cuando es un solo error o varios. Se hace así por formato del backend
       if (responseTeacher.errors && Array.isArray(responseTeacher.errors)) {
         const errorsFormat = responseTeacher.errors.join(" ");
         toast.error(errorsFormat);

@@ -19,7 +19,6 @@ export const ListTeachers = (
       <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
         <thead className="bg-gray-800 rounded-md text-light-bg">
           <tr className="">
-            <th className="p-3">#</th>
             <th className="p-3 text-center">Nombres</th>
             <th className="p-3 text-center">Documento</th>
             <th className="p-3 text-center">Celular</th>
@@ -31,9 +30,6 @@ export const ListTeachers = (
           {
             teachers.length > 0 && teachers.map((teacher) => (
               <tr className="bg-gray-800 text-center text-light-bg" key={teacher.id}>
-                <td className="p-2">
-                  <span>{teacher.id}</span>
-                </td>
                 <td className="p-2 font-bold">
                   {teacher.full_name}
                 </td>
@@ -75,7 +71,7 @@ export const ListTeachers = (
           {
             teachers && teachers.length <= 0 && (
               <tr className="text-center">
-                <td colSpan={3} className="p-2">
+                <td colSpan={6} className="p-2">
                   No hay maestros para mostrar.
                 </td>
               </tr>

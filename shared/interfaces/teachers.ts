@@ -64,6 +64,6 @@ export interface FormCourseData {
     full_name: string;
     document: number;
     phone: number;
-    password: string;
+    password?: string;
     email: string;
 }
