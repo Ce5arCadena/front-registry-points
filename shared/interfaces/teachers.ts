@@ -20,6 +20,16 @@ export interface Teacher {
     email:      string;
     phone:      string;
     status:     string;
+    user:       User;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export interface User {
+    id:         number;
+    email:      string;
+    role:       string;
+    status:     string;
     created_at: Date;
     updated_at: Date;
 }

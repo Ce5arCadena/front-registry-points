@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast"
 import { useTeachers } from "../hooks/useTeachers";
 import { ModalCreateAndUpdateTeacher } from "../components/ModalCreateAndUpdateTeacher";
 import Loading from "../../shared/components/Loading";
+import { ListTeachers } from "../components/ListTeachers";
 
 export const HomeTeacherPage = () => {
   const {
@@ -35,6 +36,13 @@ export const HomeTeacherPage = () => {
             Agregar Maestro
           </button>
         </div>
+
+        {/* Lista de asignaturas */}
+        <ListTeachers
+          teachers={dataTeachers}
+          setTeacher={setTeacher}
+          setActionModal={setActionModal}
+        />
 
         {
           (actionModal === "create" || actionModal === "edit") && (
