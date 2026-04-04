@@ -47,9 +47,14 @@ export const useTeachers = () => {
 
   const createTeacher = async (data: FormCourseData, method: string, url: string): Promise<boolean> => {
     setloading(true);
+    // Validar cuando errors es un solo error, ejemplo el correo
     try {
       const responseTeacher = await useApi<ResponseTeacherInterface>(url, method, data);
-      if (responseTeacher.errors && Object.keys(responseTeacher.errors).length > 0) {
+      if (responseTeacher.errors && Array.isArray(responseTeacher.errors)) {
+        const errorsFormat = responseTeacher.errors.join(" ");
+        toast.error(errorsFormat);
+        return false;
+      } else if (responseTeacher.errors && Object.keys(responseTeacher.errors).length > 0) {
         const errors = responseTeacher.errors;
         const errorsFormat = Object.keys(errors).map(item => {
           return (errors as Record<string, string[]>)[item][0] + "\n ";

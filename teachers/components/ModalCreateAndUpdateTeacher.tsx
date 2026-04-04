@@ -228,13 +228,22 @@ export const ModalCreateAndUpdateTeacher = ({
           }
         </div>
 
-        <div className="mt-2">
+        <div className="mt-2 flex gap-2 justify-center">
           <button className="
             text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary
           ">
             {
               teacher ? "Editar" : "Agregar"
             }
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActionModal("")} 
+            className="
+            text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-warning hover:text-warning
+          ">
+            Cancelar
           </button>
         </div>
       </form>
