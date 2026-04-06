@@ -1,8 +1,10 @@
 import { Toaster } from "react-hot-toast"
 import { useTeachers } from "../hooks/useTeachers";
-import { ModalCreateAndUpdateTeacher } from "../components/ModalCreateAndUpdateTeacher";
 import Loading from "../../shared/components/Loading";
 import { ListTeachers } from "../components/ListTeachers";
+import { Pagination } from "../../courses/components/Pagination";
+import { ModalViewTeacher } from "../components/ModalViewTeacher";
+import { ModalCreateAndUpdateTeacher } from "../components/ModalCreateAndUpdateTeacher";
 
 export const HomeTeacherPage = () => {
   const {
@@ -45,11 +47,32 @@ export const HomeTeacherPage = () => {
         />
 
         {
+          dataTeachers.length > 0 && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalTeachers}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
+
+        {
           (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdateTeacher
               teacher={teacher}
               setActionModal={setActionModal}
               createTeacher={createTeacher}
+            />
+          )
+        }
+
+        {
+          actionModal === "view" && (
+            <ModalViewTeacher
+              teacher={teacher}
+              setActionModal={setActionModal}
             />
           )
         }
