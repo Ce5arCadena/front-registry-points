@@ -1,3 +1,6 @@
+import { FaRegIdCard } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
+import { MdOutlinePhoneAndroid } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type Teacher } from "../../shared/interfaces/teachers";
 
@@ -32,6 +35,26 @@ export const ModalViewTeacher = ({
 
         {/* Divider */}
         <div className="h-px bg-gray-100" />
+        <div className="flex gap-2 items-center bg-dark-bg-elevated/70 px-2 py-1 rounded-full">
+          <HiOutlineMail />
+          <span className="text-sm">
+            {teacher?.user.email}
+          </span>
+        </div>
+
+        <div className="flex gap-2 items-center bg-dark-bg-elevated/70 px-2 py-1 rounded-full">
+          <MdOutlinePhoneAndroid />
+          <span className="text-sm">
+            {teacher?.phone}
+          </span>
+        </div>
+
+        <div className="flex gap-2 items-center bg-dark-bg-elevated/70 px-2 py-1 rounded-full">
+          <FaRegIdCard />
+          <span className="text-sm">
+            {teacher?.document}
+          </span>
+        </div>
       </div>
     </div>
   )
