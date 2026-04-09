@@ -14,6 +14,7 @@ export const HomeTeacherPage = () => {
     teacher,
     loading,
     pageCount,
+    toggleOne,
     setTeacher,
     actionModal,
     dataTeachers,
@@ -42,6 +43,7 @@ export const HomeTeacherPage = () => {
 
         {/* Lista de asignaturas */}
         <ListTeachers
+          toggleOne={toggleOne}
           teachers={dataTeachers}
           setTeacher={setTeacher}
           setActionModal={setActionModal}

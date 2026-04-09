@@ -6,10 +6,12 @@ import { type Teacher } from "../../shared/interfaces/teachers";
 export const ListTeachers = (
   {
     teachers,
+    toggleOne,
     setTeacher,
     setActionModal,
   }: {
     teachers: Teacher[],
+    toggleOne: (id: number) => void,
     setTeacher: (subject: Teacher) => void,
     setActionModal: (value: string) => void
   }
@@ -19,10 +21,12 @@ export const ListTeachers = (
       <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
         <thead className="bg-gray-800 rounded-md text-light-bg">
           <tr className="">
+            <th className="p-3 text-center"></th>
             <th className="p-3 text-center">Nombres</th>
             <th className="p-3 text-center">Documento</th>
             <th className="p-3 text-center">Celular</th>
             <th className="p-3 text-center">Correo</th>
+            <th className="p-3 text-center">Estado</th>
             <th className="p-3 text-center">Acciones</th>
           </tr>
         </thead>
@@ -30,6 +34,30 @@ export const ListTeachers = (
           {
             teachers.length > 0 && teachers.map((teacher) => (
               <tr className="bg-gray-800 text-center text-light-bg" key={teacher.id}>
+                <td>
+                  <label className="relative flex items-center justify-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      value={teacher.id}
+                      onChange={() => toggleOne(teacher.id)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
+                    peer-checked:bg-primary peer-checked:border-primary
+                    flex items-center justify-center transition-all duration-150">
+                      <svg
+                        className="hidden peer-checked:block w-3 h-3 text-white"
+                        viewBox="0 0 12 12" fill="none"
+                      >
+                        <path
+                          d="M2 6l3 3 5-5"
+                          stroke="currentColor" strokeWidth="1.5"
+                          strokeLinecap="round" strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </label>
+                </td>
                 <td className="p-2 font-bold">
                   {teacher.full_name}
                 </td>
@@ -41,6 +69,11 @@ export const ListTeachers = (
                 </td>
                 <td className="p-2 font-bold">
                   {teacher.user.email}
+                </td>
+                <td className="p-2 font-medium">
+                  <span className={`${teacher.status === "ACTIVE" ? "bg-green-600" : "bg-red-600"} p-1 rounded-full text-xs`}>
+                    {teacher.status === "ACTIVE" ? "Activo" : "Inactivo"}
+                  </span>
                 </td>
                 <td className="flex gap-1 justify-center p-2">
                   <IoEyeOutline

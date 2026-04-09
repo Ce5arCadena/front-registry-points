@@ -17,6 +17,7 @@ export const useTeachers = () => {
 
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [teacher, setTeacher] = useState<Teacher | null>();
+  const [selectedIdsBulkActions, setSelectedIdsBulkActions] = useState<number[]>([]);
 
   // Paginación
   const [end, setEnd] = useState(0);
@@ -86,8 +87,7 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseDeleteTeacher = await useApi<ResponseTeacherInterface>(`/teachers/${id}`, 'DELETE');
-      console.log(responseDeleteTeacher)
-      // Mostrar errores cuando es un solo error o varios. Se hace así por formato del backend
+
       if (responseDeleteTeacher.errors && Array.isArray(responseDeleteTeacher.errors) && responseDeleteTeacher.errors.length > 0) {
         const errorsFormat = responseDeleteTeacher.errors.join(" ");
         toast.error(errorsFormat);
@@ -132,6 +132,12 @@ export const useTeachers = () => {
     setItemOffset(newOffset);
   };
 
+  const toggleOne = (id: number) => {
+    setSelectedIdsBulkActions(prev => 
+      prev.includes(id) ? selectedIdsBulkActions.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
   useEffect(() => {
     setPageCount(Math.ceil(teachers.length / perPage));
   }, [teachers]);
@@ -146,6 +152,7 @@ export const useTeachers = () => {
     teacher,
     loading,
     pageCount,
+    toggleOne,
     setTeacher,
     totalPages,
     actionModal,
@@ -158,5 +165,6 @@ export const useTeachers = () => {
     setActionModal,
     setCurrentPage,
     handlePageClick,
+    setSelectedIdsBulkActions,
   }
 };
