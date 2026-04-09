@@ -17,21 +17,33 @@ export interface Teacher {
     id:         number;
     full_name:  string;
     document:   string;
-    email:      string;
     phone:      string;
     status:     string;
     user:       User;
+    subjects:   Subject[];
+    grades:     Grade[];
     created_at: Date;
     updated_at: Date;
 }
 
-export interface User {
+interface User {
     id:         number;
     email:      string;
     role:       string;
     status:     string;
     created_at: Date;
     updated_at: Date;
+}
+
+interface Grade {
+    id:   number;
+    name: string;
+}
+
+interface Subject {
+    id:     number;
+    name:   string;
+    status: string;
 }
 
 interface Links {
