@@ -67,7 +67,7 @@ export const ModalViewTeacher = ({
                 {
                   teacher.subjects.map(subject => (
                     <div
-                      key={subject.id + 1}
+                      key={subject.id}
                       className="flex gap-2 items-center bg-dark-bg-elevated/70 px-2 py-1 rounded-full">
                       <MdSubject />
                       <span className="text-xs">
@@ -90,7 +90,7 @@ export const ModalViewTeacher = ({
                 {
                   teacher.grades.map(grade => (
                     <div
-                      key={grade.id + 1}
+                      key={grade.id}
                       className="flex gap-2 items-center bg-dark-bg-elevated/70 px-2 py-1 rounded-full">
                       <IoPersonOutline />
                       <span className="text-xs">

@@ -86,11 +86,20 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseDeleteTeacher = await useApi<ResponseTeacherInterface>(`/teachers/${id}`, 'DELETE');
-      // if (responseDeleteTeacher.ok !== 200 && responseDeleteTeacher.errors) {
-      //   const errors = responseDeleteTeacher.errors?.join(" ");
-      //   toast.error(errors);
-      //   return false;
-      // }
+      console.log(responseDeleteTeacher)
+      // Mostrar errores cuando es un solo error o varios. Se hace así por formato del backend
+      if (responseDeleteTeacher.errors && Array.isArray(responseDeleteTeacher.errors) && responseDeleteTeacher.errors.length > 0) {
+        const errorsFormat = responseDeleteTeacher.errors.join(" ");
+        toast.error(errorsFormat);
+        return false;
+      } else if (responseDeleteTeacher.errors && Object.keys(responseDeleteTeacher.errors).length > 0) {
+        const errors = responseDeleteTeacher.errors;
+        const errorsFormat = Object.keys(errors).map(item => {
+          return (errors as Record<string, string[]>)[item][0] + "\n ";
+        }).join(" ");
+        toast.error(errorsFormat);
+        return false;
+      };
 
       toast.success(responseDeleteTeacher.message);
       const newTeachers = teachers.filter(teacher => teacher.id !== id);

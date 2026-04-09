@@ -4,6 +4,7 @@ import Loading from "../../shared/components/Loading";
 import { ListTeachers } from "../components/ListTeachers";
 import { Pagination } from "../../courses/components/Pagination";
 import { ModalViewTeacher } from "../components/ModalViewTeacher";
+import { ModalDelete } from "../../shared/components/ModalDelete";
 import { ModalCreateAndUpdateTeacher } from "../components/ModalCreateAndUpdateTeacher";
 
 export const HomeTeacherPage = () => {
@@ -73,6 +74,18 @@ export const HomeTeacherPage = () => {
             <ModalViewTeacher
               teacher={teacher}
               setActionModal={setActionModal}
+            />
+          )
+        }
+
+        {
+          actionModal === "delete" && (
+            <ModalDelete
+              model={teacher}
+              setActionModal={setActionModal}
+              deleteModel={deleteTeacher}
+              message="el maestro"
+              nameModel={`${teacher?.full_name}`}
             />
           )
         }
