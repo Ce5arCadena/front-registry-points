@@ -1,8 +1,8 @@
 import { FaRegIdCard } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import { IoCloseCircleOutline, IoPersonOutline } from "react-icons/io5";
 import { type Teacher } from "../../shared/interfaces/teachers";
 import { MdOutlinePhoneAndroid, MdSubject } from "react-icons/md";
+import { IoCloseCircleOutline, IoPersonOutline } from "react-icons/io5";
 
 export const ModalViewTeacher = ({
   teacher,
@@ -20,8 +20,8 @@ export const ModalViewTeacher = ({
             setActionModal("");
           }}
         />
-        <span className={`self-start text-xs font-semibold bg-green-400 px-3 py-1 rounded-full`}>
-          Activo
+        <span className={`self-start text-xs font-semibold ${teacher?.status === "ACTIVE" ? "bg-green-400" : "bg-red-400"}  px-3 py-1 rounded-full`}>
+          {teacher?.status === "ACTIVE" ? "Activo" : "Inactivo"}
         </span>
 
         <div>

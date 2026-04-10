@@ -6,7 +6,7 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
 import { type FormCourseData } from "../../shared/interfaces/teachers";
 
@@ -14,15 +14,15 @@ export const useTeachers = () => {
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
   const [actionModal, setActionModal] = useState("");
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [teacher, setTeacher] = useState<Teacher | null>();
-  const [selectedIdsBulkActions, setSelectedIdsBulkActions] = useState<number[]>([]);
 
   // Paginación
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -132,10 +132,19 @@ export const useTeachers = () => {
     setItemOffset(newOffset);
   };
 
+  // Lógica de seleccionar todos
   const toggleOne = (id: number) => {
-    setSelectedIdsBulkActions(prev => 
-      prev.includes(id) ? selectedIdsBulkActions.filter(item => item !== id) : [...prev, id]
+    setSelectedIds(prev => 
+      prev.includes(id) ? selectedIds.filter(item => item !== id) : [...prev, id]
     );
+  };
+
+  const getIdsTeachers = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedIds(teachers.map(teacher => teacher.id));
+    } else {
+      setSelectedIds([]);
+    }
   };
 
   useEffect(() => {
@@ -145,6 +154,10 @@ export const useTeachers = () => {
   useEffect(() => {
     getTeachers();
   }, []);
+
+  useEffect(() => {
+    console.log(selectedIds)
+  }, [selectedIds]);
 
   return {
     end,
@@ -156,15 +169,16 @@ export const useTeachers = () => {
     setTeacher,
     totalPages,
     actionModal,
+    selectedIds, 
     getTeachers,
     currentPage,
     dataTeachers,
     deleteTeacher,
     createTeacher,
     totalTeachers,
+    getIdsTeachers,
     setActionModal,
     setCurrentPage,
     handlePageClick,
-    setSelectedIdsBulkActions,
   }
 };

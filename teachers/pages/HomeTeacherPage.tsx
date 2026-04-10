@@ -16,11 +16,13 @@ export const HomeTeacherPage = () => {
     pageCount,
     toggleOne,
     setTeacher,
+    selectedIds,
     actionModal,
     dataTeachers,
     deleteTeacher,
     createTeacher,
     totalTeachers,
+    getIdsTeachers,
     setActionModal,
     handlePageClick,
   } = useTeachers();
@@ -43,6 +45,8 @@ export const HomeTeacherPage = () => {
 
         {/* Lista de asignaturas */}
         <ListTeachers
+          selectedIds={selectedIds}
+          getIdsTeachers={getIdsTeachers}
           toggleOne={toggleOne}
           teachers={dataTeachers}
           setTeacher={setTeacher}
