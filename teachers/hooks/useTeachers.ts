@@ -22,7 +22,7 @@ export const useTeachers = () => {
   // Paginación
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(5);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -116,11 +116,34 @@ export const useTeachers = () => {
     };
   };
 
+  const changeStatusTeachersByIds = async () => {
+    if (selectedIds.length <= 0) return;
+
+    setloading(true);
+    try {
+      const responseChangeStatus = await useApi<TeachersInterface>('/teachers/state', 'PATCH', { ids: selectedIds });
+      console.log(responseChangeStatus);
+      setTotalTeachers(responseChangeStatus.meta.total);
+      setTotalPages(responseChangeStatus.meta.last_page);
+      setCurrentPage(1);
+      setTeachers(prev => [...prev, ...responseChangeStatus.data]);
+    } catch (error) {
+      toast.error('Ha ocurrido un error al obtener los maestros. Comuniquese.');
+      navigate('/auth/login');
+      return;
+    } finally {
+      setloading(false);
+    };
+  };
+
   const dataTeachers = useMemo(() => {
     if (!teachers) return [];
+    setSelectedIds([]);
+
     const endOffset = itemOffset + perPage;
     setStart(itemOffset + 1);
     setEnd(Math.min(itemOffset + perPage, teachers.length));
+    
     return teachers.slice(itemOffset, endOffset);
   }, [itemOffset, teachers]);
 
@@ -141,7 +164,7 @@ export const useTeachers = () => {
 
   const getIdsTeachers = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      setSelectedIds(teachers.map(teacher => teacher.id));
+      setSelectedIds(dataTeachers.map(teacher => teacher.id));
     } else {
       setSelectedIds([]);
     }
@@ -154,10 +177,6 @@ export const useTeachers = () => {
   useEffect(() => {
     getTeachers();
   }, []);
-
-  useEffect(() => {
-    console.log(selectedIds)
-  }, [selectedIds]);
 
   return {
     end,
@@ -180,5 +199,6 @@ export const useTeachers = () => {
     setActionModal,
     setCurrentPage,
     handlePageClick,
+    changeStatusTeachersByIds
   }
 };
