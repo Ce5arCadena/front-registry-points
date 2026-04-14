@@ -126,9 +126,10 @@ export const useTeachers = () => {
       setTotalTeachers(responseChangeStatus.meta.total);
       setTotalPages(responseChangeStatus.meta.last_page);
       setCurrentPage(1);
-      setTeachers(prev => [...prev, ...responseChangeStatus.data]);
+      setTeachers(responseChangeStatus.data);
+      toast.success(responseChangeStatus.message);
     } catch (error) {
-      toast.error('Ha ocurrido un error al obtener los maestros. Comuniquese.');
+      toast.error('Ha ocurrido un error al cambiar de estado los maestros. Comuniquese.');
       navigate('/auth/login');
       return;
     } finally {

@@ -30,7 +30,7 @@ export const ListTeachers = (
               <label className="relative flex items-center justify-center cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={selectedIds.length > 0}
+                  checked={selectedIds.length === teachers.length}
                   onChange={getIdsTeachers}
                   className="sr-only peer"
                 />
