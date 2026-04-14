@@ -22,7 +22,7 @@ export const useTeachers = () => {
   // Paginación
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
-  const [perPage, setPerPage] = useState(5);
+  const [perPage, setPerPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
