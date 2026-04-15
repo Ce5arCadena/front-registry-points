@@ -20,6 +20,7 @@ export interface Student {
     document:   string;
     phone:      string;
     grade:      Grade;
+    status:     string;
     created_at: Date;
     updated_at: Date;
 }
