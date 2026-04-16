@@ -11,7 +11,11 @@ import { useApi } from "../../utils/useApi";
 import { useEffect, useMemo, useState } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
 
-export const useCourses = () => {
+export const useCourses = ({
+  allCourses = false
+}: {
+  allCourses?: boolean
+}) => {
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
   const [actionModal, setActionModal] = useState("");
@@ -32,11 +36,15 @@ export const useCourses = () => {
   const getCourses = async () => {
     setloading(true);
     try {
-      const responseCourses = await useApi<CoursesInterface>(`/courses?page=${currentPage}`);
-      setTotalCourses(responseCourses.meta.total);
-      setTotalPages(responseCourses.meta.last_page);
+      const param = allCourses ? '?all=true' : `?page=${currentPage}`;
+      const responseCourses = await useApi<CoursesInterface>(`/courses${param}`);
+      if (!allCourses) {
+        setTotalCourses(responseCourses.meta.total);
+        setTotalPages(responseCourses.meta.last_page);
+      }
       setCourses(prev => [...prev, ...responseCourses.data]);
     } catch (error) {
+      console.log(error)
       toast.error('Ha ocurrido un error al obtener los cursos. Comuniquese.');
       navigate('/auth/login');
       return;
@@ -130,6 +138,7 @@ export const useCourses = () => {
     start,
     course,
     loading,
+    courses,
     setCourse,
     pageCount,
     getCourses,

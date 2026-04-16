@@ -9,10 +9,11 @@ export const useStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const navigate = useNavigate();
 
-  const getStudents = async (currentPage = 1) => {
+  const getStudents = async (course: number) => {
     setLoading(true);
+    setStudents([]);
     try {
-      const responseStudents = await useApi<StudentsInterface>(`/students?page=${currentPage}`);
+      const responseStudents = await useApi<StudentsInterface>(`/students?gradeId=${course}`);
       console.log(responseStudents);
       // setTotalTeachers(responseStudents.meta.total);
       // setTotalPages(responseStudents.meta.last_page);
@@ -26,12 +27,13 @@ export const useStudents = () => {
     };
   };
 
-  useEffect(() => {
-    getStudents();
-  }, []);
+  // useEffect(() => {
+  //   getStudents();
+  // }, []);
 
   return {
     students,
-    loading
+    loading,
+    getStudents
   }
 }
