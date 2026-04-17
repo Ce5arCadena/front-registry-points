@@ -80,5 +80,5 @@ export interface FormCourseData {
     last_name: string;
     document: number;
     phone: number;
-    grade_id: number;
+    grade: number;
 }

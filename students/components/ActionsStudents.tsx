@@ -3,16 +3,18 @@ import { MdClass, MdKeyboardArrowDown } from "react-icons/md";
 
 export const ActionsStudents = ({
   courses,
-  getStudents
+  getStudents,
+  setActionModal
 }: {
   courses: Course[],
-  getStudents: (id: number) => void
+  getStudents: (id: number) => void,
+  setActionModal: (value: string) => void
 }) => {
   return <div className="flex gap-2">
     <button
       onClick={() => {
         // setTeacher(null);
-        // setActionModal("create");
+        setActionModal("create");
       }}
       className="text-white px-3 py-1.5 bg-dark-bg-secondary rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
       Agregar Estudiante

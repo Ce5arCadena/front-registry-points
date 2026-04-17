@@ -3,20 +3,24 @@ import { useStudents } from "../hooks/useStudents";
 import Loading from "../../shared/components/Loading";
 import { ListStudents } from "../components/ListStudents";
 import { useCourses } from "../../courses/hooks/useCourses";
-import { MdClass, MdKeyboardArrowDown } from "react-icons/md";
 import { ActionsStudents } from "../components/ActionsStudents";
+import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
   const {
     loading,
+    student,
     students,
     isSearch,
-    getStudents
+    getStudents,
+    actionModal,
+    createStudent,
+    setActionModal
   } = useStudents();
 
   const {
     courses
-  } = useCourses({allCourses: true});
+  } = useCourses({ allCourses: true });
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -28,6 +32,7 @@ export const HomeStudentPage = () => {
           <ActionsStudents
             courses={courses}
             getStudents={getStudents}
+            setActionModal={setActionModal}
           />
         </div>
 
@@ -35,6 +40,17 @@ export const HomeStudentPage = () => {
           isSearch={isSearch}
           students={students}
         />
+
+        {
+          (actionModal === "create" || actionModal === "edit") && (
+            <ModalCreateAndUpdateStudent
+              student={student}
+              courses={courses}
+              setActionModal={setActionModal}
+              createStudent={createStudent}
+            />
+          )
+        }
 
         {
           loading && (
