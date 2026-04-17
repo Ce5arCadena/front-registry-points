@@ -5,12 +5,14 @@ import { useApi } from "../../utils/useApi";
 import { type StudentsInterface, type Student } from "../../shared/interfaces/students";
 
 export const useStudents = () => {
+  const [isSearch, setIsSearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState<Student[]>([]);
   const navigate = useNavigate();
 
   const getStudents = async (course: number) => {
     setLoading(true);
+    setIsSearch(true);
     setStudents([]);
     try {
       const responseStudents = await useApi<StudentsInterface>(`/students?gradeId=${course}`);
@@ -32,8 +34,9 @@ export const useStudents = () => {
   // }, []);
 
   return {
-    students,
     loading,
+    isSearch,
+    students,
     getStudents
   }
 }

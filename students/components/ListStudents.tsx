@@ -6,6 +6,7 @@ import { type Student } from "../../shared/interfaces/students";
 export const ListStudents = (
   {
     students,
+    isSearch
     // toggleOne,
     // setTeacher,
     // selectedIds,
@@ -13,6 +14,7 @@ export const ListStudents = (
     // setActionModal,
   }: {
     students: Student[],
+    isSearch: boolean
     // selectedIds: number[],
     // toggleOne: (id: number) => void,
     // setTeacher: (subject: Teacher) => void,
@@ -134,10 +136,20 @@ export const ListStudents = (
           }
 
           {
-            students && students.length <= 0 && (
+            isSearch && students && students.length <= 0 && (
               <tr className="text-center">
                 <td colSpan={8} className="p-2">
                   No hay estudiantes para mostrar.
+                </td>
+              </tr>
+            )
+          }
+
+          {
+            !isSearch && students && students.length <= 0 && (
+              <tr className="text-center">
+                <td colSpan={8} className="p-2">
+                  Por favor haz una búsqueda.
                 </td>
               </tr>
             )
