@@ -82,6 +82,7 @@ export const useStudents = () => {
     student,
     isSearch,
     students,
+    setStudent,
     getStudents,
     actionModal,
     createStudent,

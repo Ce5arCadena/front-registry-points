@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FaRegIdCard } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { IoMdPhonePortrait } from "react-icons/io";
@@ -36,7 +37,19 @@ export const ModalCreateAndUpdateStudent = ({
       reset();
       setActionModal("");
     };
-  }
+  };
+
+  useEffect(() => {
+    if (student) {
+      reset({
+        name: student.name,
+        last_name: student.last_name,
+        phone: Number(student.phone),
+        document: Number(student.document),
+        grade: student.grade.id
+      });
+    };
+  }, [student]);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">

@@ -6,19 +6,19 @@ import { type Student } from "../../shared/interfaces/students";
 export const ListStudents = (
   {
     students,
-    isSearch
+    isSearch,
     // toggleOne,
-    // setTeacher,
+    setStudent,
     // selectedIds,
     // getIdsTeachers,
-    // setActionModal,
+    setActionModal,
   }: {
     students: Student[],
     isSearch: boolean
     // selectedIds: number[],
     // toggleOne: (id: number) => void,
-    // setTeacher: (subject: Teacher) => void,
-    // setActionModal: (value: string) => void
+    setStudent: (subject: Student) => void,
+    setActionModal: (value: string) => void
     // getIdsTeachers: (e: React.ChangeEvent<HTMLInputElement>) => void,
   }
 ) => {
@@ -113,21 +113,21 @@ export const ListStudents = (
                   <IoEyeOutline
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setTeacher(student);
-                      // setActionModal("view");
+                      setStudent(student);
+                      setActionModal("view");
                     }}
                   />
                   <RiEdit2Line
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setTeacher(student);
-                      // setActionModal("edit");
+                      setStudent(student);
+                      setActionModal("edit");
                     }}
                   />
                   <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setTeacher(student);
-                      // setActionModal("delete");
+                      setStudent(student);
+                      setActionModal("delete");
                     }}
                   />
                 </td>

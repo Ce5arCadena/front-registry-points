@@ -12,6 +12,7 @@ export const HomeStudentPage = () => {
     student,
     students,
     isSearch,
+    setStudent,
     getStudents,
     actionModal,
     createStudent,
@@ -39,6 +40,8 @@ export const HomeStudentPage = () => {
         <ListStudents
           isSearch={isSearch}
           students={students}
+          setStudent={setStudent}
+          setActionModal={setActionModal}
         />
 
         {
