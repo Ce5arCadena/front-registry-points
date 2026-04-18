@@ -11,22 +11,23 @@ import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 
 export const useStudents = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [actionModal, setActionModal] = useState("");
+  const [totalStudents, setTotalStudents] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [student, setStudent] = useState<Student | null>(null);
-  const navigate = useNavigate();
 
   const getStudents = async (course: number) => {
     setLoading(true);
     setIsSearch(true);
     setStudents([]);
     try {
-      const responseStudents = await useApi<StudentsInterface>(`/students?gradeId=${course}`);
+      const responseStudents = await useApi<StudentsInterface>(`/students?page=${currentPage}&gradeId=${course}`);
       console.log(responseStudents);
-      // setTotalTeachers(responseStudents.meta.total);
-      // setTotalPages(responseStudents.meta.last_page);
+      setTotalStudents(responseStudents.meta.total);
       setStudents(prev => [...prev, ...responseStudents.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener los estudiantes. Comuniquese.');
@@ -119,8 +120,10 @@ export const useStudents = () => {
     setStudent,
     getStudents,
     actionModal,
+    totalStudents,
     deleteStudent,
     createStudent,
-    setActionModal
+    setActionModal,
+    setCurrentPage
   }
 }

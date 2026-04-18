@@ -4,8 +4,10 @@ import Loading from "../../shared/components/Loading";
 import { ListStudents } from "../components/ListStudents";
 import { useCourses } from "../../courses/hooks/useCourses";
 import { ActionsStudents } from "../components/ActionsStudents";
+import { Pagination } from "../../courses/components/Pagination";
 import { ModalViewStudent } from "../components/ModalViewStudent";
 import { ModalDelete } from "../../shared/components/ModalDelete";
+import { useStudentsPagination } from "../hooks/useStudentsPagination";
 import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
@@ -18,13 +20,29 @@ export const HomeStudentPage = () => {
     getStudents,
     actionModal,
     deleteStudent,
+    totalStudents,
     createStudent,
-    setActionModal
+    setActionModal,
+    setCurrentPage
   } = useStudents();
 
   const {
     courses
   } = useCourses({ allCourses: true });
+
+  const {
+    end,
+    start,
+    pageCount,
+    dataStudents,
+    handlePageClick,
+  } = useStudentsPagination({
+    students,
+    totalStudents,
+    setCurrentPage,
+  });
+
+  console.log(dataStudents, isSearch)
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -42,10 +60,22 @@ export const HomeStudentPage = () => {
 
         <ListStudents
           isSearch={isSearch}
-          students={students}
+          students={dataStudents}
           setStudent={setStudent}
           setActionModal={setActionModal}
         />
+
+        {
+          dataStudents.length > 0 && isSearch && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalStudents}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
 
         {
           (actionModal === "create" || actionModal === "edit") && (
