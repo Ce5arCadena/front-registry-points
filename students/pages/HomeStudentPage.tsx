@@ -4,6 +4,7 @@ import Loading from "../../shared/components/Loading";
 import { ListStudents } from "../components/ListStudents";
 import { useCourses } from "../../courses/hooks/useCourses";
 import { ActionsStudents } from "../components/ActionsStudents";
+import { ModalViewStudent } from "../components/ModalViewStudent";
 import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
@@ -51,6 +52,15 @@ export const HomeStudentPage = () => {
               courses={courses}
               setActionModal={setActionModal}
               createStudent={createStudent}
+            />
+          )
+        }
+
+        {
+          actionModal === "view" && (
+            <ModalViewStudent
+              student={student}
+              setActionModal={setActionModal}
             />
           )
         }
