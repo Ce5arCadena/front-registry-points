@@ -1,6 +1,7 @@
 import { type Course } from "../interfaces/courses";
 import { type Teacher } from "../interfaces/teachers";
 import { type Subject } from "../interfaces/subjects";
+import { type Student } from "../interfaces/students";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 export const ModalDelete = ({
@@ -12,9 +13,9 @@ export const ModalDelete = ({
 }: {
   message: string,
   nameModel: string,
-  model: Subject | Teacher | Course | null | undefined,
-  deleteModel: (id: number) => Promise<boolean>,
   setActionModal: (value: string) => void,
+  deleteModel: (id: number) => Promise<boolean>,
+  model: Subject | Teacher | Course | Student | null | undefined,
 }) => {
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">

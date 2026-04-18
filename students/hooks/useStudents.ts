@@ -1,11 +1,12 @@
-import { 
-  type Student, 
-  type FormCourseData, 
-  type StudentsInterface, 
-  type ResponseStudentInterface 
+import {
+  type Student,
+  type FormCourseData,
+  type StudentsInterface,
+  type ResponseStudentInterface
 } from "../../shared/interfaces/students";
+
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 
@@ -73,6 +74,39 @@ export const useStudents = () => {
     };
   };
 
+  const deleteStudent = async (id: number): Promise<boolean> => {
+    setLoading(true);
+    try {
+      const responseDeleteStudent = await useApi<ResponseStudentInterface>(`/students/${id}`, 'DELETE');
+
+      if (responseDeleteStudent.errors && Array.isArray(responseDeleteStudent.errors) && responseDeleteStudent.errors.length > 0) {
+        const errorsFormat = responseDeleteStudent.errors.join(" ");
+        toast.error(errorsFormat);
+        return false;
+      } else if (responseDeleteStudent.errors && Object.keys(responseDeleteStudent.errors).length > 0) {
+        const errors = responseDeleteStudent.errors;
+        const errorsFormat = Object.keys(errors).map(item => {
+          return (errors as Record<string, string[]>)[item][0] + "\n ";
+        }).join(" ");
+        toast.error(errorsFormat);
+        return false;
+      };
+
+      toast.success(responseDeleteStudent.message);
+      const newTeachers = students.filter(student => student.id !== id);
+      setStudents(newTeachers);
+      setStudent(null);
+      setActionModal("");
+      return true;
+    } catch (error) {
+      toast.error('Ha ocurrido un error al eliminar el estudiante. Comuniquese.');
+      navigate('/auth/login');
+      return false;
+    } finally {
+      setLoading(false);
+    };
+  };
+
   // useEffect(() => {
   //   getStudents();
   // }, []);
@@ -85,6 +119,7 @@ export const useStudents = () => {
     setStudent,
     getStudents,
     actionModal,
+    deleteStudent,
     createStudent,
     setActionModal
   }

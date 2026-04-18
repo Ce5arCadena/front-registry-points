@@ -5,6 +5,7 @@ import { ListStudents } from "../components/ListStudents";
 import { useCourses } from "../../courses/hooks/useCourses";
 import { ActionsStudents } from "../components/ActionsStudents";
 import { ModalViewStudent } from "../components/ModalViewStudent";
+import { ModalDelete } from "../../shared/components/ModalDelete";
 import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
@@ -16,6 +17,7 @@ export const HomeStudentPage = () => {
     setStudent,
     getStudents,
     actionModal,
+    deleteStudent,
     createStudent,
     setActionModal
   } = useStudents();
@@ -61,6 +63,18 @@ export const HomeStudentPage = () => {
             <ModalViewStudent
               student={student}
               setActionModal={setActionModal}
+            />
+          )
+        }
+
+        {
+          actionModal === "delete" && (
+            <ModalDelete
+              model={student}
+              setActionModal={setActionModal}
+              deleteModel={deleteStudent}
+              message="el estudiante"
+              nameModel={`${student?.name}`}
             />
           )
         }
