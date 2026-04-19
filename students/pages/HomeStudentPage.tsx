@@ -1,3 +1,4 @@
+import { useAtomValue } from "jotai";
 import { Toaster } from "react-hot-toast";
 import { useStudents } from "../hooks/useStudents";
 import Loading from "../../shared/components/Loading";
@@ -7,15 +8,15 @@ import { ActionsStudents } from "../components/ActionsStudents";
 import { Pagination } from "../../courses/components/Pagination";
 import { ModalViewStudent } from "../components/ModalViewStudent";
 import { ModalDelete } from "../../shared/components/ModalDelete";
+import { isSearchAtom, loadingAtom } from "../store/studentsStore";
 import { useStudentsPagination } from "../hooks/useStudentsPagination";
 import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
+  const loading = useAtomValue(loadingAtom);
+  const isSearch = useAtomValue(isSearchAtom);
   const {
-    loading,
     student,
-    students,
-    isSearch,
     setStudent,
     getStudents,
     actionModal,
@@ -23,7 +24,6 @@ export const HomeStudentPage = () => {
     totalStudents,
     createStudent,
     setActionModal,
-    setCurrentPage
   } = useStudents();
 
   const {
@@ -36,11 +36,7 @@ export const HomeStudentPage = () => {
     pageCount,
     dataStudents,
     handlePageClick,
-  } = useStudentsPagination({
-    students,
-    totalStudents,
-    setCurrentPage,
-  });
+  } = useStudentsPagination();
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -58,7 +54,6 @@ export const HomeStudentPage = () => {
 
         <ListStudents
           isSearch={isSearch}
-          students={dataStudents}
           setStudent={setStudent}
           setActionModal={setActionModal}
         />

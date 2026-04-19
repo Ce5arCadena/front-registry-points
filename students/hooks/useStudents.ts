@@ -5,21 +5,24 @@ import {
   type ResponseStudentInterface
 } from "../../shared/interfaces/students";
 
+import { useAtom, useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
+import { currentPageAtom, isSearchAtom, loadingAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
 
 export const useStudents = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const setIsSearch = useSetAtom(isSearchAtom);
   const [actionModal, setActionModal] = useState("");
-  const [totalStudents, setTotalStudents] = useState(0);
-  const [students, setStudents] = useState<Student[]>([]);
   const [student, setStudent] = useState<Student | null>(null);
   const [courseId, setCourseId] = useState<number | null>(null);
+  
+  const [loading, setLoading] = useAtom(loadingAtom);
+  const [students, setStudents] = useAtom(studentsAtom);
+  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const [totalStudents, setTotalStudents] = useAtom(totalStudentsAtom);
 
   const getStudents = async (course: number) => {
     setLoading(true);
@@ -117,7 +120,6 @@ export const useStudents = () => {
   return {
     loading,
     student,
-    isSearch,
     students,
     setStudent,
     getStudents,
@@ -126,6 +128,5 @@ export const useStudents = () => {
     deleteStudent,
     createStudent,
     setActionModal,
-    setCurrentPage
   }
 }

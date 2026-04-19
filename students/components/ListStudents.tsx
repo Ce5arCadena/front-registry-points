@@ -1,27 +1,30 @@
+import { useAtomValue } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { dataStudentsAtom, selectedIdsAtom } from "../store/studentsStore";
 import { type Student } from "../../shared/interfaces/students";
+import { useChangeStatesStudents } from "../hooks/useChangeStatesStudents";
 
 export const ListStudents = (
   {
-    students,
     isSearch,
-    // toggleOne,
     setStudent,
-    // selectedIds,
-    // getIdsTeachers,
     setActionModal,
   }: {
-    students: Student[],
-    isSearch: boolean
-    // selectedIds: number[],
-    // toggleOne: (id: number) => void,
+    isSearch: boolean,
     setStudent: (subject: Student) => void,
     setActionModal: (value: string) => void
-    // getIdsTeachers: (e: React.ChangeEvent<HTMLInputElement>) => void,
   }
 ) => {
+  const {
+    toggleOne,
+    getIdsStudents
+  } = useChangeStatesStudents();
+
+  const selectedIds = useAtomValue(selectedIdsAtom);
+  const dataStudents = useAtomValue(dataStudentsAtom);
+
   return (
     <div className="h-full">
       <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -31,8 +34,8 @@ export const ListStudents = (
               <label className="relative flex items-center justify-center cursor-pointer">
                 <input
                   type="checkbox"
-                  // checked={selectedIds.length === students.length}
-                  // onChange={getIdsTeachers}
+                  checked={selectedIds.length === dataStudents.length}
+                  onChange={getIdsStudents}
                   className="sr-only peer"
                 />
                 <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
@@ -62,15 +65,15 @@ export const ListStudents = (
         </thead>
         <tbody>
           {
-            students.length > 0 && students.map((student) => (
+            dataStudents.length > 0 && dataStudents.map((student) => (
               <tr className="bg-gray-800 text-center text-light-bg" key={student.id}>
                 <td>
                   <label className="relative flex items-center justify-center cursor-pointer">
                     <input
                       type="checkbox"
                       value={student.id}
-                      // checked={selectedIds.includes(student.id)}
-                      // onChange={() => toggleOne(student.id)}
+                      checked={selectedIds.includes(student.id)}
+                      onChange={() => toggleOne(student.id)}
                       className="sr-only peer"
                     />
                     <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
@@ -136,7 +139,7 @@ export const ListStudents = (
           }
 
           {
-            isSearch && students && students.length <= 0 && (
+            isSearch && dataStudents && dataStudents.length <= 0 && (
               <tr className="text-center">
                 <td colSpan={8} className="p-2">
                   No hay estudiantes para mostrar.
@@ -146,7 +149,7 @@ export const ListStudents = (
           }
 
           {
-            !isSearch && students && students.length <= 0 && (
+            !isSearch && dataStudents && dataStudents.length <= 0 && (
               <tr className="text-center">
                 <td colSpan={8} className="p-2">
                   Por favor haz una búsqueda.

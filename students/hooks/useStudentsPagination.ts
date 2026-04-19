@@ -1,16 +1,14 @@
-import { type Student } from "../../shared/interfaces/students";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useEffect, useMemo, useState } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { currentPageAtom, dataStudentsAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
 
-export const useStudentsPagination = ({
-  students,
-  totalStudents,
-  setCurrentPage
-}: {
-  students: Student[],
-  totalStudents: number,
-  setCurrentPage: Dispatch<SetStateAction<number>>
-}) => {
+export const useStudentsPagination = () => {
+  const students = useAtomValue(studentsAtom);
+  const setCurrentPage = useSetAtom(currentPageAtom);
+  const setStudentsData = useSetAtom(dataStudentsAtom);
+  const totalStudents = useAtomValue(totalStudentsAtom);
+
   const [end, setEnd] = useState(0);
   const [start, setStart] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -19,13 +17,13 @@ export const useStudentsPagination = ({
   
   const dataStudents = useMemo(() => {
     if (!students) return [];
-    // setSelectedIds([]);
 
     const endOffset = itemOffset + perPage;
     setStart(itemOffset + 1);
     setEnd(Math.min(itemOffset + perPage, students.length));
+    const paginated = students.slice(itemOffset, endOffset);
 
-    return students.slice(itemOffset, endOffset);
+    return paginated;
   }, [itemOffset, students]);
 
   const handlePageClick = (event: PaginateClickEvent) => {
@@ -41,6 +39,10 @@ export const useStudentsPagination = ({
   useEffect(() => {
     setPageCount(Math.ceil(students.length / perPage));
   }, [students]);
+
+  useEffect(() => {
+    setStudentsData(dataStudents);
+  }, [dataStudents]);
 
   return {
     end, 
