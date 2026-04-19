@@ -22,7 +22,7 @@ export const HomeCourse = () => {
     createCourse,
     setActionModal,
     handlePageClick,
-  } = useCourses();
+  } = useCourses({allCourses: false});
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">

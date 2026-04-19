@@ -5,9 +5,9 @@ import {
   type ResponseStudentInterface
 } from "../../shared/interfaces/students";
 
-import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
 
 export const useStudents = () => {
@@ -19,14 +19,14 @@ export const useStudents = () => {
   const [totalStudents, setTotalStudents] = useState(0);
   const [students, setStudents] = useState<Student[]>([]);
   const [student, setStudent] = useState<Student | null>(null);
+  const [courseId, setCourseId] = useState<number | null>(null);
 
   const getStudents = async (course: number) => {
     setLoading(true);
     setIsSearch(true);
-    setStudents([]);
+    setCourseId(course);
     try {
       const responseStudents = await useApi<StudentsInterface>(`/students?page=${currentPage}&gradeId=${course}`);
-      console.log(responseStudents);
       setTotalStudents(responseStudents.meta.total);
       setStudents(prev => [...prev, ...responseStudents.data]);
     } catch (error) {
@@ -108,9 +108,11 @@ export const useStudents = () => {
     };
   };
 
-  // useEffect(() => {
-  //   getStudents();
-  // }, []);
+  useEffect(() => {
+    if (currentPage > 1 && courseId) {
+      getStudents(courseId);
+    };
+  }, [currentPage]);
 
   return {
     loading,

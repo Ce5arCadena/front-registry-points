@@ -42,8 +42,6 @@ export const HomeStudentPage = () => {
     setCurrentPage,
   });
 
-  console.log(dataStudents, isSearch)
-
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
       <Toaster position="top-right" />
