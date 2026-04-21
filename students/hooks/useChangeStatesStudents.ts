@@ -1,36 +1,41 @@
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
-import { useEffect, useState } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { type StudentsInterface } from "../../shared/interfaces/students";
-import { dataStudentsAtom, loadingAtom, selectedIdsAtom } from "../store/studentsStore";
+import { currentPageAtom, dataStudentsAtom, loadingAtom, selectedIdsAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
 
 export const useChangeStatesStudents = () => {
-  const [loading, setLoading] = useAtom(loadingAtom);
+  const navigate = useNavigate();
+
+  const setLoading = useSetAtom(loadingAtom);
+  const setStudents = useSetAtom(studentsAtom);
+  const setCurrentPage = useSetAtom(currentPageAtom);
   const dataStudents = useAtomValue(dataStudentsAtom);
+  const setTotalStudents = useSetAtom(totalStudentsAtom);
   const [selectedIds, setSelectedIds] = useAtom(selectedIdsAtom);
 
-  // TODO: Manejar jotai para los estados que son compartidos, y obtener ese estado en el hook que lo necesita
+  const changeStatusTeachersByIds = async () => {
+    if (selectedIds.length <= 0) return;
 
-  // const changeStatusTeachersByIds = async () => {
-  //   if (selectedIds.length <= 0) return;
-
-  //   setLoading(true);
-  //   try {
-  //     const responseChangeStatus = await useApi<StudentsInterface>('/teachers/state', 'PATCH', { ids: selectedIds });
-  //     console.log(responseChangeStatus);
-  //     setTotalTeachers(responseChangeStatus.meta.total);
-  //     setTotalPages(responseChangeStatus.meta.last_page);
-  //     setCurrentPage(1);
-  //     setTeachers(responseChangeStatus.data);
-  //     toast.success(responseChangeStatus.message);
-  //   } catch (error) {
-  //     toast.error('Ha ocurrido un error al cambiar de estado los maestros. Comuniquese.');
-  //     navigate('/auth/login');
-  //     return;
-  //   } finally {
-  //     setLoading(false);
-  //   };
-  // };
+    setLoading(true);
+    try {
+      // Este endpoint retorna la lista de nuevo de todos los registros. Reseteamos todo de nuevo
+      const responseChangeStatus = await useApi<StudentsInterface>('/students/state', 'PATCH', { ids: selectedIds });
+      console.log(responseChangeStatus);
+      setTotalStudents(responseChangeStatus.meta.total);
+      setCurrentPage(1);
+      setStudents(responseChangeStatus.data);
+      toast.success(responseChangeStatus.message);
+    } catch (error) {
+      toast.error('Ha ocurrido un error al cambiar de estado los estudiantes. Comuniquese.');
+      navigate('/auth/login');
+      return;
+    } finally {
+      setLoading(false);
+    };
+  };
 
   const toggleOne = (id: number) => {
     setSelectedIds(prev =>
@@ -46,13 +51,9 @@ export const useChangeStatesStudents = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedIds);
-  }, [selectedIds])
-  
-
   return {
     toggleOne,
     getIdsStudents,
+    changeStatusTeachersByIds
   }
 };

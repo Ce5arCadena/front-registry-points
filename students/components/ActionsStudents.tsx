@@ -1,3 +1,5 @@
+import { useSetAtom } from "jotai";
+import { studentAtom } from "../store/studentsStore";
 import { type Course } from "../../shared/interfaces/courses";
 import { MdClass, MdKeyboardArrowDown } from "react-icons/md";
 
@@ -10,14 +12,25 @@ export const ActionsStudents = ({
   getStudents: (id: number) => void,
   setActionModal: (value: string) => void
 }) => {
+  const setStudent = useSetAtom(studentAtom);
+
   return <div className="flex gap-2">
     <button
       onClick={() => {
-        // setTeacher(null);
+        setStudent(null);
         setActionModal("create");
       }}
       className="text-white px-3 py-1.5 bg-dark-bg-secondary rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
       Agregar Estudiante
+    </button>
+
+    <button
+      onClick={() => {
+        setStudent(null);
+        
+      }}
+      className="text-white px-3 py-1.5 bg-dark-bg-secondary rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
+      Cambiar Estado
     </button>
 
     <div className="relative min-w-42">
