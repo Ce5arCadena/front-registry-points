@@ -1,5 +1,15 @@
-import { useAtomValue } from "jotai";
+import { 
+  endAtom,
+  startAtom, 
+  studentAtom, 
+  loadingAtom, 
+  isSearchAtom, 
+  pageCountAtom,
+  actionModalAtom,
+} from "../store/studentsStore";
+
 import { Toaster } from "react-hot-toast";
+import { useAtom, useAtomValue } from "jotai";
 import { useStudents } from "../hooks/useStudents";
 import Loading from "../../shared/components/Loading";
 import { ListStudents } from "../components/ListStudents";
@@ -8,22 +18,25 @@ import { ActionsStudents } from "../components/ActionsStudents";
 import { Pagination } from "../../courses/components/Pagination";
 import { ModalViewStudent } from "../components/ModalViewStudent";
 import { ModalDelete } from "../../shared/components/ModalDelete";
-import { isSearchAtom, loadingAtom } from "../store/studentsStore";
 import { useStudentsPagination } from "../hooks/useStudentsPagination";
 import { ModalCreateAndUpdateStudent } from "../components/ModalCreateAndUpdateStudent";
 
 export const HomeStudentPage = () => {
   const loading = useAtomValue(loadingAtom);
   const isSearch = useAtomValue(isSearchAtom);
+  const [student, setStudent] = useAtom(studentAtom);
+  const [actionModal, setActionModal] = useAtom(actionModalAtom);
+
+  // Estados de paginación
+  const end = useAtomValue(endAtom);
+  const start = useAtomValue(startAtom);
+  const pageCount = useAtomValue(pageCountAtom);
+
   const {
-    student,
-    setStudent,
     getStudents,
-    actionModal,
     deleteStudent,
     totalStudents,
     createStudent,
-    setActionModal,
   } = useStudents();
 
   const {
@@ -31,9 +44,6 @@ export const HomeStudentPage = () => {
   } = useCourses({ allCourses: true });
 
   const {
-    end,
-    start,
-    pageCount,
     dataStudents,
     handlePageClick,
   } = useStudentsPagination();

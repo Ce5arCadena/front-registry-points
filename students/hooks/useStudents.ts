@@ -5,18 +5,28 @@ import {
   type ResponseStudentInterface
 } from "../../shared/interfaces/students";
 
-import { useAtom, useSetAtom } from "jotai";
+import { 
+  studentAtom, 
+  loadingAtom, 
+  isSearchAtom, 
+  studentsAtom, 
+  currentPageAtom, 
+  actionModalAtom,
+  totalStudentsAtom, 
+} from "../store/studentsStore";
+
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
-import { currentPageAtom, isSearchAtom, loadingAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
 
 export const useStudents = () => {
   const navigate = useNavigate();
+  const student = useAtomValue(studentAtom);
+  const setStudent = useSetAtom(studentAtom);
   const setIsSearch = useSetAtom(isSearchAtom);
-  const [actionModal, setActionModal] = useState("");
-  const [student, setStudent] = useState<Student | null>(null);
+  const setActionModal = useSetAtom(actionModalAtom);
   const [courseId, setCourseId] = useState<number | null>(null);
   
   const [loading, setLoading] = useAtom(loadingAtom);
@@ -24,14 +34,15 @@ export const useStudents = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [totalStudents, setTotalStudents] = useAtom(totalStudentsAtom);
 
-  const getStudents = async (course: number) => {
+  const getStudents = async (course: number, resetData = false) => {
     setLoading(true);
     setIsSearch(true);
     setCourseId(course);
     try {
+      console.log(currentPage, course, students)
       const responseStudents = await useApi<StudentsInterface>(`/students?page=${currentPage}&gradeId=${course}`);
       setTotalStudents(responseStudents.meta.total);
-      setStudents(prev => [...prev, ...responseStudents.data]);
+      resetData ? setStudents([...responseStudents.data]) : setStudents(prev => [...prev, ...responseStudents.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener los estudiantes. Comuniquese.');
       navigate('/auth/login');
@@ -60,12 +71,7 @@ export const useStudents = () => {
       };
 
       toast.success(responseCourse.message);
-      if (method === 'PUT') {
-        const newStudents = students.filter(course => course.id !== responseCourse.data?.id);
-        setStudents([...newStudents, responseCourse.data as Student]);
-      } else {
-        await getStudents(data.grade);
-      }
+      await getStudents(data.grade, true);
       setStudent(null);
       setActionModal("");
       return true;
@@ -97,8 +103,7 @@ export const useStudents = () => {
       };
 
       toast.success(responseDeleteStudent.message);
-      const newTeachers = students.filter(student => student.id !== id);
-      setStudents(newTeachers);
+      if (student && student.grade) await getStudents(student.grade.id, true);
       setStudent(null);
       setActionModal("");
       return true;
@@ -119,14 +124,10 @@ export const useStudents = () => {
 
   return {
     loading,
-    student,
     students,
-    setStudent,
     getStudents,
-    actionModal,
     totalStudents,
     deleteStudent,
     createStudent,
-    setActionModal,
   }
 }
