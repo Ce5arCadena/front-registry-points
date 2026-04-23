@@ -1,15 +1,15 @@
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { type StudentsInterface } from "../../shared/interfaces/students";
-import { currentPageAtom, dataStudentsAtom, loadingAtom, selectedIdsAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
+import { courseIdAtom, currentPageAtom, dataStudentsAtom, loadingAtom, selectedIdsAtom, studentsAtom, totalStudentsAtom } from "../store/studentsStore";
 
 export const useChangeStatesStudents = () => {
   const navigate = useNavigate();
 
   const setLoading = useSetAtom(loadingAtom);
+  const courseId = useAtomValue(courseIdAtom);
   const setStudents = useSetAtom(studentsAtom);
   const setCurrentPage = useSetAtom(currentPageAtom);
   const dataStudents = useAtomValue(dataStudentsAtom);
@@ -22,7 +22,7 @@ export const useChangeStatesStudents = () => {
     setLoading(true);
     try {
       // Este endpoint retorna la lista de nuevo de todos los registros. Reseteamos todo de nuevo
-      const responseChangeStatus = await useApi<StudentsInterface>('/students/state', 'PATCH', { ids: selectedIds });
+      const responseChangeStatus = await useApi<StudentsInterface>('/students/state', 'PATCH', { ids: selectedIds, grade: courseId });
       console.log(responseChangeStatus);
       setTotalStudents(responseChangeStatus.meta.total);
       setCurrentPage(1);

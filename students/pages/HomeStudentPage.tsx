@@ -47,8 +47,6 @@ export const HomeStudentPage = () => {
     dataStudents,
     handlePageClick,
   } = useStudentsPagination();
-  // TODO: Limpiar componentes al pasar las props y llamar estados directamente en ellos y no pasarlos por props. Llamar hook de cmabio de estado y llamar función de cambio
-  // Crear endpoint en back
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">

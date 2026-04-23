@@ -8,6 +8,7 @@ export const actionModalAtom = atom("");
 export const totalStudentsAtom = atom(0);
 export const studentsAtom = atom<Student[]>([]);
 export const selectedIdsAtom = atom<number[]>([]);
+export const courseIdAtom = atom<number | null>();
 export const dataStudentsAtom = atom<Student[]>([]);
 export const studentAtom = atom<Student | null>(null);
 
