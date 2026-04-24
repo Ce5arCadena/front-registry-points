@@ -15,11 +15,11 @@ import {
   totalStudentsAtom, 
 } from "../store/studentsStore";
 
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useApi } from "../../utils/useApi";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 export const useStudents = () => {
   const navigate = useNavigate();

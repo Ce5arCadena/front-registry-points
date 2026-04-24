@@ -12,6 +12,7 @@ import { HomeSubjectPage } from './subjects/pages/HomeSubjectPage';
 import { HomeTeacherPage } from './teachers/pages/HomeTeacherPage';
 import { HomeStudentPage } from './students/pages/HomeStudentPage';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { HomeAssignmentsPage } from './assignments/pages/HomeAssignmentsPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path='subjects' element={<HomeSubjectPage/>}/>
           <Route path='teachers' element={<HomeTeacherPage/>}/>
           <Route path='students' element={<HomeStudentPage/>}/>
+          <Route path='assignments' element={<HomeAssignmentsPage/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>

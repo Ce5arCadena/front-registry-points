@@ -1,6 +1,6 @@
 import { BsPeople } from "react-icons/bs";
 import { MdSubject } from "react-icons/md";
-import { PiStudentBold } from "react-icons/pi";
+import { PiBooksLight, PiStudentBold } from "react-icons/pi";
 import { FaChalkboardTeacher, FaHome } from "react-icons/fa";
 
 export const ROLES = {
@@ -47,6 +47,12 @@ export const ROLES = {
                 label: "Estudiantes",
                 url: '/school/students',
                 IconType: PiStudentBold 
+            },
+            {
+                defaultUrl: false,
+                label: "Asignaciones",
+                url: '/school/assignments',
+                IconType: PiBooksLight 
             },
         ]
     },
