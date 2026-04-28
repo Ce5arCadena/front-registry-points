@@ -19,7 +19,6 @@ export const useAssignments = () => {
     try {
       const responseStudents = await useApi<AssignmentsInterface>(`/teachers-subjects?page=${currentPage}`);
       console.log(responseStudents);
-      setTotalAssignments(responseStudents.meta.total);
       setAssignments(prev => [...prev, ...responseStudents.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las asignaciones. Comuniquese.');
