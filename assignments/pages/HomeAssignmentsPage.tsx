@@ -3,14 +3,15 @@ import Loading from '../../shared/components/Loading';
 import { useAssignments } from '../hooks/useAssignments';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ListAssignments } from '../components/ListAssignments';
-import { actionModalAtom, assignmentAtom, loadingAtom } from '../store/assignmentsStore';
+import { ActionsAssignments } from '../components/ActionsAssignments';
+import { actionModalAtom, loadingAtom } from '../store/assignmentsStore';
+import { ModalCreateAndUpdateAssignment } from '../components/ModalCreateAndUpdateAssignment';
 
 export const HomeAssignmentsPage = () => {
   useAssignments();
 
   const loading = useAtomValue(loadingAtom);
-  const setAssignment = useSetAtom(assignmentAtom);
-  const [actionModal, setActionModal] = useAtom(actionModalAtom);
+  const actionModal = useAtomValue(actionModalAtom);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -19,17 +20,16 @@ export const HomeAssignmentsPage = () => {
         <div className="bg-dark-bg-elevated border-l-8 rounded-r-md flex items-center justify-between p-2 rounded-l-xl border-primary">
           <h1 className="text-2xl font-bold">Asignación de materias por curso</h1>
 
-          {/* <ActionsStudents
-            courses={courses}
-            getStudents={getStudents}
-            setActionModal={setActionModal}
-          /> */}
+          <ActionsAssignments />
         </div>
 
-        <ListAssignments
-          setAssignment={setAssignment}
-          setActionModal={setActionModal}
-        />
+        <ListAssignments />
+
+        {
+          (actionModal === "create" || actionModal === "edit") && (
+            <ModalCreateAndUpdateAssignment />
+          )
+        }
 
         {
           loading && (

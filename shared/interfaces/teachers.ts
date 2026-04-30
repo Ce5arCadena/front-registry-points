@@ -79,3 +79,21 @@ export interface FormCourseData {
     password?: string;
     email: string;
 }
+
+// Búsqueda de maestros
+export interface SearchTeachersInterface {
+    message: string;
+    data:    TeacherSearch[];
+}
+
+export interface TeacherSearch {
+    id:         number;
+    full_name:  string;
+    document:   string;
+    phone:      string;
+    status:     string;
+    school_id:  number;
+    user_id:    number;
+    created_at: Date;
+    updated_at: Date;
+}

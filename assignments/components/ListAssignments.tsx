@@ -1,19 +1,12 @@
-import { useAtomValue } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
+import { useAtomValue, useSetAtom } from "jotai";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdPeopleOutline } from "react-icons/md";
-import { assignmentsAtom } from "../store/assignmentsStore";
-import { type AssignmentsInterface } from "../../shared/interfaces/assignments";
+import { actionModalAtom, assignmentAtom, assignmentsAtom } from "../store/assignmentsStore";
 
-export const ListAssignments = (
-  {
-    setAssignment,
-    setActionModal,
-  }: {
-    setActionModal: (value: string) => void,
-    setAssignment: (subject: AssignmentsInterface) => void,
-  }
-) => {
+export const ListAssignments = () => {
+  const setAssignment = useSetAtom(assignmentAtom);
+  const setActionModal = useSetAtom(actionModalAtom);
   const dataAssignments = useAtomValue(assignmentsAtom);
 
   return (
@@ -30,11 +23,13 @@ export const ListAssignments = (
                 <RiEdit2Line
                   className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                   onClick={() => {
+                    setAssignment(null);
                     setActionModal("edit");
                   }}
                 />
                 <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                   onClick={() => {
+                    setAssignment(null);
                     setActionModal("delete");
                   }}
                 />
