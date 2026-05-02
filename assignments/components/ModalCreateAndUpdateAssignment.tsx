@@ -1,5 +1,7 @@
+import Select from 'react-select';
 import { useSetAtom } from "jotai";
 import { IoMdBook } from "react-icons/io";
+import { YEARS } from "../../shared/data";
 import AsyncSelect from 'react-select/async';
 import { MdPeopleOutline } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
@@ -119,6 +121,59 @@ export const ModalCreateAndUpdateAssignment = () => {
             onChange={handleChange}
             menuPosition="fixed"
           />
+        </div>
+
+        <div>
+          <label htmlFor="full_name" className="block mb-2.5 text-sm font-medium text-dark-text">
+            Año
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <FaChalkboardTeacher className="w-4 h-4 text-dark-text-secondary" />
+            </div>
+            <Select
+              placeholder="Año de aisgnación"
+              classNames={{
+                control: ({ isFocused }) =>
+                  `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
+                  }`,
+                input: () => "text-white",
+                placeholder: () => "text-white-500",
+                menu: () => "bg-[#1e2130] border border-[#2e3347] rounded-lg mt-1",
+                menuList: () => "p-1",
+                option: ({ isFocused }) =>
+                  `rounded-md px-3 py-2 cursor-pointer text-white ${isFocused ? "bg-[#2e3347]" : "bg-transparent"
+                  }`,
+                singleValue: () => "text-white",
+                dropdownIndicator: () => "text-gray-500 hover:text-white",
+                indicatorSeparator: () => "hidden",
+                loadingMessage: () => "text-gray-500 py-2",
+                noOptionsMessage: () => "text-gray-500 py-2",
+              }}
+              unstyled
+              classNamePrefix="select"
+              defaultValue={YEARS[0]}
+              name="year"
+              options={YEARS}
+            />
+          </div>
+        </div>
+
+        <div className="mt-2 flex gap-2 justify-center">
+          <button className="
+            text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary
+          ">
+            Asignar
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActionModal("")}
+            className="
+            text-warning px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border border-warning hover:border-primary hover:text-primary
+          ">
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
