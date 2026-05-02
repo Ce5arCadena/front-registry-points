@@ -5,9 +5,9 @@ import { type SearchTeachersInterface } from "../../shared/interfaces/teachers";
 export const searchStudents = async (value: string, field: string = 'full_name') => {
   try {
     const responseStudents = await useApi<SearchTeachersInterface>(`/teachers/search?field=${field}&value=${value}`);
-    return responseStudents.data;
+    return responseStudents.data.length > 0 ? responseStudents.data : [];
   } catch (error) {
     toast.error('Ha ocurrido un error al buscar los maestros. Comuniquese.');
-    return;
+    return [];
   };
 };

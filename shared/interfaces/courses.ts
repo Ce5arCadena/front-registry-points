@@ -62,6 +62,20 @@ interface Link {
     active: boolean;
 }
 
+export interface SearchCourseInterface {
+    message: string;
+    data:    CourseSearch[];
+}
+
+export interface CourseSearch {
+    id:         number;
+    name:       string;
+    school_id:  number;
+    status:     string;
+    created_at: Date;
+    updated_at: Date;
+}
+
 // Fourmulario crear o editar
 export interface FormCourseData {
     name: string
