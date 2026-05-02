@@ -17,8 +17,8 @@ export const useAssignments = () => {
   const getStudents = async () => {
     setLoading(true);
     try {
-      const responseStudents = await useApi<AssignmentsInterface>(`/teachers-subjects?page=${currentPage}`);
-      setAssignments(prev => [...prev, ...responseStudents.data]);
+      const responseAssignments = await useApi<AssignmentsInterface>(`/teachers-subjects?page=${currentPage}`);
+      setAssignments(prev => [...prev, ...responseAssignments.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las asignaciones. Comuniquese.');
       navigate('/auth/login');
@@ -29,6 +29,7 @@ export const useAssignments = () => {
   };
 
   useEffect(() => {
+    setAssignments([]);
     getStudents();
   }, []);
 }

@@ -47,6 +47,11 @@ interface Link {
     active: boolean;
 }
 
+export interface SearchSubjectInterface {
+    message: string;
+    data:    Subject[];
+}
+
 // Fourmulario crear o editar
 export interface FormCourseData {
     name: string
