@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { type SingleValue } from "react-select";
 import { searchCourses } from "../../courses/api/queries";
 import { searchStudents } from "../../teachers/api/queries";
@@ -54,18 +54,16 @@ export const useSelectHelpers = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log(valuesAssignment);
-  }, [valuesAssignment]);
-
-  const onSubmit = () => {
-    
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (0 in valuesAssignment) return;
   };
 
   return {
     onSubmit,
     handleChange,
-    promiseOptions
+    promiseOptions,
+    valuesAssignment
   }
 }
 

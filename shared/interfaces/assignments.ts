@@ -25,5 +25,5 @@ export interface AssignmentDataForm {
     grade: number;
     teacher: number;
     subject: number;
-    academic_year?: number;
+    academic_year: number;
 }

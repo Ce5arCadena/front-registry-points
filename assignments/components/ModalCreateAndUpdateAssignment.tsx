@@ -14,13 +14,12 @@ export const ModalCreateAndUpdateAssignment = () => {
   const {
     onSubmit,
     handleChange,
-    promiseOptions
+    promiseOptions,
+    valuesAssignment
   } = useSelectHelpers();
 
   const setAssignment = useSetAtom(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
-
-  
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
@@ -65,6 +64,11 @@ export const ModalCreateAndUpdateAssignment = () => {
             }}
             onChange={(value) => handleChange(value, 'teacher')}
           />
+          {
+            valuesAssignment.teacher <= 0 && (
+              <span className="text-xs text-secondary">El maestro es requerido</span>
+            )
+          }
         </div>
 
         {/* Select de cursos */}
@@ -97,6 +101,11 @@ export const ModalCreateAndUpdateAssignment = () => {
             onChange={(value) => handleChange(value, 'grade')}
             menuPosition="fixed"
           />
+          {
+            valuesAssignment.grade <= 0 && (
+              <span className="text-xs text-secondary">El curso es requerido</span>
+            )
+          }
         </div>
 
         {/* Select de asignaturas */}
@@ -129,6 +138,11 @@ export const ModalCreateAndUpdateAssignment = () => {
             onChange={(value) => handleChange(value, 'subject')}
             menuPosition="fixed"
           />
+          {
+            valuesAssignment.subject <= 0 && (
+              <span className="text-xs text-secondary">El curso es requerido</span>
+            )
+          }
         </div>
 
         <div>
@@ -165,6 +179,11 @@ export const ModalCreateAndUpdateAssignment = () => {
               options={YEARS}
               onChange={(value) => handleChange(value, 'academic_year')}
             />
+            {
+            valuesAssignment.academic_year <= 0 && (
+              <span className="text-xs text-secondary">El año es requerido</span>
+            )
+          }
           </div>
         </div>
 
