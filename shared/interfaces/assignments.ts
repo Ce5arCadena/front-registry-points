@@ -21,9 +21,9 @@ export interface Subject {
 }
 
 // Fourmulario crear o editar
-export interface FormCourseData {
-    teacher: number;
+export interface AssignmentDataForm {
     grade: number;
+    teacher: number;
     subject: number;
     academic_year?: number;
 }

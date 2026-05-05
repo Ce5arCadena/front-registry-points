@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Select from 'react-select';
 import { useSetAtom } from "jotai";
 import { IoMdBook } from "react-icons/io";
@@ -5,27 +6,34 @@ import { YEARS } from "../../shared/data";
 import AsyncSelect from 'react-select/async';
 import { MdPeopleOutline } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import { IoCloseCircleOutline } from "react-icons/io5"
-import { handleChange, promiseOptions } from "../helpers/selectHelpers";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { useSelectHelpers } from '../hooks/useSelectHelpers';
 import { actionModalAtom, assignmentAtom } from "../store/assignmentsStore";
 
 export const ModalCreateAndUpdateAssignment = () => {
+  const {
+    onSubmit,
+    handleChange,
+    promiseOptions
+  } = useSelectHelpers();
+
   const setAssignment = useSetAtom(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
+
+  
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
       <IoCloseCircleOutline
         className="text-2xl absolute right-2 top-2 cursor-pointer"
         onClick={() => {
-          // reset();
           setActionModal("");
         }}
       />
 
       <form
         autoComplete="off"
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className='w-[35%] flex flex-col gap-2 p-3 rounded-lg border border-dark-bg-elevated'
       >
         {/* Select de maestros */}
@@ -36,7 +44,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             placeholder="Buscar maestro..."
             loadingMessage={() => "Buscando..."}
             noOptionsMessage={() => "Sin resultados"}
-            loadOptions={(value: string) => promiseOptions(value, 'TEACHER')}
+            loadOptions={(value: string) => promiseOptions(value, 'teacher')}
             unstyled
             classNames={{
               control: ({ isFocused }) =>
@@ -55,7 +63,7 @@ export const ModalCreateAndUpdateAssignment = () => {
               loadingMessage: () => "text-gray-500 py-2",
               noOptionsMessage: () => "text-gray-500 py-2",
             }}
-            onChange={handleChange}
+            onChange={(value) => handleChange(value, 'teacher')}
           />
         </div>
 
@@ -67,7 +75,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             placeholder="Buscar curso..."
             loadingMessage={() => "Buscando..."}
             noOptionsMessage={() => "Sin resultados"}
-            loadOptions={(value: string) => promiseOptions(value, 'COURSE')}
+            loadOptions={(value: string) => promiseOptions(value, 'grade')}
             unstyled
             classNames={{
               control: ({ isFocused }) =>
@@ -86,7 +94,7 @@ export const ModalCreateAndUpdateAssignment = () => {
               loadingMessage: () => "text-gray-500 py-2",
               noOptionsMessage: () => "text-gray-500 py-2",
             }}
-            onChange={handleChange}
+            onChange={(value) => handleChange(value, 'grade')}
             menuPosition="fixed"
           />
         </div>
@@ -99,7 +107,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             placeholder="Buscar asignatura..."
             loadingMessage={() => "Buscando..."}
             noOptionsMessage={() => "Sin resultados"}
-            loadOptions={(value: string) => promiseOptions(value, 'SUBJECT')}
+            loadOptions={(value: string) => promiseOptions(value, 'subject')}
             unstyled
             classNames={{
               control: ({ isFocused }) =>
@@ -118,7 +126,7 @@ export const ModalCreateAndUpdateAssignment = () => {
               loadingMessage: () => "text-gray-500 py-2",
               noOptionsMessage: () => "text-gray-500 py-2",
             }}
-            onChange={handleChange}
+            onChange={(value) => handleChange(value, 'subject')}
             menuPosition="fixed"
           />
         </div>
@@ -155,6 +163,7 @@ export const ModalCreateAndUpdateAssignment = () => {
               defaultValue={YEARS[0]}
               name="year"
               options={YEARS}
+              onChange={(value) => handleChange(value, 'academic_year')}
             />
           </div>
         </div>
