@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router';
 import { useApi } from '../../utils/useApi';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { type AssignmentsInterface } from '../../shared/interfaces/assignments';
-import { assignmentAtom, assignmentsAtom, currentPageAtom, loadingAtom, totalAssignmentsAtom } from '../store/assignmentsStore';
+import { assignmentsAtom, currentPageAtom, loadingAtom, totalAssignmentsAtom } from '../store/assignmentsStore';
 
 export const useAssignments = () => {
   const navigate = useNavigate();
 
   const setLoading = useSetAtom(loadingAtom);
-  const setAssignments = useSetAtom(assignmentsAtom);
   const currentPage = useAtomValue(currentPageAtom);
+  const setAssignments = useSetAtom(assignmentsAtom);
   const setTotalAssignments = useSetAtom(totalAssignmentsAtom);
 
-  const getStudents = async () => {
+  const getAssignments = async () => {
     setLoading(true);
     try {
       const responseAssignments = await useApi<AssignmentsInterface>(`/teachers-subjects?page=${currentPage}`);
@@ -30,6 +30,6 @@ export const useAssignments = () => {
 
   useEffect(() => {
     setAssignments([]);
-    getStudents();
+    getAssignments();
   }, []);
 }

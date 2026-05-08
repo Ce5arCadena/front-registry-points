@@ -1,6 +1,7 @@
 export interface AssignmentsInterface {
     data:    Assignments[];
     message: string;
+    errors?: string[] | Record<string, string[]>
 }
 
 export interface Assignments {

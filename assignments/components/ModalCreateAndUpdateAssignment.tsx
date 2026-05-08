@@ -4,10 +4,10 @@ import { useSetAtom } from "jotai";
 import { IoMdBook } from "react-icons/io";
 import { YEARS } from "../../shared/data";
 import AsyncSelect from 'react-select/async';
-import { MdPeopleOutline } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useSelectHelpers } from '../hooks/useSelectHelpers';
+import { MdOutlineDateRange, MdPeopleOutline } from "react-icons/md";
 import { actionModalAtom, assignmentAtom } from "../store/assignmentsStore";
 
 export const ModalCreateAndUpdateAssignment = () => {
@@ -146,8 +146,8 @@ export const ModalCreateAndUpdateAssignment = () => {
         </div>
 
         <div>
-          <label htmlFor="full_name" className="block mb-2.5 text-sm font-medium text-dark-text">
-            Año
+          <label htmlFor="full_name" className="font-medium text-dark-text flex gap-2 items-center">
+            <MdOutlineDateRange /> Año
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
