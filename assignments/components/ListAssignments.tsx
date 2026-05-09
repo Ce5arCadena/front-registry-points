@@ -19,31 +19,33 @@ export const ListAssignments = () => {
                 <span className="rounded-full min-w-10 h-10 bg-light-bg-secondary text-dark-bg font-bold flex justify-center items-center">{assignment.full_name[0]}{assignment.full_name.split(" ")[1]?.[0] ?? ""}</span>
                 <h3 className="font-bold truncate">{assignment.full_name}</h3>
               </div>
-              <div className="flex gap-1 items-center bg-dark-bg-secondary rounded-lg p-1">
-                <RiEdit2Line
-                  className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                  onClick={() => {
-                    setAssignment(null);
-                    setActionModal("edit");
-                  }}
-                />
-                <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                  onClick={() => {
-                    setAssignment(null);
-                    setActionModal("delete");
-                  }}
-                />
-              </div>
             </div>
             <div className="flex flex-col gap-1">
               {
                 assignment.assignments.length > 0 && assignment.assignments.map(item => (
                   <div key={item.grade_id} className="bg-dark-bg-secondary rounded-xl mb-1 flex-col px-2 py-1">
-                    <h4 className="flex text-sm items-center gap-2"><MdPeopleOutline /> {item.grade}</h4>
-                    <div className="flex gap-2 mt-1 mb-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="flex text-sm items-center gap-2 truncate"><MdPeopleOutline />{item.grade}</h4>
+                      <div className="flex gap-1 items-center bg-light-bg rounded-lg p-1">
+                        <RiEdit2Line
+                          className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
+                          onClick={() => {
+                            setAssignment(null);
+                            setActionModal("edit");
+                          }}
+                        />
+                        <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
+                          onClick={() => {
+                            setAssignment(null);
+                            setActionModal("delete");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-2 mb-1">
                       {
                         item.subjects.length > 0 && item.subjects.map(subject => (
-                          <h5 className="text-sm bg-light-bg-secondary rounded-xl px-1 text-dark-bg" key={subject.id}>{subject.name}</h5>
+                          <h5 className="text-sm bg-light-bg-secondary rounded-lg px-1 text-dark-bg" key={subject.id}>{subject.name}</h5>
                         ))
                       }
                     </div>
