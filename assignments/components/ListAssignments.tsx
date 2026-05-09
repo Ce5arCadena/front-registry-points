@@ -10,13 +10,18 @@ export const ListAssignments = () => {
   const dataAssignments = useAtomValue(assignmentsAtom);
 
   return (
-    <div className="h-full flex flex-wrap justify-between gap-3">
+    <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 content-start overflow-y-auto px-2 py-1">
       {
         dataAssignments.length > 0 && dataAssignments.map((assignment) => (
-          <div key={assignment.id} className="bg-dark-bg-elevated rounded-lg border border-secondary min-w-80 max-w-80 max-h-52 overflow-y-scroll p-3">
-            <div className="flex gap-2 items-center justify-between mb-2 w-full">
+          <div
+            key={assignment.id}
+            className="bg-dark-bg-elevated rounded-lg border border-secondary h-44 overflow-y-auto pb-3 px-3 relative"
+          >
+            <div className="flex gap-2 items-center justify-between mb-2 w-full sticky top-0 bg-dark-bg-elevated pt-3 pb-1">
               <div className="flex gap-2 items-center max-w-[80%]">
-                <span className="rounded-full min-w-10 h-10 bg-light-bg-secondary text-dark-bg font-bold flex justify-center items-center">{assignment.full_name[0]}{assignment.full_name.split(" ")[1]?.[0] ?? ""}</span>
+                <span className="rounded-full min-w-10 h-10 bg-light-bg-secondary text-dark-bg font-bold flex justify-center items-center">
+                  {assignment.full_name[0]}{assignment.full_name.split(" ")[1]?.[0] ?? ""}
+                </span>
                 <h3 className="font-bold truncate">{assignment.full_name}</h3>
               </div>
             </div>
@@ -29,16 +34,11 @@ export const ListAssignments = () => {
                       <div className="flex gap-1 items-center bg-light-bg rounded-lg p-1">
                         <RiEdit2Line
                           className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
-                          onClick={() => {
-                            setAssignment(null);
-                            setActionModal("edit");
-                          }}
+                          onClick={() => { setAssignment(null); setActionModal("edit"); }}
                         />
-                        <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
-                          onClick={() => {
-                            setAssignment(null);
-                            setActionModal("delete");
-                          }}
+                        <MdDeleteOutline
+                          className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
+                          onClick={() => { setAssignment(null); setActionModal("delete"); }}
                         />
                       </div>
                     </div>
@@ -56,6 +56,6 @@ export const ListAssignments = () => {
           </div>
         ))
       }
-    </div >
+    </div>
   )
 }
