@@ -20,6 +20,7 @@ export interface Subject {
     id:   number;
     name: string;
     assignment_id: number;
+    year: number;
 }
 
 // Fourmulario crear o editar

@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { IoMdBook } from "react-icons/io";
 import { YEARS } from "../../shared/data";
 import { useEffect, useState } from 'react';
@@ -18,7 +18,7 @@ export const ModalCreateAndUpdateAssignment = () => {
     valuesAssignment
   } = useSelectHelpers();
 
-  const assignment = useAtomValue(assignmentAtom);
+  const [assignment, setAssignment] = useAtom(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
 
   useEffect(() => {
@@ -130,6 +130,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             noOptionsMessage={() => "Sin resultados"}
             loadOptions={(value: string) => promiseOptions(value, 'subject')}
             unstyled
+            value={assignment && assignment.assignments.length > 0 && assignment.assignments[0].subjects.length > 0 ? [{value: assignment.assignments[0].subjects[0].id, label: assignment.assignments[0].subjects[0].name}] : null}
             classNames={{
               control: ({ isFocused }) =>
                 `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
@@ -185,6 +186,7 @@ export const ModalCreateAndUpdateAssignment = () => {
                 noOptionsMessage: () => "text-gray-500 py-2",
               }}
               unstyled
+              value={assignment && assignment.assignments.length > 0 && assignment.assignments[0].subjects.length > 0 ? [{value: assignment.assignments[0].subjects[0].year, label: String(assignment.assignments[0].subjects[0].year)}] : null}
               classNamePrefix="select"
               defaultValue={YEARS[0]}
               name="year"
