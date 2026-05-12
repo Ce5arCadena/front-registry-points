@@ -19,6 +19,7 @@ export interface Assignment {
 export interface Subject {
     id:   number;
     name: string;
+    assignment_id: number;
 }
 
 // Fourmulario crear o editar

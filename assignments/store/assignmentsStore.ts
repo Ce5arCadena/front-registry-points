@@ -7,8 +7,10 @@ export const actionModalAtom = atom("");
 export const totalAssignmentsAtom = atom(0);
 export const selectedIdsAtom = atom<number[]>([]);
 export const assignmentsAtom = atom<Assignments[]>([]);
+export const idCourseAssignmentAtom = atom<null | number>();
+export const idSubjectAssignmentAtom = atom<null | number>();
+export const assignmentAtom = atom<Assignments | null>(null);
 export const dataAssignmentsAtom = atom<AssignmentsInterface[]>([]);
-export const assignmentAtom = atom<AssignmentsInterface | null>(null);
 
 // Paginación
 export const endAtom = atom(0);

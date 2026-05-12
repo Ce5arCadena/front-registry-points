@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import Select from 'react-select';
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { IoMdBook } from "react-icons/io";
 import { YEARS } from "../../shared/data";
+import { useEffect, useState } from 'react';
 import AsyncSelect from 'react-select/async';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -18,8 +18,15 @@ export const ModalCreateAndUpdateAssignment = () => {
     valuesAssignment
   } = useSelectHelpers();
 
-  const setAssignment = useSetAtom(assignmentAtom);
+  const assignment = useAtomValue(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
+
+  useEffect(() => {
+    if (assignment) {
+      console.log(assignment)
+    }
+  }, [assignment])
+  
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
@@ -36,40 +43,44 @@ export const ModalCreateAndUpdateAssignment = () => {
         className='w-[35%] flex flex-col gap-2 p-3 rounded-lg border border-dark-bg-elevated'
       >
         {/* Select de maestros */}
-        <div className="">
-          <label className="flex gap-2 items-center"><FaChalkboardTeacher />Maestros</label>
-          <AsyncSelect
-            cacheOptions
-            placeholder="Buscar maestro..."
-            loadingMessage={() => "Buscando..."}
-            noOptionsMessage={() => "Sin resultados"}
-            loadOptions={(value: string) => promiseOptions(value, 'teacher')}
-            unstyled
-            classNames={{
-              control: ({ isFocused }) =>
-                `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
-                }`,
-              input: () => "text-white",
-              placeholder: () => "text-white-500",
-              menu: () => "bg-[#1e2130] border border-[#2e3347] rounded-lg mt-1",
-              menuList: () => "p-1",
-              option: ({ isFocused }) =>
-                `rounded-md px-3 py-2 cursor-pointer text-white ${isFocused ? "bg-[#2e3347]" : "bg-transparent"
-                }`,
-              singleValue: () => "text-white",
-              dropdownIndicator: () => "text-gray-500 hover:text-white",
-              indicatorSeparator: () => "hidden",
-              loadingMessage: () => "text-gray-500 py-2",
-              noOptionsMessage: () => "text-gray-500 py-2",
-            }}
-            onChange={(value) => handleChange(value, 'teacher')}
-          />
-          {
-            valuesAssignment.teacher <= 0 && (
-              <span className="text-xs text-secondary">El maestro es requerido</span>
-            )
-          }
-        </div>
+        {
+          !assignment && (
+            <div className="">
+              <label className="flex gap-2 items-center"><FaChalkboardTeacher />Maestros</label>
+              <AsyncSelect
+                cacheOptions
+                placeholder="Buscar maestro..."
+                loadingMessage={() => "Buscando..."}
+                noOptionsMessage={() => "Sin resultados"}
+                loadOptions={(value: string) => promiseOptions(value, 'teacher')}
+                unstyled
+                classNames={{
+                  control: ({ isFocused }) =>
+                    `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
+                    }`,
+                  input: () => "text-white",
+                  placeholder: () => "text-white-500",
+                  menu: () => "bg-[#1e2130] border border-[#2e3347] rounded-lg mt-1",
+                  menuList: () => "p-1",
+                  option: ({ isFocused }) =>
+                    `rounded-md px-3 py-2 cursor-pointer text-white ${isFocused ? "bg-[#2e3347]" : "bg-transparent"
+                    }`,
+                  singleValue: () => "text-white",
+                  dropdownIndicator: () => "text-gray-500 hover:text-white",
+                  indicatorSeparator: () => "hidden",
+                  loadingMessage: () => "text-gray-500 py-2",
+                  noOptionsMessage: () => "text-gray-500 py-2",
+                }}
+                onChange={(value) => handleChange(value, 'teacher')}
+              />
+              {
+                valuesAssignment.teacher <= 0 && (
+                  <span className="text-xs text-secondary">El maestro es requerido</span>
+                )
+              }
+            </div>
+          )
+        }
 
         {/* Select de cursos */}
         <div className="">
@@ -81,6 +92,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             noOptionsMessage={() => "Sin resultados"}
             loadOptions={(value: string) => promiseOptions(value, 'grade')}
             unstyled
+            value={assignment && assignment.assignments.length > 0 ? [{value: assignment.assignments[0].grade_id, label: assignment.assignments[0].grade}] : null}
             classNames={{
               control: ({ isFocused }) =>
                 `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
