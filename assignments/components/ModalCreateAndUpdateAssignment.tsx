@@ -15,7 +15,8 @@ export const ModalCreateAndUpdateAssignment = () => {
     onSubmit,
     handleChange,
     promiseOptions,
-    valuesAssignment
+    valuesAssignment,
+    setValuesAssignment
   } = useSelectHelpers();
 
   const [assignment, setAssignment] = useAtom(assignmentAtom);
@@ -23,10 +24,14 @@ export const ModalCreateAndUpdateAssignment = () => {
 
   useEffect(() => {
     if (assignment) {
-      console.log(assignment)
+      setValuesAssignment({
+        academic_year: assignment.assignments[0].subjects[0].year,
+        grade: assignment.assignments[0].grade_id,
+        subject: assignment.assignments[0].subjects[0].id,
+        teacher: assignment.id
+      });
     }
-  }, [assignment])
-  
+  }, [assignment]);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
