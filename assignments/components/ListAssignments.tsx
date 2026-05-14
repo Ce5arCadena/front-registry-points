@@ -2,7 +2,6 @@ import { RiEdit2Line } from "react-icons/ri";
 import { useAtomValue, useSetAtom } from "jotai";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdPeopleOutline } from "react-icons/md";
-import { type Assignments } from "../../shared/interfaces/assignments";
 import { actionModalAtom, assignmentAtom, assignmentsAtom } from "../store/assignmentsStore";
 
 export const ListAssignments = () => {
@@ -42,7 +41,15 @@ export const ListAssignments = () => {
                               <RiEdit2Line
                                 className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
                                 onClick={() => {
-                                  // TODO: Acá setear en el estado del form de setValuesAssignment
+                                  setAssignment({
+                                    ...assignment,
+                                    assignments: assignment.assignments
+                                      .map(assign => ({
+                                        ...assign,
+                                        subjects: assign.subjects.filter(subjectFilter => subjectFilter.assignment_id == subject.assignment_id)
+                                      }))
+                                      .filter(assign => assign.subjects.length > 0)
+                                  });
                                   setActionModal("edit");
                                 }}
                               />

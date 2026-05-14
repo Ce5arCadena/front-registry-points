@@ -1,36 +1,49 @@
 import Select from 'react-select';
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useEffect } from 'react';
 import { IoMdBook } from "react-icons/io";
 import { YEARS } from "../../shared/data";
-import { useEffect, useState } from 'react';
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import AsyncSelect from 'react-select/async';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useSelectHelpers } from '../hooks/useSelectHelpers';
 import { MdOutlineDateRange, MdPeopleOutline } from "react-icons/md";
-import { actionModalAtom, assignmentAtom } from "../store/assignmentsStore";
+import { actionModalAtom, assignmentAtom, valuesAssignmentAtom } from "../store/assignmentsStore";
 
 export const ModalCreateAndUpdateAssignment = () => {
   const {
     onSubmit,
     handleChange,
     promiseOptions,
-    valuesAssignment,
-    setValuesAssignment
   } = useSelectHelpers();
 
-  const [assignment, setAssignment] = useAtom(assignmentAtom);
+  const assignment = useAtomValue(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
+  const [valuesAssignment, setValuesAssignment] = useAtom(valuesAssignmentAtom);
 
   useEffect(() => {
     if (assignment) {
+      console.log(assignment);
       setValuesAssignment({
-        academic_year: assignment.assignments[0].subjects[0].year,
-        grade: assignment.assignments[0].grade_id,
-        subject: assignment.assignments[0].subjects[0].id,
-        teacher: assignment.id
+        academic_year: {
+          id: assignment.assignments[0].subjects[0].year,
+          label: String(assignment.assignments[0].subjects[0].year)
+        },
+        grade: {
+          id: assignment.assignments[0].grade_id,
+          label: assignment.assignments[0].grade
+        },
+        subject: {
+          id: assignment.assignments[0].subjects[0].id,
+          label: assignment.assignments[0].subjects[0].name
+        },
+        teacher: {
+          id: assignment.id,
+          label: assignment.full_name
+        },
+        assignment_id: assignment.assignments[0].subjects[0].assignment_id
       });
-    }
+    };
   }, [assignment]);
 
   return (
@@ -79,7 +92,7 @@ export const ModalCreateAndUpdateAssignment = () => {
                 onChange={(value) => handleChange(value, 'teacher')}
               />
               {
-                valuesAssignment.teacher <= 0 && (
+                valuesAssignment.teacher.id <= 0 && (
                   <span className="text-xs text-secondary">El maestro es requerido</span>
                 )
               }
@@ -97,7 +110,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             noOptionsMessage={() => "Sin resultados"}
             loadOptions={(value: string) => promiseOptions(value, 'grade')}
             unstyled
-            value={assignment && assignment.assignments.length > 0 ? [{value: assignment.assignments[0].grade_id, label: assignment.assignments[0].grade}] : null}
+            value={valuesAssignment.grade.id > 0 ? [{value: valuesAssignment.grade.id, label: valuesAssignment.grade.label}] : null}
             classNames={{
               control: ({ isFocused }) =>
                 `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
@@ -119,7 +132,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             menuPosition="fixed"
           />
           {
-            valuesAssignment.grade <= 0 && (
+            valuesAssignment.grade.id <= 0 && (
               <span className="text-xs text-secondary">El curso es requerido</span>
             )
           }
@@ -135,7 +148,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             noOptionsMessage={() => "Sin resultados"}
             loadOptions={(value: string) => promiseOptions(value, 'subject')}
             unstyled
-            value={assignment && assignment.assignments.length > 0 && assignment.assignments[0].subjects.length > 0 ? [{value: assignment.assignments[0].subjects[0].id, label: assignment.assignments[0].subjects[0].name}] : null}
+            value={valuesAssignment.subject.id > 0 ? [{value: valuesAssignment.subject.id, label: valuesAssignment.subject.label}] : null}
             classNames={{
               control: ({ isFocused }) =>
                 `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
@@ -157,7 +170,7 @@ export const ModalCreateAndUpdateAssignment = () => {
             menuPosition="fixed"
           />
           {
-            valuesAssignment.subject <= 0 && (
+            valuesAssignment.subject.id <= 0 && (
               <span className="text-xs text-secondary">El curso es requerido</span>
             )
           }
@@ -191,7 +204,7 @@ export const ModalCreateAndUpdateAssignment = () => {
                 noOptionsMessage: () => "text-gray-500 py-2",
               }}
               unstyled
-              value={assignment && assignment.assignments.length > 0 && assignment.assignments[0].subjects.length > 0 ? [{value: assignment.assignments[0].subjects[0].year, label: String(assignment.assignments[0].subjects[0].year)}] : null}
+              value={valuesAssignment.academic_year.id > 0  ? [{value: valuesAssignment.academic_year.id, label: valuesAssignment.academic_year.label}] : null}
               classNamePrefix="select"
               defaultValue={YEARS[0]}
               name="year"
@@ -199,10 +212,10 @@ export const ModalCreateAndUpdateAssignment = () => {
               onChange={(value) => handleChange(value, 'academic_year')}
             />
             {
-            valuesAssignment.academic_year <= 0 && (
-              <span className="text-xs text-secondary">El año es requerido</span>
-            )
-          }
+              valuesAssignment.academic_year.id <= 0 && (
+                <span className="text-xs text-secondary">El año es requerido</span>
+              )
+            }
           </div>
         </div>
 

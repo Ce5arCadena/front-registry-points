@@ -25,8 +25,14 @@ export interface Subject {
 
 // Fourmulario crear o editar
 export interface AssignmentDataForm {
-    grade: number;
-    teacher: number;
-    subject: number;
-    academic_year: number;
+    grade: AssignmentLabel;
+    teacher: AssignmentLabel;
+    subject: AssignmentLabel;
+    academic_year: AssignmentLabel;
+    assignment_id?: number;
+}
+
+interface AssignmentLabel {
+    id: number;
+    label: string;
 }
