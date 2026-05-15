@@ -76,6 +76,7 @@ export const useSelectHelpers = () => {
         grade: valuesAssignment.grade.id,
         academic_year: valuesAssignment.academic_year.id
       };
+
       const METHOD = valuesAssignment.assignment_id ? 'PUT' : 'POST'; 
       const URL = valuesAssignment.assignment_id ? `/teachers-subjects/${valuesAssignment.assignment_id}` : `/teachers-subjects`;
       const responseAssignments = await useApi<AssignmentsInterface>(URL, METHOD, data);
@@ -93,6 +94,7 @@ export const useSelectHelpers = () => {
         subject: { id: 0, label: "" },
         academic_year: { id: 0, label: "" }
       });
+
       setAssignments([...responseAssignments.data]);
       setActionModal("");
       toast.success(responseAssignments.message);
