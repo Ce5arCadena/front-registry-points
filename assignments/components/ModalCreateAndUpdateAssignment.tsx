@@ -19,32 +19,7 @@ export const ModalCreateAndUpdateAssignment = () => {
 
   const assignment = useAtomValue(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
-  const [valuesAssignment, setValuesAssignment] = useAtom(valuesAssignmentAtom);
-
-  useEffect(() => {
-    if (assignment) {
-      console.log(assignment);
-      setValuesAssignment({
-        academic_year: {
-          id: assignment.assignments[0].subjects[0].year,
-          label: String(assignment.assignments[0].subjects[0].year)
-        },
-        grade: {
-          id: assignment.assignments[0].grade_id,
-          label: assignment.assignments[0].grade
-        },
-        subject: {
-          id: assignment.assignments[0].subjects[0].id,
-          label: assignment.assignments[0].subjects[0].name
-        },
-        teacher: {
-          id: assignment.id,
-          label: assignment.full_name
-        },
-        assignment_id: assignment.assignments[0].subjects[0].assignment_id
-      });
-    };
-  }, [assignment]);
+  const valuesAssignment = useAtomValue(valuesAssignmentAtom);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">

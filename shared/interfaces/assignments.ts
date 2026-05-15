@@ -1,3 +1,11 @@
+// Estado inicial de asignaciones
+export const INITIAL_ASSIGNMENT_STATE = {
+  grade: { id: 0, label: "" },
+  teacher: { id: 0, label: "" },
+  subject: { id: 0, label: "" },
+  academic_year: { id: 0, label: "" }
+};
+
 export interface AssignmentsInterface {
     data:    Assignments[];
     message: string;
