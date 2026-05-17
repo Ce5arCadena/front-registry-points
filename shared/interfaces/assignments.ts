@@ -8,6 +8,7 @@ export const INITIAL_ASSIGNMENT_STATE = {
 
 export interface AssignmentsInterface {
     data:    Assignments[];
+    ok?:      number;
     message: string;
     errors?: string[] | Record<string, string[]>
 }
