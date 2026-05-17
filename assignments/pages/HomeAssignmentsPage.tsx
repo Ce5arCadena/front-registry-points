@@ -5,8 +5,9 @@ import { useAssignments } from '../hooks/useAssignments';
 import { ListAssignments } from '../components/ListAssignments';
 import { ModalDelete } from '../../shared/components/ModalDelete';
 import { ActionsAssignments } from '../components/ActionsAssignments';
+import { ModalViewAssignment } from '../components/ModalViewAssignment';
 import { ModalCreateAndUpdateAssignment } from '../components/ModalCreateAndUpdateAssignment';
-import { actionModalAtom, assignmentAtom, loadingAtom, subjectAssignmentAtom } from '../store/assignmentsStore';
+import { actionModalAtom, assignmentAtom, loadingAtom } from '../store/assignmentsStore';
 
 export const HomeAssignmentsPage = () => {
   const { deleteAssignment } = useAssignments();
@@ -30,6 +31,12 @@ export const HomeAssignmentsPage = () => {
         {
           (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdateAssignment />
+          )
+        }
+
+        {
+          actionModal === "view" && assignment && (
+            <ModalViewAssignment />
           )
         }
 
