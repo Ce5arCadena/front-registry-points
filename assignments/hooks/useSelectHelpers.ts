@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
 import { type SingleValue } from "react-select";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { searchCourses } from "../../courses/api/queries";
 import { searchStudents } from "../../teachers/api/queries";
 import { searchSubjects } from "../../subjects/api/queries";
@@ -10,7 +11,6 @@ import { type CourseSearch } from "../../shared/interfaces/courses";
 import { type TeacherSearch } from "../../shared/interfaces/teachers";
 import { INITIAL_ASSIGNMENT_STATE, type AssignmentsInterface } from "../../shared/interfaces/assignments";
 import { actionModalAtom, assignmentAtom, assignmentsAtom, loadingAtom, valuesAssignmentAtom } from "../store/assignmentsStore";
-import { useEffect } from "react";
 
 type Option = 'teacher' | 'grade' | 'subject' | 'academic_year';
 

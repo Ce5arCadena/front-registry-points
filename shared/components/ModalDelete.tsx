@@ -1,11 +1,7 @@
-import { type Course } from "../interfaces/courses";
-import { type Teacher } from "../interfaces/teachers";
-import { type Subject } from "../interfaces/subjects";
-import { type Student } from "../interfaces/students";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 export const ModalDelete = ({
-  model,
+  idModel,
   message,
   nameModel,
   deleteModel,
@@ -15,7 +11,7 @@ export const ModalDelete = ({
   nameModel: string,
   setActionModal: (value: string) => void,
   deleteModel: (id: number) => Promise<boolean>,
-  model: Subject | Teacher | Course | Student | null | undefined,
+  idModel: number,
 }) => {
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
@@ -44,7 +40,7 @@ export const ModalDelete = ({
           <button
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-warning hover:text-warning"
             onClick={() => {
-              deleteModel(Number(model?.id));
+              deleteModel(Number(idModel));
             }}
           >
             Eliminar

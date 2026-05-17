@@ -1,11 +1,18 @@
 import { atom } from "jotai";
-import { INITIAL_ASSIGNMENT_STATE, type AssignmentDataForm, type Assignments, type AssignmentsInterface } from "../../shared/interfaces/assignments";
+import { 
+    type Subject, 
+    type Assignments, 
+    type AssignmentDataForm, 
+    INITIAL_ASSIGNMENT_STATE, 
+    type AssignmentsInterface 
+} from "../../shared/interfaces/assignments";
 
 export const loadingAtom = atom(false);
 export const isSearchAtom = atom(false);
 export const actionModalAtom = atom("");
 export const totalAssignmentsAtom = atom(0);
 export const selectedIdsAtom = atom<number[]>([]);
+export const subjectAssignmentAtom = atom<Subject>();
 export const assignmentsAtom = atom<Assignments[]>([]);
 export const idCourseAssignmentAtom = atom<null | number>();
 export const idSubjectAssignmentAtom = atom<null | number>();

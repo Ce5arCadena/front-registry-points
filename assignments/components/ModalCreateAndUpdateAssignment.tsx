@@ -1,13 +1,13 @@
 import Select from 'react-select';
-import { useEffect } from 'react';
 import { IoMdBook } from "react-icons/io";
 import { YEARS } from "../../shared/data";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import AsyncSelect from 'react-select/async';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useSelectHelpers } from '../hooks/useSelectHelpers';
 import { MdOutlineDateRange, MdPeopleOutline } from "react-icons/md";
+import { INITIAL_ASSIGNMENT_STATE } from '../../shared/interfaces/assignments';
 import { actionModalAtom, assignmentAtom, valuesAssignmentAtom } from "../store/assignmentsStore";
 
 export const ModalCreateAndUpdateAssignment = () => {
@@ -19,7 +19,7 @@ export const ModalCreateAndUpdateAssignment = () => {
 
   const assignment = useAtomValue(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
-  const valuesAssignment = useAtomValue(valuesAssignmentAtom);
+  const [valuesAssignment, setValuesAssignment] = useAtom(valuesAssignmentAtom);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
@@ -27,6 +27,7 @@ export const ModalCreateAndUpdateAssignment = () => {
         className="text-2xl absolute right-2 top-2 cursor-pointer"
         onClick={() => {
           setActionModal("");
+          setValuesAssignment(INITIAL_ASSIGNMENT_STATE)
         }}
       />
 

@@ -2,7 +2,7 @@ import { RiEdit2Line } from "react-icons/ri";
 import { useAtomValue, useSetAtom } from "jotai";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdPeopleOutline } from "react-icons/md";
-import { actionModalAtom, assignmentAtom, assignmentsAtom } from "../store/assignmentsStore";
+import { actionModalAtom, assignmentAtom, assignmentsAtom, subjectAssignmentAtom } from "../store/assignmentsStore";
 
 export const ListAssignments = () => {
   const setAssignment = useSetAtom(assignmentAtom);
@@ -56,7 +56,24 @@ export const ListAssignments = () => {
                               <MdDeleteOutline
                                 className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300 text-dark-bg"
                                 onClick={() => {
-                                  setAssignment(assignment);
+                                  console.log({
+                                    ...assignment,
+                                    assignments: assignment.assignments
+                                      .map(assign => ({
+                                        ...assign,
+                                        subjects: assign.subjects.filter(subjectFilter => subjectFilter.assignment_id == subject.assignment_id)
+                                      }))
+                                      .filter(assign => assign.subjects.length > 0)
+                                  })
+                                  setAssignment({
+                                    ...assignment,
+                                    assignments: assignment.assignments
+                                      .map(assign => ({
+                                        ...assign,
+                                        subjects: assign.subjects.filter(subjectFilter => subjectFilter.assignment_id == subject.assignment_id)
+                                      }))
+                                      .filter(assign => assign.subjects.length > 0)
+                                  });
                                   setActionModal("delete");
                                 }}
                               />

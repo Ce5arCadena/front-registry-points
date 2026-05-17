@@ -99,9 +99,9 @@ export const HomeTeacherPage = () => {
         }
 
         {
-          actionModal === "delete" && (
+          actionModal === "delete" && teacher &&(
             <ModalDelete
-              model={teacher}
+              idModel={teacher?.id}
               setActionModal={setActionModal}
               deleteModel={deleteTeacher}
               message="el maestro"

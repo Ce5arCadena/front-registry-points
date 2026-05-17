@@ -1,17 +1,19 @@
 import { Toaster } from 'react-hot-toast';
+import { useAtom, useAtomValue } from 'jotai';
 import Loading from '../../shared/components/Loading';
 import { useAssignments } from '../hooks/useAssignments';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ListAssignments } from '../components/ListAssignments';
+import { ModalDelete } from '../../shared/components/ModalDelete';
 import { ActionsAssignments } from '../components/ActionsAssignments';
-import { actionModalAtom, loadingAtom } from '../store/assignmentsStore';
 import { ModalCreateAndUpdateAssignment } from '../components/ModalCreateAndUpdateAssignment';
+import { actionModalAtom, assignmentAtom, loadingAtom, subjectAssignmentAtom } from '../store/assignmentsStore';
 
 export const HomeAssignmentsPage = () => {
-  useAssignments();
+  const { deleteAssignment } = useAssignments();
 
   const loading = useAtomValue(loadingAtom);
-  const actionModal = useAtomValue(actionModalAtom);
+  const assignment = useAtomValue(assignmentAtom);
+  const [actionModal, setActionModal] = useAtom(actionModalAtom);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -28,6 +30,18 @@ export const HomeAssignmentsPage = () => {
         {
           (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdateAssignment />
+          )
+        }
+
+        {
+          actionModal === "delete" && assignment && (
+            <ModalDelete
+              idModel={assignment.assignments[0].subjects[0].assignment_id}
+              setActionModal={setActionModal}
+              deleteModel={deleteAssignment}
+              message="la asignación de la materia"
+              nameModel={`${assignment.assignments[0].subjects[0].name} al maestro ${assignment.full_name} del curso ${assignment.assignments[0].grade}`}
+            />
           )
         }
 

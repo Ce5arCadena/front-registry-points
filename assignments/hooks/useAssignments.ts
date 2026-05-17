@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useApi } from '../../utils/useApi';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { type AssignmentsInterface } from '../../shared/interfaces/assignments';
-import { assignmentsAtom, currentPageAtom, loadingAtom, totalAssignmentsAtom } from '../store/assignmentsStore';
+import { assignmentsAtom, currentPageAtom, loadingAtom } from '../store/assignmentsStore';
 
 export const useAssignments = () => {
   const navigate = useNavigate();
@@ -12,7 +12,6 @@ export const useAssignments = () => {
   const setLoading = useSetAtom(loadingAtom);
   const currentPage = useAtomValue(currentPageAtom);
   const setAssignments = useSetAtom(assignmentsAtom);
-  const setTotalAssignments = useSetAtom(totalAssignmentsAtom);
 
   const getAssignments = async () => {
     setLoading(true);
@@ -28,8 +27,24 @@ export const useAssignments = () => {
     };
   };
 
+  const deleteAssignment = async (id: number): Promise<boolean> => {
+    setLoading(true);
+    try {
+      console.log(id);
+      return true
+    } catch (error) {
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     setAssignments([]);
     getAssignments();
   }, []);
+
+  return {
+    deleteAssignment
+  }
 }

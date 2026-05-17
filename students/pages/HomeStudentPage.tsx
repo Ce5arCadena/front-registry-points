@@ -101,9 +101,9 @@ export const HomeStudentPage = () => {
         }
 
         {
-          actionModal === "delete" && (
+          actionModal === "delete" && student && (
             <ModalDelete
-              model={student}
+              idModel={student?.id}
               setActionModal={setActionModal}
               deleteModel={deleteStudent}
               message="el estudiante"
