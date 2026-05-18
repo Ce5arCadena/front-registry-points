@@ -1,7 +1,7 @@
+import { MdSubject } from "react-icons/md";
 import { useAtomValue, useSetAtom } from "jotai";
 import { FaGraduationCap } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { MdPeopleOutline, MdSubject } from "react-icons/md";
 import { INITIAL_ASSIGNMENT_STATE } from "../../shared/interfaces/assignments";
 import { actionModalAtom, assignmentAtom, valuesAssignmentAtom } from "../store/assignmentsStore";
 

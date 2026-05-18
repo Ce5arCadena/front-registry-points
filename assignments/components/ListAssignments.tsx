@@ -1,13 +1,13 @@
+import { useSetAtom } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
-import { useAtomValue, useSetAtom } from "jotai";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdPeopleOutline } from "react-icons/md";
-import { actionModalAtom, assignmentAtom, assignmentsAtom } from "../store/assignmentsStore";
+import { type Assignments } from "../../shared/interfaces/assignments";
+import { actionModalAtom, assignmentAtom } from "../store/assignmentsStore";
 
-export const ListAssignments = () => {
+export const ListAssignments = ({ dataAssignments }: { dataAssignments: Assignments[] }) => {
   const setAssignment = useSetAtom(assignmentAtom);
   const setActionModal = useSetAtom(actionModalAtom);
-  const dataAssignments = useAtomValue(assignmentsAtom);
 
   return (
     <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 content-start overflow-y-auto px-2 py-1">

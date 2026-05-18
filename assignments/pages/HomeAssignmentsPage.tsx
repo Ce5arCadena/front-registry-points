@@ -3,17 +3,27 @@ import { useAtom, useAtomValue } from 'jotai';
 import Loading from '../../shared/components/Loading';
 import { useAssignments } from '../hooks/useAssignments';
 import { ListAssignments } from '../components/ListAssignments';
+import { Pagination } from '../../courses/components/Pagination';
 import { ModalDelete } from '../../shared/components/ModalDelete';
 import { ActionsAssignments } from '../components/ActionsAssignments';
 import { ModalViewAssignment } from '../components/ModalViewAssignment';
 import { ModalCreateAndUpdateAssignment } from '../components/ModalCreateAndUpdateAssignment';
-import { actionModalAtom, assignmentAtom, loadingAtom } from '../store/assignmentsStore';
+import { actionModalAtom, assignmentAtom, assignmentsAtom, endAtom, loadingAtom, pageCountAtom, startAtom, totalAssignmentsAtom } from '../store/assignmentsStore';
 
 export const HomeAssignmentsPage = () => {
-  const { deleteAssignment } = useAssignments();
+  const { 
+    deleteAssignment, 
+    dataAssignments,
+    handlePageClick
+   } = useAssignments();
 
+  const end = useAtomValue(endAtom);
+  const start = useAtomValue(startAtom);
   const loading = useAtomValue(loadingAtom);
+  const pageCount = useAtomValue(pageCountAtom);
   const assignment = useAtomValue(assignmentAtom);
+  const assignments = useAtomValue(assignmentsAtom);
+  const totalAssignments = useAtomValue(totalAssignmentsAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
 
   return (
@@ -26,7 +36,21 @@ export const HomeAssignmentsPage = () => {
           <ActionsAssignments />
         </div>
 
-        <ListAssignments />
+        <ListAssignments 
+          dataAssignments={dataAssignments}
+        />
+
+        {
+          dataAssignments.length > 0 && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalAssignments}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
 
         {
           (actionModal === "create" || actionModal === "edit") && (

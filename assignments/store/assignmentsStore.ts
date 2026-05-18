@@ -24,4 +24,6 @@ export const valuesAssignmentAtom = atom<AssignmentDataForm>(INITIAL_ASSIGNMENT_
 export const endAtom = atom(0);
 export const startAtom = atom(0);
 export const pageCountAtom = atom(0);
+export const itemOffsetAtom = atom(0);
 export const currentPageAtom = atom(1);
+export const totalCoursesAtom = atom(0);

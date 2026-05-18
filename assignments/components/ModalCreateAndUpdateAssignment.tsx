@@ -161,7 +161,7 @@ export const ModalCreateAndUpdateAssignment = () => {
               <FaChalkboardTeacher className="w-4 h-4 text-dark-text-secondary" />
             </div>
             <Select
-              placeholder="Año de aisgnación"
+              placeholder="Año de asignación"
               classNames={{
                 control: ({ isFocused }) =>
                   `bg-[#1e2130] border rounded-lg px-2 py-3 ${isFocused ? "border-purple-600" : "border-[#2e3347]"
