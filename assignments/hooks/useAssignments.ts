@@ -18,7 +18,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { type PaginateClickEvent } from '../../shared/interfaces';
 import { type AssignmentsInterface } from '../../shared/interfaces/assignments';
 
-const PERPAGE = 8;
+const PERPAGE = 12;
 
 export const useAssignments = () => {
   const navigate = useNavigate();

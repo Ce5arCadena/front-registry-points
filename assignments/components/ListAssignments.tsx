@@ -10,12 +10,12 @@ export const ListAssignments = ({ dataAssignments }: { dataAssignments: Assignme
   const setActionModal = useSetAtom(actionModalAtom);
 
   return (
-    <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 content-start overflow-y-auto px-2 py-1">
+    <div className="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 content-start overflow-y-auto px-2 py-1">
       {
         dataAssignments.length > 0 && dataAssignments.map((assignment) => (
           <div
             key={assignment.id}
-            className="bg-dark-bg-elevated rounded-lg border border-secondary h-44 overflow-y-auto pb-3 px-3 relative"
+            className="bg-dark-bg-elevated rounded-lg border border-secondary h-40 overflow-y-auto pb-3 px-3 relative"
           >
             <div className="flex gap-2 items-center justify-between mb-2 w-full sticky top-0 bg-dark-bg-elevated pt-3 pb-1">
               <div className="flex gap-2 items-center max-w-[80%]">

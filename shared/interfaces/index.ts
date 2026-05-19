@@ -45,6 +45,19 @@ export interface User {
     updated:  Date;
 }
 
+// Dashboard data
+export interface DashboardDataInterface {
+    message: string;
+    data: DashboardData;
+}
+
+interface DashboardData {
+    total_courses: number;
+    total_students: number;
+    total_teachers: number;
+    total_subjects: number;
+}
+
 // Jwt
 export interface JwtPayload {
     email:  string;
