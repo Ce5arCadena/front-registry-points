@@ -2,6 +2,7 @@ import { Toaster } from "react-hot-toast";
 import { useDashboard } from "../hooks/useDashboard";
 import Loading from "../../shared/components/Loading";
 import { ItemsCards } from "../../courses/components/ItemsCards";
+import { ItemsNavigate } from "../../courses/components/ItemsNavigate";
 
 export const HomeDashboard = () => {
   const {
@@ -23,6 +24,8 @@ export const HomeDashboard = () => {
             <ItemsCards dataDashboard={dataDashboard}/>
           )
         }
+
+        <ItemsNavigate/>
 
         {
           loading && (

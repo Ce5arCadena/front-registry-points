@@ -7,9 +7,9 @@ export const SidebarSchool = () => {
     <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 transform transition-transform duration-300 ease-in-out">
       <div className="flex flex-col h-full">
         <header className="p-4 flex justify-between items-center border-b border-gray-700">
-          <a className="font-semibold text-xl text-white" href="#">
+          <NavLink className="font-semibold text-xl text-white" to="/school/home">
             Bienvenido
-          </a>
+          </NavLink>
         </header>
 
         <nav className="flex-1 overflow-y-auto p-4">

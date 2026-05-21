@@ -10,8 +10,8 @@ export const ItemsCards = ({
   dataDashboard: DashboardDataInterface
 }) => {
   return (
-    <div className="flex gap-4 w-full items-center justify-center">
-      <div className="rounded-md min-w-44 min-h-28 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
+    <div className="flex gap-4 w-full items-center">
+      <div className="rounded-md min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
         <span className="flex gap-2">
           <FaPeopleGroup className="text-primary text-2xl" />
           Cursos Activos
@@ -22,7 +22,7 @@ export const ItemsCards = ({
           }
         </span>
       </div>
-      <div className="rounded-md min-w-44 min-h-28 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
+      <div className="rounded-md min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
         <span className="flex gap-2">
           <BsPeople className="text-primary text-2xl" />
           Estudiantes Activos
@@ -33,7 +33,7 @@ export const ItemsCards = ({
           }
         </span>
       </div>
-      <div className="rounded-md min-w-44 min-h-28 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
+      <div className="rounded-md min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
         <span className="flex gap-2">
           <FaGraduationCap className="text-primary text-2xl" />
           Maestros Activos
@@ -44,7 +44,7 @@ export const ItemsCards = ({
           }
         </span>
       </div>
-      <div className="rounded-md min-w-44 min-h-28 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
+      <div className="rounded-md min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2">
         <span className="flex gap-2">
           <TbBook className="text-primary text-2xl" />
           Asignaturas Activas
