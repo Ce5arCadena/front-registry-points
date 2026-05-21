@@ -13,7 +13,6 @@ export const useDashboard = () => {
     setLoading(true);
     try {
       const responseData = await useApi<DashboardDataInterface>(`/info`);
-      console.log(responseData)
       setDataDashboard(responseData);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener la información del dashboard. Comuniquese.');
@@ -31,6 +30,6 @@ export const useDashboard = () => {
 
   return {
     loading,
-    dataDashboard
+    dataDashboard,
   }
 }

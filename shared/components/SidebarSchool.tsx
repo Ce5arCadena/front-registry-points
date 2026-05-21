@@ -1,8 +1,14 @@
+import { useSetAtom } from 'jotai';
 import { NavLink } from 'react-router';
+import { TbLogout2 } from "react-icons/tb";
+import { CgProfile } from "react-icons/cg";
 import { type NavItem } from '../interfaces';
 import { ROLES } from '../../shared/auth/roles';
+import { showUpdateProfileAtom } from '../../dashboard-school/store/dashboardStore';
 
 export const SidebarSchool = () => {
+  const setUpdateProfile = useSetAtom(showUpdateProfileAtom);
+
   return (
     <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 transform transition-transform duration-300 ease-in-out">
       <div className="flex flex-col h-full">
@@ -31,43 +37,21 @@ export const SidebarSchool = () => {
                     </NavLink>
                 })
               }
-              {/* <button
-                            onClick={() => toggleAccordion('users-main')}
-                            className="w-full text-left flex items-center justify-between gap-x-3 py-2 px-3 text-sm text-white rounded-lg hover:bg-gray-800 transition-colors"
-                        >
-                            <div className="flex items-center gap-x-3 cursor-pointer">
-                                
-                            </div>
-                        </button> */}
-              {/* Si se necesita submenu se deja este codigo */}
-              {/* {openAccordions['users-main'] ? (
-                                <MdOutlineKeyboardArrowUp className="w-5 h-5 cursor-pointer"/>
-                            ) : (
-                                <IoIosArrowDown className="w-5 h-5 cursor-pointer"/>
-                            )} */}
-
-              {/* Submenú nivel 1. Lo dejo por si luego necesito menu con subnivel */}
-              {/* <div
-                            className={`
-                                overflow-hidden transition-all duration-300 ease-in-out
-                                ${openAccordions['users-main'] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
-                            `}
-                        >
-                            <ul className="ml-7 space-y-1">
-                                <li>
-                                <button
-                                    onClick={() => toggleAccordion('submenu-1')}
-                                    className="w-full text-left cursor-pointer flex items-center gap-2 py-2 px-3 text-sm text-gray-300 rounded-lg hover:bg-gray-800 transition-colors"
-                                >
-                                    <IoMdAddCircleOutline className="w-4 h-4" />
-                                    <span>Crear</span>
-                                </button>
-                                </li>
-                            </ul>
-                        </div>  */}
             </li>
           </ul>
         </nav>
+
+        <div className='p-4 flex flex-col'>
+          <span 
+            className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm'
+            onClick={() => setUpdateProfile(true)}
+          >
+            <CgProfile  className='w-4 h-4'/> Perfil
+          </span>
+          <span className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm '>
+            <TbLogout2 className='w-4 h-4' /> Cerrar Sesión
+          </span>
+        </div>
       </div>
     </div>
   )
