@@ -7,12 +7,16 @@ import AdminLayout from './admin/layouts/AdminLayout';
 import { HomeCourse } from './courses/pages/HomeCourse';
 import { SchoolLayout } from './shared/layouts/SchoolLayout';
 import ProtectedRoute from './auth/components/ProtectedRoute';
+import { TeacherLayout } from './shared/layouts/TeacherLayout';
 import { HomeSubjectPage } from './subjects/pages/HomeSubjectPage';
 import { HomeTeacherPage } from './teachers/pages/HomeTeacherPage';
 import { HomeStudentPage } from './students/pages/HomeStudentPage';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { HomeDashboard } from './dashboard-school/pages/HomeDashboard';
+import { PointCategoryPage } from './point-categorys/pages/PointCategoryPage';
 import { HomeAssignmentsPage } from './assignments/pages/HomeAssignmentsPage';
+import { RegistryPointPage } from './registry-points/pages/RegistryPointPage';
+import { HomeTeacherAdmin } from './admin-teacher/components/HomeTeacherAdmin';
 
 function App() {
   return (
@@ -47,6 +51,17 @@ function App() {
           <Route path='teachers' element={<HomeTeacherPage/>}/>
           <Route path='students' element={<HomeStudentPage/>}/>
           <Route path='assignments' element={<HomeAssignmentsPage/>}/>
+        </Route>
+
+        <Route path='teacher/*' element={
+          <ProtectedRoute>
+            <TeacherLayout/>
+          </ProtectedRoute>
+        }>
+          <Route index element={<HomeTeacherAdmin/>}/>
+          <Route path='home' element={<HomeTeacherAdmin/>}/>
+          <Route path='point-categorys' element={<PointCategoryPage/>}/>
+          <Route path='registry-points' element={<RegistryPointPage/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>

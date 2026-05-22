@@ -1,5 +1,7 @@
 import { BsPeople } from "react-icons/bs";
 import { MdSubject } from "react-icons/md";
+import { TbCategory } from "react-icons/tb";
+import { LiaHandPointerSolid } from "react-icons/lia";
 import { PiBooksLight, PiStudentBold } from "react-icons/pi";
 import { FaChalkboardTeacher, FaHome } from "react-icons/fa";
 
@@ -63,7 +65,19 @@ export const ROLES = {
                 defaultUrl: true,
                 label: "Home",
                 url: '/teacher/home',
-                IconType: MdSubject 
+                IconType: FaChalkboardTeacher  
+            },
+            {
+                defaultUrl: false,
+                label: "Categoria de Puntos",
+                url: '/teacher/point-categories',
+                IconType: TbCategory 
+            },
+            {
+                defaultUrl: false,
+                label: "Registro de Puntos",
+                url: '/teacher/registry-points',
+                IconType: LiaHandPointerSolid 
             },
         ]
     } 
