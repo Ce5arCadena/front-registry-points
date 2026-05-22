@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { useApi } from "../../utils/useApi";
+import { getInitialDataDashboard } from "../api/query";
 import { type DashboardDataInterface } from "../../shared/interfaces";
 
 export const useDashboard = () => {
@@ -12,7 +12,7 @@ export const useDashboard = () => {
   const getInitialData = async () => {
     setLoading(true);
     try {
-      const responseData = await useApi<DashboardDataInterface>(`/info`);
+      const responseData = await getInitialDataDashboard();
       setDataDashboard(responseData);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener la información del dashboard. Comuniquese.');

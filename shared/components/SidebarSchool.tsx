@@ -1,13 +1,12 @@
 import { useSetAtom } from 'jotai';
 import { NavLink } from 'react-router';
 import { TbLogout2 } from "react-icons/tb";
-import { CgProfile } from "react-icons/cg";
 import { type NavItem } from '../interfaces';
 import { ROLES } from '../../shared/auth/roles';
-import { showUpdateProfileAtom } from '../../dashboard-school/store/dashboardStore';
+import { useLogouts } from '../../auth/hooks/useLogouts';
 
 export const SidebarSchool = () => {
-  const setUpdateProfile = useSetAtom(showUpdateProfileAtom);
+  const { logout } = useLogouts();
 
   return (
     <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 transform transition-transform duration-300 ease-in-out">
@@ -42,13 +41,9 @@ export const SidebarSchool = () => {
         </nav>
 
         <div className='p-4 flex flex-col'>
-          <span 
-            className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm'
-            onClick={() => setUpdateProfile(true)}
-          >
-            <CgProfile  className='w-4 h-4'/> Perfil
-          </span>
-          <span className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm '>
+          <span
+            onClick={logout}
+            className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm '>
             <TbLogout2 className='w-4 h-4' /> Cerrar Sesión
           </span>
         </div>

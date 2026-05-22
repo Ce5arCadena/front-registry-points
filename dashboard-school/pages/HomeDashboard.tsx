@@ -1,9 +1,6 @@
-import { useAtomValue } from "jotai";
 import { Toaster } from "react-hot-toast";
 import { useDashboard } from "../hooks/useDashboard";
 import Loading from "../../shared/components/Loading";
-import { UpdateProfile } from "../components/UpdateProfile";
-import { showUpdateProfileAtom } from "../store/dashboardStore";
 import { ItemsCards } from "../../courses/components/ItemsCards";
 import { ItemsNavigate } from "../../courses/components/ItemsNavigate";
 
@@ -12,8 +9,6 @@ export const HomeDashboard = () => {
     loading,
     dataDashboard
   } = useDashboard();
-
-  const showUpdateProfile = useAtomValue(showUpdateProfileAtom);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -30,12 +25,6 @@ export const HomeDashboard = () => {
         }
 
         <ItemsNavigate/>
-
-        {
-          showUpdateProfile && (
-            <UpdateProfile />
-          )
-        }
 
         {
           loading && (
