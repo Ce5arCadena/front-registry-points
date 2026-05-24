@@ -60,7 +60,7 @@ function App() {
         }>
           <Route index element={<HomeTeacherAdmin/>}/>
           <Route path='home' element={<HomeTeacherAdmin/>}/>
-          <Route path='point-categorys' element={<PointCategoryPage/>}/>
+          <Route path='point-categories' element={<PointCategoryPage/>}/>
           <Route path='registry-points' element={<RegistryPointPage/>}/>
         </Route>
 
