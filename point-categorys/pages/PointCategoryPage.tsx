@@ -1,10 +1,12 @@
 import { useAtomValue } from "jotai";
 import { Toaster } from "react-hot-toast";
+import Loading from "../../shared/components/Loading";
 import { usePointCategories } from "../hooks/usePointCategories";
-import { pointCategorysAtom } from "../store/pointCategoryStore";
 import { ListAssignments } from "../components/ListPointCategories";
+import { loadingAtom, pointCategorysAtom } from "../store/pointCategoryStore";
 
 export const PointCategoryPage = () => {
+  const loading = useAtomValue(loadingAtom);
   const pointCategories = useAtomValue(pointCategorysAtom);
   usePointCategories();
 
@@ -25,6 +27,17 @@ export const PointCategoryPage = () => {
         </div>
           
         <ListAssignments pointCategories={pointCategories} />
+
+        {
+          loading && (
+            <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
+              <Loading />
+              <span>
+                Por favor, espere...
+              </span>
+            </div>
+          )
+        }
       </div>
     </div>
   )

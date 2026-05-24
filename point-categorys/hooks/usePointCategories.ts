@@ -12,6 +12,7 @@ export const usePointCategories = () => {
   const setPointCategories = useSetAtom(pointCategorysAtom);
 
   const getInitialData = async () => {
+    setLoading(true);
     try {
       const response = await getPointCategories(page);
       console.log(response);

@@ -99,7 +99,6 @@ export const ListAssignments = ({ pointCategories }: { pointCategories: PointCat
                   />
                   <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      
                       setActionModal("delete");
                     }}
                   />
@@ -111,7 +110,7 @@ export const ListAssignments = ({ pointCategories }: { pointCategories: PointCat
           {
             pointCategories && pointCategories.length <= 0 && (
               <tr className="text-center">
-                <td colSpan={3} className="p-2">
+                <td colSpan={5} className="p-2">
                   No hay categorías de puntos para mostrar.
                 </td>
               </tr>
