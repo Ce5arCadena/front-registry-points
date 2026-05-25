@@ -2,6 +2,8 @@ export interface PointCategoriesResponse {
     data:    PointCategory[];
     links:   Links;
     meta:    Meta;
+    ok:      number;
+    errors?: string[];
     message: string;
 }
 

@@ -5,7 +5,11 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { actionModalAtom } from "../store/pointCategoryStore";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
 
-export const ModalCreateAndUpdatePointCategory = () => {
+export const ModalCreateAndUpdatePointCategory = ({
+  createAndUpdatePointCategory
+} : {
+  createAndUpdatePointCategory: (data: FormPointCategory, METHOD: 'POST' | 'PUT') => Promise<boolean>;
+}) => {
   const setActionModal = useSetAtom(actionModalAtom);
   const {
     register,
@@ -15,8 +19,8 @@ export const ModalCreateAndUpdatePointCategory = () => {
     mode: 'onChange'
   });
 
-  const onSubmit: SubmitHandler<FormPointCategory> = (values) => {
-    console.log(values);
+  const onSubmit: SubmitHandler<FormPointCategory> = async (values) => {
+    await createAndUpdatePointCategory(values, 'POST');
   };
 
   return (
@@ -111,7 +115,6 @@ export const ModalCreateAndUpdatePointCategory = () => {
           </button>
         </div>
       </form>
-
     </div>
   )
 }

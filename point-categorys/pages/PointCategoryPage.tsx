@@ -10,7 +10,7 @@ export const PointCategoryPage = () => {
   const loading = useAtomValue(loadingAtom);
   const pointCategories = useAtomValue(pointCategorysAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
-  usePointCategories();
+   const { createAndUpdatePointCategory } = usePointCategories();
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -32,7 +32,9 @@ export const PointCategoryPage = () => {
 
         {
           actionModal === "create" && (
-            <ModalCreateAndUpdatePointCategory />
+            <ModalCreateAndUpdatePointCategory 
+              createAndUpdatePointCategory={createAndUpdatePointCategory}
+            />
           )
         }
 

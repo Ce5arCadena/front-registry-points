@@ -9,8 +9,8 @@ export interface CoursesInterface {
 export interface ResponseCourseInterface {
     ok: number;
     message: string;
-    data?: Course
-    errors?: string[]
+    data?: Course;
+    errors?: string[];
 }
 
 export interface Course {
