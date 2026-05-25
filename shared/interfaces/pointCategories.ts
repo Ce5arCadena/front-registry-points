@@ -80,3 +80,9 @@ export interface Link {
     page:   number | null;
     active: boolean;
 }
+
+// Formulario 
+export interface FormPointCategory {
+    name: string;
+    max_points: string;
+}
