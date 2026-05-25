@@ -1,9 +1,10 @@
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { TbCategory, TbNumbers } from "react-icons/tb";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { actionModalAtom } from "../store/pointCategoryStore";
+import { actionModalAtom, pointCategoryAtom } from "../store/pointCategoryStore";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
+import { useEffect } from "react";
 
 export const ModalCreateAndUpdatePointCategory = ({
   createAndUpdatePointCategory
@@ -11,17 +12,30 @@ export const ModalCreateAndUpdatePointCategory = ({
   createAndUpdatePointCategory: (data: FormPointCategory, METHOD: 'POST' | 'PUT') => Promise<boolean>;
 }) => {
   const setActionModal = useSetAtom(actionModalAtom);
+  const pointCategory = useAtomValue(pointCategoryAtom);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormPointCategory>({
     mode: 'onChange'
   });
 
   const onSubmit: SubmitHandler<FormPointCategory> = async (values) => {
-    await createAndUpdatePointCategory(values, 'POST');
+    const METHOD = pointCategory ? 'PUT' : 'POST';
+    await createAndUpdatePointCategory(values, METHOD);
   };
+
+  useEffect(() => {
+    if (pointCategory) {
+      reset({
+        name: pointCategory.name,
+        max_points: pointCategory.max_points.toString()
+      });
+    }
+  }, [pointCategory]);
 
   return (
     <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center">
@@ -101,7 +115,9 @@ export const ModalCreateAndUpdatePointCategory = ({
           <button className="
             text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary
           ">
-            Agregar
+            {
+              pointCategory ? "Actualizar" : "Agregar"
+            }
           </button>
           <button
             onClick={() => {

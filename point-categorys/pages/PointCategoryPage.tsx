@@ -31,7 +31,7 @@ export const PointCategoryPage = () => {
         <ListAssignments pointCategories={pointCategories} />
 
         {
-          actionModal === "create" && (
+          actionModal === "create" || actionModal === "edit" && (
             <ModalCreateAndUpdatePointCategory 
               createAndUpdatePointCategory={createAndUpdatePointCategory}
             />

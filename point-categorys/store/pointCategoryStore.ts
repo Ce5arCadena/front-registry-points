@@ -3,6 +3,7 @@ import { type PointCategory } from "../../shared/interfaces/pointCategories";
 
 export const loadingAtom = atom(false);
 export const actionModalAtom = atom("");
+export const pointCategoryAtom = atom<PointCategory>();
 export const pointCategorysAtom = atom<PointCategory[]>([]);
 
 // Paginación

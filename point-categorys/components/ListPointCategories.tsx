@@ -2,11 +2,12 @@ import { useSetAtom } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
-import { actionModalAtom } from "../store/pointCategoryStore";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
+import { actionModalAtom, pointCategoryAtom } from "../store/pointCategoryStore";
 
 export const ListAssignments = ({ pointCategories }: { pointCategories: PointCategory[] }) => {
   const setActionModal = useSetAtom(actionModalAtom);
+  const setPointCategory = useSetAtom(pointCategoryAtom);
 
   return (
     <div className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -87,18 +88,20 @@ export const ListAssignments = ({ pointCategories }: { pointCategories: PointCat
                   <IoEyeOutline
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
-                      // setPointCategory(category);
+                      setPointCategory(category);
                       setActionModal("view");
                     }}
                   />
                   <RiEdit2Line
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
+                      setPointCategory(category);
                       setActionModal("edit");
                     }}
                   />
                   <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
+                      setPointCategory(category);
                       setActionModal("delete");
                     }}
                   />
