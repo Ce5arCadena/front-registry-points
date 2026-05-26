@@ -18,6 +18,7 @@ export const usePointCategories = () => {
     setLoading(true);
     try {
       const response = await getPointCategories(page);
+      console.log(response.data);
       setPointCategories(prev => [...prev, ...response.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las categorías de puntos. Comuniquese.');
@@ -54,6 +55,7 @@ export const usePointCategories = () => {
   };
 
   useEffect(() => {
+    setPointCategories([]);
     getInitialData();
   }, []);
 

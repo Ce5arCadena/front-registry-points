@@ -3,6 +3,7 @@ import { useAtom, useAtomValue } from "jotai";
 import Loading from "../../shared/components/Loading";
 import { usePointCategories } from "../hooks/usePointCategories";
 import { ListAssignments } from "../components/ListPointCategories";
+import { ModalViewPointCategory } from "../components/ModalViewPointCategory";
 import { actionModalAtom, loadingAtom, pointCategorysAtom } from "../store/pointCategoryStore";
 import { ModalCreateAndUpdatePointCategory } from "../components/ModalCreateAndUpdatePointCategory";
 
@@ -35,6 +36,12 @@ export const PointCategoryPage = () => {
             <ModalCreateAndUpdatePointCategory 
               createAndUpdatePointCategory={createAndUpdatePointCategory}
             />
+          )
+        }
+
+        {
+          actionModal === "view" && (
+            <ModalViewPointCategory />
           )
         }
 
