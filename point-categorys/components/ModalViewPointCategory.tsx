@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { PiBooksLight } from "react-icons/pi";
 import { CiStar, CiUser } from "react-icons/ci";
 import { useAtomValue, useSetAtom } from "jotai";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -45,17 +47,34 @@ export const ModalViewPointCategory = () => {
               </div>
               <h5 className="text-sm font-medium text-light-bg-secondary">{pointCategory?.teacher.full_name}</h5>
             </div>
-            <div className="">
+            <div className="flex flex-col gap-2">
               <h4 className="text-xs font-medium mt-4 text-light-bg-secondary/85">CATEGORÍAS ASIGNADAS POR CURSO Y MATERIA</h4>
               {
                 pointCategory?.context && pointCategory?.context.length > 0 ? pointCategory?.context.map((context) => (
-                  <div>
-                    {context.status}
+                  <div key={context.id} className="rounded-md bg-dark-bg-elevated p-2 flex items-center justify-between">
+                    <div className="flex gap-3 items-center justify-between">
+                      <PiBooksLight className="text-primary text-xl"/>
+                      <div className="flex flex-col">
+                        <h5 className="text-sm font-medium text-light-bg-secondary">{context.course.name}</h5>
+                        <h5 className="text-xs font-medium text-light-bg-secondary/55">{context.subject.name}</h5>
+                      </div>
+                    </div>
+                    <div className="flex items-center bg-light-bg-secondary px-2 py-1 rounded-full p-2">
+                      <span className="text-xs font-medium text-dark-bg-elevated">{context.status == "ACTIVE" ? "Activa" : "Inactiva"}</span>
+                    </div>
                   </div>
                 )) : (
                   <h5 className="text-sm font-medium mt-1 text-light-bg-secondary">Esta categoría de puntos no tiene cursos ni materias asignados aún.</h5>
                 ) 
               }
+            </div>
+          </div>
+
+          {/* footer */}
+          <div className="mt-4 border-t border-gray-700 pt-4 flex justify-between items-center">
+            <h5 className="text-sm font-medium text-light-bg-secondary">Creado el: {dayjs(pointCategory?.created_at).format('DD/MM/YYYY')}</h5>
+            <div className="flex items-center bg-light-bg-secondary px-2 py-1 rounded-full p-2">
+              <span className="text-xs font-medium text-dark-bg-elevated">{pointCategory?.status == "ACTIVE" ? "Activa" : "Inactiva"}</span>
             </div>
           </div>
         </div>
