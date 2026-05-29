@@ -1,24 +1,44 @@
-import { useEffect } from "react";
+import {
+  endAtom,
+  startAtom,
+  loadingAtom,
+  pageCountAtom,
+  itemOffsetAtom,
+  actionModalAtom,
+  pointCategoryAtom,
+  pointCategorysAtom,
+  currentPageAtom,
+  totalPointCategoriesAtom,
+} from "../store/pointCategoryStore";
 import toast from "react-hot-toast";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
+import { type PaginateClickEvent } from "../../shared/interfaces";
 import { createPointCategories, getPointCategories } from "../api/queries";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
-import { actionModalAtom, loadingAtom, pageCountAtom, pointCategoryAtom, pointCategorysAtom } from "../store/pointCategoryStore";
+
+const PERPAGE = 12;
 
 export const usePointCategories = () => {
   const navigate = useNavigate();
-  const page = useAtomValue(pageCountAtom);
+  const setEnd = useSetAtom(endAtom);
+  const setStart = useSetAtom(startAtom);
   const setLoading = useSetAtom(loadingAtom);
   const setActionModal = useSetAtom(actionModalAtom);
-  const setPointCategories = useSetAtom(pointCategorysAtom);
+  const [pageCount, setPageCount] = useAtom(pageCountAtom);
+  const [itemOffset, setItemOffset] = useAtom(itemOffsetAtom);
+  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [pointCategory, setPointCategory] = useAtom(pointCategoryAtom);
+  const [pointCategories, setPointCategories] = useAtom(pointCategorysAtom);
+  const [totalPointCategories, setTotalPointCategories] = useAtom(totalPointCategoriesAtom);
 
   const getInitialData = async () => {
     setLoading(true);
     try {
-      const response = await getPointCategories(page);
+      const response = await getPointCategories(currentPage);
       console.log(response.data);
+      setTotalPointCategories(response.data.length);
       setPointCategories(prev => [...prev, ...response.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las categorías de puntos. Comuniquese.');
@@ -28,6 +48,14 @@ export const usePointCategories = () => {
       setLoading(false);
     };
   };
+
+  const dataPointCategories = useMemo(() => {
+    if (!pointCategories) return [];
+    const endOffset = itemOffset + PERPAGE;
+    setStart(itemOffset + 1);
+    setEnd(Math.min(itemOffset + PERPAGE, pointCategories.length));
+    return pointCategories.slice(itemOffset, endOffset);
+  }, [itemOffset, pointCategories]);
 
   const createAndUpdatePointCategory = async (data: FormPointCategory, METHOD: 'POST' | 'PUT'): Promise<boolean> => {
     setLoading(true);
@@ -54,12 +82,32 @@ export const usePointCategories = () => {
     };
   };
 
+  const handlePageClick = (event: PaginateClickEvent) => {
+    if (event.nextSelectedPage === undefined) return;
+
+    if (event.nextSelectedPage === pageCount - 1 && pointCategories.length < totalPointCategories) setCurrentPage(prev => prev + 1);
+    const newOffset = (event.nextSelectedPage * PERPAGE) % pointCategories.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    setPageCount(Math.ceil(pointCategories.length / PERPAGE));
+  }, [pointCategories]);
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      getInitialData();
+    }
+  }, [currentPage]);
+
   useEffect(() => {
     setPointCategories([]);
     getInitialData();
   }, []);
 
   return {
+    handlePageClick,
+    dataPointCategories,
     createAndUpdatePointCategory
   }
 }

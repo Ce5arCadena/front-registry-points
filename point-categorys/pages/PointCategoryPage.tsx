@@ -1,17 +1,35 @@
+import { 
+  endAtom, 
+  startAtom, 
+  loadingAtom, 
+  pageCountAtom, 
+  actionModalAtom, 
+  pointCategorysAtom, 
+  totalPointCategoriesAtom
+} from "../store/pointCategoryStore";
 import { Toaster } from "react-hot-toast";
 import { useAtom, useAtomValue } from "jotai";
 import Loading from "../../shared/components/Loading";
 import { usePointCategories } from "../hooks/usePointCategories";
+import { Pagination } from "../../courses/components/Pagination";
 import { ListAssignments } from "../components/ListPointCategories";
 import { ModalViewPointCategory } from "../components/ModalViewPointCategory";
-import { actionModalAtom, loadingAtom, pointCategorysAtom } from "../store/pointCategoryStore";
 import { ModalCreateAndUpdatePointCategory } from "../components/ModalCreateAndUpdatePointCategory";
 
 export const PointCategoryPage = () => {
+  const {
+    handlePageClick,
+    dataPointCategories,
+    createAndUpdatePointCategory
+  } = usePointCategories();
+
+  const end = useAtomValue(endAtom);
+  const start = useAtomValue(startAtom);
   const loading = useAtomValue(loadingAtom);
+  const pageCount = useAtomValue(pageCountAtom);
   const pointCategories = useAtomValue(pointCategorysAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
-   const { createAndUpdatePointCategory } = usePointCategories();
+  const totalPointCategories = useAtomValue(totalPointCategoriesAtom);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -28,12 +46,24 @@ export const PointCategoryPage = () => {
             Agregar Categoria de Puntos
           </button>
         </div>
-          
+
         <ListAssignments pointCategories={pointCategories} />
 
         {
+          dataPointCategories.length > 0 && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalPointCategories}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
+
+        {
           actionModal === "create" || actionModal === "edit" && (
-            <ModalCreateAndUpdatePointCategory 
+            <ModalCreateAndUpdatePointCategory
               createAndUpdatePointCategory={createAndUpdatePointCategory}
             />
           )

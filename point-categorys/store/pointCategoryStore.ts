@@ -12,4 +12,4 @@ export const startAtom = atom(0);
 export const pageCountAtom = atom(0);
 export const itemOffsetAtom = atom(0);
 export const currentPageAtom = atom(1);
-export const totalCoursesAtom = atom(0);
+export const totalPointCategoriesAtom = atom(0);
