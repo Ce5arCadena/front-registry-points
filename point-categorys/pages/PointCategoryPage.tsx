@@ -18,7 +18,9 @@ import { ModalCreateAndUpdatePointCategory } from "../components/ModalCreateAndU
 
 export const PointCategoryPage = () => {
   const {
+    toggleOne,
     handlePageClick,
+    getIdsPointCategories,
     dataPointCategories,
     createAndUpdatePointCategory
   } = usePointCategories();
@@ -38,16 +40,30 @@ export const PointCategoryPage = () => {
         <div className="bg-dark-bg-elevated border-l-8 rounded-r-md flex items-center justify-between p-2 rounded-l-xl border-primary">
           <h1 className="text-2xl font-bold">Lista de Categorias de Puntos</h1>
 
-          <button
-            onClick={() => {
-              setActionModal("create");
-            }}
-            className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
-            Agregar Categoria de Puntos
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                setActionModal("create");
+              }}
+              className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
+              Agregar Categoria de Puntos
+            </button>
+
+            <button
+              onClick={() => {
+                // setActionModal("create");
+              }}
+              className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
+              Cambiar de Estado
+            </button>
+          </div>
         </div>
 
-        <ListAssignments pointCategories={pointCategories} />
+        <ListAssignments 
+          toggleOne={toggleOne}
+          pointCategories={pointCategories} 
+          getIdsPointCategories={getIdsPointCategories}
+        />
 
         {
           dataPointCategories.length > 0 && (

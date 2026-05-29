@@ -9,6 +9,7 @@ import {
   pointCategorysAtom,
   currentPageAtom,
   totalPointCategoriesAtom,
+  idsPointCategoriesAtom,
 } from "../store/pointCategoryStore";
 import toast from "react-hot-toast";
 import { useEffect, useMemo } from "react";
@@ -31,6 +32,7 @@ export const usePointCategories = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [pointCategory, setPointCategory] = useAtom(pointCategoryAtom);
   const [pointCategories, setPointCategories] = useAtom(pointCategorysAtom);
+  const [idsPointCategories, setIdsPointCategories] = useAtom(idsPointCategoriesAtom);
   const [totalPointCategories, setTotalPointCategories] = useAtom(totalPointCategoriesAtom);
 
   const getInitialData = async () => {
@@ -56,6 +58,24 @@ export const usePointCategories = () => {
     setEnd(Math.min(itemOffset + PERPAGE, pointCategories.length));
     return pointCategories.slice(itemOffset, endOffset);
   }, [itemOffset, pointCategories]);
+
+  const getIdsPointCategories = () => {
+    if (idsPointCategories.length === pointCategories.length) {
+      setIdsPointCategories([]);
+    } else {
+      const ids = pointCategories.map(pointCategory => pointCategory.id);
+      setIdsPointCategories(ids);
+    }
+  };
+
+  const toggleOne = (id: number) => {
+    const idExist = [...idsPointCategories].find(ids => ids === id);
+    if (idExist) {
+      setIdsPointCategories(prev => prev.filter(ids => ids !== id));
+    } else {
+      setIdsPointCategories(prev => [...prev, id]);
+    }
+  }
 
   const createAndUpdatePointCategory = async (data: FormPointCategory, METHOD: 'POST' | 'PUT'): Promise<boolean> => {
     setLoading(true);
@@ -106,8 +126,10 @@ export const usePointCategories = () => {
   }, []);
 
   return {
+    toggleOne,
     handlePageClick,
     dataPointCategories,
+    getIdsPointCategories,
     createAndUpdatePointCategory
   }
 }

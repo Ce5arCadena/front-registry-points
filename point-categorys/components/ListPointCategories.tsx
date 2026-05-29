@@ -1,13 +1,22 @@
-import { useSetAtom } from "jotai";
 import { RiEdit2Line } from "react-icons/ri";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { useAtomValue, useSetAtom } from "jotai";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
-import { actionModalAtom, pointCategoryAtom } from "../store/pointCategoryStore";
+import { actionModalAtom, idsPointCategoriesAtom, pointCategoryAtom } from "../store/pointCategoryStore";
 
-export const ListAssignments = ({ pointCategories }: { pointCategories: PointCategory[] }) => {
+export const ListAssignments = ({ 
+  toggleOne,
+  pointCategories,
+  getIdsPointCategories,
+}: { 
+  toggleOne: (id: number) => void,
+  pointCategories: PointCategory[],
+  getIdsPointCategories: () => void,
+}) => {
   const setActionModal = useSetAtom(actionModalAtom);
   const setPointCategory = useSetAtom(pointCategoryAtom);
+  const pointCategoriesIds = useAtomValue(idsPointCategoriesAtom);
 
   return (
     <div className="table text-gray-400 border-separate space-y-6 text-sm w-full">
@@ -18,8 +27,8 @@ export const ListAssignments = ({ pointCategories }: { pointCategories: PointCat
               <label className="relative flex items-center justify-center cursor-pointer">
                 <input
                   type="checkbox"
-                  // checked={selectedIds.length === teachers.length}
-                  // onChange={getIdsTeachers}
+                  checked={pointCategoriesIds.length === pointCategories.length}
+                  onChange={getIdsPointCategories}
                   className="sr-only peer"
                 />
                 <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
@@ -52,9 +61,9 @@ export const ListAssignments = ({ pointCategories }: { pointCategories: PointCat
                   <label className="relative flex items-center justify-center cursor-pointer">
                     <input
                       type="checkbox"
-                      // value={teacher.id}
-                      // checked={selectedIds.includes(teacher.id)}
-                      // onChange={() => toggleOne(teacher.id)}
+                      value={category.id}
+                      checked={pointCategoriesIds.includes(category.id)}
+                      onChange={() => toggleOne(category.id)}
                       className="sr-only peer"
                     />
                     <div className="w-4 h-4 rounded border border-gray-500 bg-transparent

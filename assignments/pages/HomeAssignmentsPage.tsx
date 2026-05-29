@@ -22,7 +22,6 @@ export const HomeAssignmentsPage = () => {
   const loading = useAtomValue(loadingAtom);
   const pageCount = useAtomValue(pageCountAtom);
   const assignment = useAtomValue(assignmentAtom);
-  const assignments = useAtomValue(assignmentsAtom);
   const totalAssignments = useAtomValue(totalAssignmentsAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
 
