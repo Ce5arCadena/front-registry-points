@@ -5,7 +5,8 @@ import {
   pageCountAtom, 
   actionModalAtom, 
   pointCategorysAtom, 
-  totalPointCategoriesAtom
+  idsPointCategoriesAtom,
+  totalPointCategoriesAtom,
 } from "../store/pointCategoryStore";
 import { Toaster } from "react-hot-toast";
 import { useAtom, useAtomValue } from "jotai";
@@ -20,9 +21,10 @@ export const PointCategoryPage = () => {
   const {
     toggleOne,
     handlePageClick,
-    getIdsPointCategories,
     dataPointCategories,
-    createAndUpdatePointCategory
+    getIdsPointCategories,
+    createAndUpdatePointCategory,
+    changeStatusPointCategoriesByIds
   } = usePointCategories();
 
   const end = useAtomValue(endAtom);
@@ -31,6 +33,7 @@ export const PointCategoryPage = () => {
   const pageCount = useAtomValue(pageCountAtom);
   const pointCategories = useAtomValue(pointCategorysAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
+  const pointCategoriesIds = useAtomValue(idsPointCategoriesAtom);
   const totalPointCategories = useAtomValue(totalPointCategoriesAtom);
 
   return (
@@ -50,10 +53,13 @@ export const PointCategoryPage = () => {
             </button>
 
             <button
+              disabled={pointCategoriesIds.length <= 0}
               onClick={() => {
-                // setActionModal("create");
+                changeStatusPointCategoriesByIds();
               }}
-              className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
+              className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 border 
+              hover:border-primary hover:text-primary
+                disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-current disabled:hover:text-white">
               Cambiar de Estado
             </button>
           </div>

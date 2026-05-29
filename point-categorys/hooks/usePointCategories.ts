@@ -16,8 +16,8 @@ import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { type PaginateClickEvent } from "../../shared/interfaces";
-import { createPointCategories, getPointCategories } from "../api/queries";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
+import { changeStatesPointCategories, createPointCategories, getPointCategories } from "../api/queries";
 
 const PERPAGE = 12;
 
@@ -44,6 +44,26 @@ export const usePointCategories = () => {
       setPointCategories(prev => [...prev, ...response.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las categorías de puntos. Comuniquese.');
+      navigate('/auth/login');
+      return;
+    } finally {
+      setLoading(false);
+    };
+  };
+
+  const changeStatusPointCategoriesByIds = async () => {
+    if (idsPointCategories.length <= 0) return;
+
+    setLoading(true);
+    try {
+      const responseChangeStatus = await changeStatesPointCategories(idsPointCategories);
+      setTotalPointCategories(responseChangeStatus.meta.total);
+      setCurrentPage(1);
+      setIdsPointCategories([]);
+      setPointCategories(responseChangeStatus.data);
+      toast.success(responseChangeStatus.message);
+    } catch (error) {
+      toast.error('Ha ocurrido un error al cambiar de estado las categorías de puntos. Comuniquese.');
       navigate('/auth/login');
       return;
     } finally {
@@ -130,6 +150,7 @@ export const usePointCategories = () => {
     handlePageClick,
     dataPointCategories,
     getIdsPointCategories,
-    createAndUpdatePointCategory
+    createAndUpdatePointCategory,
+    changeStatusPointCategoriesByIds,
   }
 }

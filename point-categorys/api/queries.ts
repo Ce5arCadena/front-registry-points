@@ -13,3 +13,8 @@ export const createPointCategories = async (data: FormPointCategory, METHOD: 'PO
   const response = await useApi<PointCategoriesResponse>(URL, METHOD, data);
   return response;
 }
+
+export const changeStatesPointCategories = async (data: number[]) => {
+  const response = await useApi<PointCategoriesResponse>(`/point-categories/state`, 'PATCH', { ids: data });
+  return response;
+}
