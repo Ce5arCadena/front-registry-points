@@ -17,6 +17,7 @@ import { PointCategoryPage } from './point-categorys/pages/PointCategoryPage';
 import { HomeAssignmentsPage } from './assignments/pages/HomeAssignmentsPage';
 import { RegistryPointPage } from './registry-points/pages/RegistryPointPage';
 import { HomeTeacherAdmin } from './admin-teacher/components/HomeTeacherAdmin';
+import { PointCategoriesAssignmentsPage } from './point-categories-assignments/pages/PointCategoriesAssignmentsPage';
 
 function App() {
   return (
@@ -60,8 +61,9 @@ function App() {
         }>
           <Route index element={<HomeTeacherAdmin/>}/>
           <Route path='home' element={<HomeTeacherAdmin/>}/>
-          <Route path='point-categories' element={<PointCategoryPage/>}/>
           <Route path='registry-points' element={<RegistryPointPage/>}/>
+          <Route path='point-categories' element={<PointCategoryPage/>}/>
+          <Route path='point-categories-assignments' element={<PointCategoriesAssignmentsPage/>}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/auth/login' />}/>

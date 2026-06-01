@@ -1,9 +1,9 @@
 import { BsPeople } from "react-icons/bs";
-import { MdSubject } from "react-icons/md";
 import { TbCategory } from "react-icons/tb";
 import { LiaHandPointerSolid } from "react-icons/lia";
 import { PiBooksLight, PiStudentBold } from "react-icons/pi";
 import { FaChalkboardTeacher, FaHome } from "react-icons/fa";
+import { MdOutlineAssignmentTurnedIn, MdSubject } from "react-icons/md";
 
 export const ROLES = {
     SUPERADMIN: {
@@ -78,6 +78,12 @@ export const ROLES = {
                 label: "Registro de Puntos",
                 url: '/teacher/registry-points',
                 IconType: LiaHandPointerSolid 
+            },
+            {
+                defaultUrl: false,
+                label: "Asignar Categorías",
+                url: '/teacher/point-categories-assignments',
+                IconType: MdOutlineAssignmentTurnedIn 
             },
         ]
     } 

@@ -39,7 +39,6 @@ export const usePointCategories = () => {
     setLoading(true);
     try {
       const response = await getPointCategories(currentPage);
-      console.log(response.data);
       setTotalPointCategories(response.data.length);
       setPointCategories(prev => [...prev, ...response.data]);
     } catch (error) {
