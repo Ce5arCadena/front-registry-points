@@ -4,6 +4,7 @@ import {
   pointCategoriesAssignmentsAtom, 
   totalPointCategoriesAssignmentAtom 
 } from "../store/pointCategoryAssignmentStore";
+
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -33,6 +34,7 @@ export const usePointCategoryAssignment = () => {
   };
 
   useEffect(() => {
+    setPointCategoriesAssignment([]);
     getInitialData();
   }, []);
   

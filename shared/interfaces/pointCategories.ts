@@ -88,3 +88,17 @@ export interface FormPointCategory {
     name: string;
     max_points: string;
 }
+
+// Formulario de crear o editar asignación de categoria de puntos
+export interface AssignmentDataForm {
+    grade: AssignmentLabel;
+    teacher: AssignmentLabel;
+    subject: AssignmentLabel;
+    academic_year: AssignmentLabel;
+    assignment_id?: number;
+}
+
+interface AssignmentLabel {
+    id: number;
+    label: string;
+}

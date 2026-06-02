@@ -75,15 +75,15 @@ export const ROLES = {
             },
             {
                 defaultUrl: false,
-                label: "Registro de Puntos",
-                url: '/teacher/registry-points',
-                IconType: LiaHandPointerSolid 
-            },
-            {
-                defaultUrl: false,
                 label: "Asignar Categorías",
                 url: '/teacher/point-categories-assignments',
                 IconType: MdOutlineAssignmentTurnedIn 
+            },
+            {
+                defaultUrl: false,
+                label: "Registro de Puntos",
+                url: '/teacher/registry-points',
+                IconType: LiaHandPointerSolid 
             },
         ]
     } 
