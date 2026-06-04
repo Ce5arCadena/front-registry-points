@@ -80,3 +80,31 @@ export interface CourseSearch {
 export interface FormCourseData {
     name: string
 }
+
+// Lista de cursos asignados al maestro
+export interface CoursesByTeacherInterface {
+    message: string;
+    data:    Teacher;
+}
+
+export interface Teacher {
+    id:         number;
+    full_name:  string;
+    document:   string;
+    phone:      string;
+    status:     string;
+    school_id:  number;
+    user_id:    number;
+    created_at: Date;
+    updated_at: Date;
+    grades:     CourseData[];
+}
+
+export interface CourseData {
+    id:         number;
+    name:       string;
+    school_id:  number;
+    status:     string;
+    created_at: Date;
+    updated_at: Date;
+}

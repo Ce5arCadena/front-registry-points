@@ -1,8 +1,10 @@
 import { atom } from "jotai";
+import { type SelectOption } from "../../shared/interfaces";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
 
 export const loadingAtom = atom(false);
 export const actionModalAtom = atom("");
+export const teacherCoursesAtom = atom<SelectOption[]>([]);
 export const pointCategoryAssignmentAtom = atom<PointCategory>();
 export const idsPointCategoriesAssignmentsAtom = atom<number[]>([]);
 export const pointCategoriesAssignmentsAtom = atom<PointCategory[]>([]);

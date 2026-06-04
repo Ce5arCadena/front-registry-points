@@ -99,3 +99,9 @@ export interface PaginateClickEvent {
   isPage: boolean;
   isActive: boolean;
 }
+
+// Selects type
+export interface SelectOption {
+  value: string | number;
+  label: string;
+};
