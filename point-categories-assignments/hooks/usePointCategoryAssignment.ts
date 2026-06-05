@@ -2,7 +2,8 @@ import {
   loadingAtom, 
   currentPageAtom, 
   pointCategoriesAssignmentsAtom, 
-  totalPointCategoriesAssignmentAtom 
+  totalPointCategoriesAssignmentAtom, 
+  pointsCategorySelectAtom
 } from "../store/pointCategoryAssignmentStore";
 
 import { useEffect } from "react";
@@ -15,6 +16,7 @@ export const usePointCategoryAssignment = () => {
   const navigate = useNavigate();
   const setLoading = useSetAtom(loadingAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const setPointsCategorySelect = useSetAtom(pointsCategorySelectAtom);
   const [pointCategoriesAssignment, setPointCategoriesAssignment] = useAtom(pointCategoriesAssignmentsAtom);
   const [totalPointCategoriesAssignment, setTotalPointCategoriesAssignment] = useAtom(totalPointCategoriesAssignmentAtom);
 
@@ -23,6 +25,10 @@ export const usePointCategoryAssignment = () => {
     try {
       const response = await getPointCategories(currentPage);
       setTotalPointCategoriesAssignment(response.data.length);
+      setPointsCategorySelect(response.data.map(pointCategory => ({
+        value: String(pointCategory.id),
+        label: pointCategory.name
+      })));
       setPointCategoriesAssignment(prev => [...prev, ...response.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener las asignaciones de categorías de puntos. Comuniquese.');

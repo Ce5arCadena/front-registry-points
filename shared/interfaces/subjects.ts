@@ -56,3 +56,31 @@ export interface SearchSubjectInterface {
 export interface FormCourseData {
     name: string
 }
+
+// Interfaces para asignación de categorías de puntos
+export interface SubjectsByTeacherInterface {
+    message: string;
+    data:    Data;
+}
+
+export interface Data {
+    id:         number;
+    full_name:  string;
+    document:   string;
+    phone:      string;
+    status:     string;
+    school_id:  number;
+    user_id:    number;
+    created_at: Date;
+    updated_at: Date;
+    subjects:   Subject[];
+}
+
+export interface Subject {
+    id:         number;
+    name:       string;
+    school_id:  number;
+    status:     string;
+    created_at: Date;
+    updated_at: Date;
+}

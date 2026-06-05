@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
-import { getMyCourses } from "../../courses/api/queries";
-import { loadingAtom, teacherCoursesAtom } from "../store/pointCategoryAssignmentStore";
+import { getMyCourses, getMySubjects } from "../../courses/api/queries";
+import { loadingAtom, teacherCoursesAtom, teacherSubjectsAtom } from "../store/pointCategoryAssignmentStore";
 
 export const useSelectPointCategories = () => {
   const navigate = useNavigate();
   const setLoading = useSetAtom(loadingAtom);
   const setTeacherCoursesAtom = useSetAtom(teacherCoursesAtom);
+  const setTeacherSubjectsAtom = useSetAtom(teacherSubjectsAtom);
 
   const getCoursesOptions = async() => {
     setLoading(true);
@@ -32,10 +33,36 @@ export const useSelectPointCategories = () => {
     };
   };
 
+  const getSubjectsOptions = async() => {
+    setLoading(true);
+    try {
+      const response = await getMySubjects();
+      if(response && response.data && response.data.subjects.length > 0) {
+        const formatSubjects = response.data.subjects.map(subject => ({
+          value: String(subject.id),
+          label: subject.name
+        }));
+        setTeacherSubjectsAtom(formatSubjects);
+      } else {
+        setTeacherSubjectsAtom([]);
+      }
+    } catch (error) {
+      toast.error('Ha ocurrido un error al obtener tus asignaturas. Comuniquese.');
+      navigate('/auth/login');
+      return;
+    } finally {
+      setLoading(false);
+    };
+  };
+
   useEffect(() => {
     getCoursesOptions();
+    getSubjectsOptions();
   }, []);
   
 
-  return { getCoursesOptions }
+  return { 
+    getCoursesOptions, 
+    getSubjectsOptions
+  }
 }

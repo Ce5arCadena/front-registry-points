@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { useApi } from "../../utils/useApi";
+import { type SubjectsByTeacherInterface } from "../../shared/interfaces/subjects";
 import { type SearchCourseInterface, type CoursesByTeacherInterface } from "../../shared/interfaces/courses";
 
 export const getMyCourses = async () => {
@@ -8,6 +9,15 @@ export const getMyCourses = async () => {
     return responseCourses;
   } catch (error) {
     toast.error('Ha ocurrido un error al buscar los cursos. Comuniquese.');
+  };
+};
+
+export const getMySubjects = async () => {
+  try {
+    const responseSubjects = await useApi<SubjectsByTeacherInterface>(`/teacher/subjects/`);
+    return responseSubjects;
+  } catch (error) {
+    toast.error('Ha ocurrido un error al buscar las asignaturas. Comuniquese.');
   };
 };
 
