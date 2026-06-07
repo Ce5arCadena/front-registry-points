@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { type SelectOption } from "../../shared/interfaces";
-import { type PointCategory } from "../../shared/interfaces/pointCategories";
+import { INITIAL_VALUES_ASSIGNMENT, type PointCategory } from "../../shared/interfaces/pointCategories";
 
 export const loadingAtom = atom(false);
 export const actionModalAtom = atom("");
@@ -10,6 +10,7 @@ export const pointsCategorySelectAtom = atom<SelectOption[]>([]);
 export const pointCategoryAssignmentAtom = atom<PointCategory>();
 export const idsPointCategoriesAssignmentsAtom = atom<number[]>([]);
 export const pointCategoriesAssignmentsAtom = atom<PointCategory[]>([]);
+export const formAssignmentPointCategoryAtom = atom(INITIAL_VALUES_ASSIGNMENT);
 
 // Paginación
 export const endAtom = atom(0);
