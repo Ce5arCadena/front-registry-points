@@ -36,6 +36,8 @@ export const PointCategoryPage = () => {
   const pointCategoriesIds = useAtomValue(idsPointCategoriesAtom);
   const totalPointCategories = useAtomValue(totalPointCategoriesAtom);
 
+  console.log(actionModal);
+
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
       <Toaster position="top-right" />
@@ -84,7 +86,7 @@ export const PointCategoryPage = () => {
         }
 
         {
-          actionModal === "create" || actionModal === "edit" && (
+          (actionModal === "create" || actionModal === "edit") && (
             <ModalCreateAndUpdatePointCategory
               createAndUpdatePointCategory={createAndUpdatePointCategory}
             />

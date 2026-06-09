@@ -125,7 +125,7 @@ export const useSelectPointCategories = () => {
         value: String(pointCategory.id),
         label: pointCategory.name
       })));
-      setPointCategoriesAssignment(prev => [...prev, ...response.data]);
+      setPointCategoriesAssignment(response.data);
       setFormAssignmentPointCategory(INITIAL_VALUES_ASSIGNMENT);
       setActionModal("");
       return true;

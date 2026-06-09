@@ -44,5 +44,7 @@ export const usePointCategoryAssignment = () => {
     getInitialData();
   }, []);
   
-  return {}
+  return {
+    getInitialData
+  }
 }

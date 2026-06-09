@@ -1,10 +1,10 @@
-import { useAtomValue, useSetAtom } from "jotai";
+import { useEffect } from "react";
+import { useAtom, useSetAtom } from "jotai";
 import { TbCategory, TbNumbers } from "react-icons/tb";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { actionModalAtom, pointCategoryAtom } from "../store/pointCategoryStore";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
-import { useEffect } from "react";
 
 export const ModalCreateAndUpdatePointCategory = ({
   createAndUpdatePointCategory
@@ -12,7 +12,7 @@ export const ModalCreateAndUpdatePointCategory = ({
   createAndUpdatePointCategory: (data: FormPointCategory, METHOD: 'POST' | 'PUT') => Promise<boolean>;
 }) => {
   const setActionModal = useSetAtom(actionModalAtom);
-  const pointCategory = useAtomValue(pointCategoryAtom);
+  const [pointCategory, setPointCategory] = useAtom(pointCategoryAtom);
 
   const {
     register,
@@ -43,6 +43,7 @@ export const ModalCreateAndUpdatePointCategory = ({
         className="text-2xl absolute right-2 top-2 cursor-pointer"
         onClick={() => {
           setActionModal("");
+          setPointCategory(undefined);
         }}
       />
 
@@ -122,6 +123,7 @@ export const ModalCreateAndUpdatePointCategory = ({
           <button
             onClick={() => {
               setActionModal("");
+              setPointCategory(undefined);
             }}
             type="button"
             className="
