@@ -12,9 +12,9 @@ export const searchSubjects = async (value: string, field: string = 'name') => {
   };
 };
 
-export const getMySubjects = async () => {
+export const getMySubjects = async (courseId: number) => {
   try {
-    const responseSubjects = await useApi<SubjectsByTeacherInterface>(`/teacher/subjects/`);
+    const responseSubjects = await useApi<SubjectsByTeacherInterface>(`/teacher/subjects?courseId=${courseId}`);
     return responseSubjects;
   } catch (error) {
     toast.error('Ha ocurrido un error al buscar las asignaturas. Comuniquese.');

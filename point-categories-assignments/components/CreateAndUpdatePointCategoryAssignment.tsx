@@ -133,7 +133,7 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
               noOptionsMessage: () => "!text-gray-500 !py-2",
             }}
             classNamePrefix="select"
-            defaultValue={teacherSubjects[0]}
+            value={teacherSubjects[0]}
             isSearchable={true}
             name="subject"
             options={teacherSubjects}

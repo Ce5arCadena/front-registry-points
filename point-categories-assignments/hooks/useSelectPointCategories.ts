@@ -53,10 +53,10 @@ export const useSelectPointCategories = () => {
     };
   };
 
-  const getSubjectsOptions = async() => {
+  const getSubjectsOptions = async(courseId: number) => {
     setLoading(true);
     try {
-      const response = await getMySubjects();
+      const response = await getMySubjects(courseId);
       if(response && response.data && response.data.subjects.length > 0) {
         const formatSubjects = response.data.subjects.map(subject => ({
           value: String(subject.id),
@@ -76,6 +76,16 @@ export const useSelectPointCategories = () => {
   };
 
   const onChangeSelectsAssignments = (data: SingleValue<SelectOption>, type: string) => {
+    if(type === 'course' && data) {
+      setTeacherSubjectsAtom([]);
+      setFormAssignmentPointCategory(prev => ({
+        ...prev,
+        subject: { value: '', label: '' },
+      }));
+      
+      getSubjectsOptions(Number(data.value));
+    };
+
     setFormAssignmentPointCategory(prev => ({
       ...prev,
       [type]: data ? data : { value: '', label: '' }
@@ -130,7 +140,6 @@ export const useSelectPointCategories = () => {
 
   useEffect(() => {
     getCoursesOptions();
-    getSubjectsOptions();
   }, []);
 
   return {
