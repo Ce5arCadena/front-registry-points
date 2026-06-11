@@ -109,6 +109,7 @@ interface itemSelect {
 }
 
 export interface FormAssignPointCategories {
+  pointCategoryContext?: number;
   course: itemSelect;
   subject: itemSelect;
   pointCategory: itemSelect;
@@ -121,6 +122,7 @@ export interface SaveAsisgnment {
 }
 
 export const INITIAL_VALUES_ASSIGNMENT: FormAssignPointCategories = {
+  pointCategoryContext: 0,
   course: { value: '', label: '' },
   subject: { value: '', label: '' },
   pointCategory: { value: '', label: '' }

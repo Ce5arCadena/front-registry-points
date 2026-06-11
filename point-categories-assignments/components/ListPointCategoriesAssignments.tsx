@@ -1,6 +1,7 @@
 import {
   actionModalAtom,
   pointCategoryAssignmentAtom,
+  formAssignmentPointCategoryAtom,
   idsPointCategoriesAssignmentsAtom,
 } from "../store/pointCategoryAssignmentStore";
 import { RiEdit2Line } from "react-icons/ri";
@@ -21,6 +22,7 @@ export const ListPointCategoriesAssignments = ({
   const setActionModal = useSetAtom(actionModalAtom);
   const setPointCategoryAssignment = useSetAtom(pointCategoryAssignmentAtom);
   const pointCategoriesIds = useAtomValue(idsPointCategoriesAssignmentsAtom);
+  const setFormAssignmentPointCategoryAtom = useSetAtom(formAssignmentPointCategoryAtom);
 
   return (
     <div className="text-gray-400 border-separate text-sm w-full h-screen overflow-y-scroll grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6 auto-rows-max">
@@ -68,13 +70,41 @@ export const ListPointCategoriesAssignments = ({
                           <RiEdit2Line
                             className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                             onClick={() => {
-                              setPointCategoryAssignment(category);
+                              setFormAssignmentPointCategoryAtom({
+                                pointCategoryContext: c.id,
+                                pointCategory: {
+                                  value: category.id ? String(category.id) : '',
+                                  label: category.name,
+                                },
+                                course: {
+                                  value: c.course?.id ? String(c.course.id) : '',
+                                  label: c.course?.name || '',
+                                },
+                                subject: {
+                                  value: c.subject?.id ? String(c.subject.id) : '',
+                                  label: c.subject?.name || '',
+                                }
+                              });
                               setActionModal("edit");
                             }}
                           />
                           <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                             onClick={() => {
-                              setPointCategoryAssignment(category);
+                              setFormAssignmentPointCategoryAtom({
+                                pointCategoryContext: c.id,
+                                pointCategory: {
+                                  value: category.id ? String(category.id) : '',
+                                  label: category.name,
+                                },
+                                course: {
+                                  value: c.course?.id ? String(c.course.id) : '',
+                                  label: c.course?.name || '',
+                                },
+                                subject: {
+                                  value: c.subject?.id ? String(c.subject.id) : '',
+                                  label: c.subject?.name || '',
+                                }
+                              });
                               setActionModal("delete");
                             }}
                           />

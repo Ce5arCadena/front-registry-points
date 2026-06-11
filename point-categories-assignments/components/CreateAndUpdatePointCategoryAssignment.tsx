@@ -63,7 +63,9 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
               noOptionsMessage: () => "!text-gray-500 !py-2",
             }}
             classNamePrefix="select"
-            // defaultValue={pointCategoriesSelect[0]}
+            value={
+              formAssignmentPointCategory.pointCategory && formAssignmentPointCategory.pointCategory.value ? formAssignmentPointCategory.pointCategory : pointCategoriesSelect[0]
+            }
             isSearchable={true}
             name="course"
             options={pointCategoriesSelect}
@@ -98,7 +100,9 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
               noOptionsMessage: () => "!text-gray-500 !py-2",
             }}
             classNamePrefix="select"
-            defaultValue={teacherCourses[0]}
+            value={
+              formAssignmentPointCategory.course && formAssignmentPointCategory.course.value ? formAssignmentPointCategory.course : teacherCourses[0]
+            }
             isSearchable={true}
             name="course"
             options={teacherCourses}
@@ -133,7 +137,9 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
               noOptionsMessage: () => "!text-gray-500 !py-2",
             }}
             classNamePrefix="select"
-            value={teacherSubjects[0]}
+            value={
+              formAssignmentPointCategory.subject && formAssignmentPointCategory.subject.value ? formAssignmentPointCategory.subject : teacherSubjects[0]
+            }
             isSearchable={true}
             name="subject"
             options={teacherSubjects}
@@ -157,6 +163,7 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
           <button
             type="button"
             onClick={() => {
+              setFormAssignmentPointCategory(INITIAL_VALUES_ASSIGNMENT);
               setActionModal("");
             }}
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-secondary hover:text-secondary">

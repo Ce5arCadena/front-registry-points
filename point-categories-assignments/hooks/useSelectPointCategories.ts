@@ -142,6 +142,12 @@ export const useSelectPointCategories = () => {
     getCoursesOptions();
   }, []);
 
+  useEffect(() => {
+    if(formAssignmentPointCategory.pointCategoryContext) {
+      getSubjectsOptions(formAssignmentPointCategory.course.value ? Number(formAssignmentPointCategory.course.value) : 0);
+    }
+  }, [formAssignmentPointCategory]);
+
   return {
     onSubmit,
     getCoursesOptions, 

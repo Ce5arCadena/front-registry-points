@@ -53,7 +53,7 @@ export const PointCategoriesAssignmentsPage = () => {
           )
         }
         
-        {actionModal === "create" && (
+        {(actionModal === "create" || actionModal === "edit") && (
           <CreateAndUpdatePointCategoryAssignment />
         )}
 
