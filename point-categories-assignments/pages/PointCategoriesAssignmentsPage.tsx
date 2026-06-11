@@ -3,6 +3,7 @@ import { useAtom, useAtomValue } from "jotai";
 import Loading from "../../shared/components/Loading";
 import { usePointCategoryAssignment } from "../hooks/usePointCategoryAssignment";
 import { ListPointCategoriesAssignments } from "../components/ListPointCategoriesAssignments";
+import { ModalViewPointCategoryAssignment } from "../components/ModalViewPointCategoryAssignment";
 import { CreateAndUpdatePointCategoryAssignment } from "../components/CreateAndUpdatePointCategoryAssignment";
 import { actionModalAtom, loadingAtom, pointCategoriesAssignmentsAtom } from "../store/pointCategoryAssignmentStore";
 
@@ -45,6 +46,12 @@ export const PointCategoriesAssignmentsPage = () => {
         <ListPointCategoriesAssignments
           pointCategoriesAssignments={pointCategoriesAssignments} 
         />
+
+        {
+          actionModal === "view" && (
+            <ModalViewPointCategoryAssignment />
+          )
+        }
         
         {actionModal === "create" && (
           <CreateAndUpdatePointCategoryAssignment />
