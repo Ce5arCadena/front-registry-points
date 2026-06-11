@@ -1,19 +1,19 @@
-import { 
-  actionModalAtom, 
-  pointCategoryAssignmentAtom, 
-  idsPointCategoriesAssignmentsAtom, 
+import {
+  actionModalAtom,
+  pointCategoryAssignmentAtom,
+  idsPointCategoriesAssignmentsAtom,
 } from "../store/pointCategoryAssignmentStore";
 import { RiEdit2Line } from "react-icons/ri";
-import { IoEyeOutline } from "react-icons/io5";
+import { IoBook, IoEyeOutline, IoPeople, IoSchool } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { useAtomValue, useSetAtom } from "jotai";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
 
-export const ListPointCategoriesAssignments = ({ 
+export const ListPointCategoriesAssignments = ({
   // toggleOne,
   pointCategoriesAssignments,
   // getIdsPointCategories,
-}: { 
+}: {
   // toggleOne: (id: number) => void,
   pointCategoriesAssignments: PointCategory[],
   // getIdsPointCategories: () => void,
@@ -23,81 +23,21 @@ export const ListPointCategoriesAssignments = ({
   const pointCategoriesIds = useAtomValue(idsPointCategoriesAssignmentsAtom);
 
   return (
-    <div className="table text-gray-400 border-separate space-y-6 text-sm w-full">
-      <table className="table text-gray-400 border-separate space-y-6 text-sm w-full">
-        <thead className="bg-gray-800 rounded-md text-light-bg">
-          <tr className="">
-            <th className="p-3 text-center">
-              <label className="relative flex items-center justify-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  // checked={pointCategoriesIds.length === pointCategoriesAssignments.length}
-                  // onChange={getIdsPointCategories}
-                  className="sr-only peer"
-                />
-                <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
-                    peer-checked:bg-primary peer-checked:border-primary
-                    flex items-center justify-center transition-all duration-150">
-                  <svg
-                    className="hidden peer-checked:block w-3 h-3 text-white"
-                    viewBox="0 0 12 12" fill="none"
-                  >
-                    <path
-                      d="M2 6l3 3 5-5"
-                      stroke="currentColor" strokeWidth="1.5"
-                      strokeLinecap="round" strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              </label>
-            </th>
-            <th className="p-3 text-center">Nombre de la Categoría</th>
-            <th className="p-3 text-center">Puntos Máximos</th>
-            <th className="p-3 text-center">Estado</th>
-            <th className="p-3 text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            pointCategoriesAssignments.length > 0 && pointCategoriesAssignments.map((category) => (
-              <tr className="bg-gray-800 text-center text-light-bg" key={category.id}>
-                <td>
-                  <label className="relative flex items-center justify-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      value={category.id}
-                      // checked={pointCategoriesIds.includes(category.id)}
-                      // onChange={() => toggleOne(category.id)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-4 h-4 rounded border border-gray-500 bg-transparent
-                    peer-checked:bg-primary peer-checked:border-primary
-                    flex items-center justify-center transition-all duration-150">
-                      <svg
-                        className="hidden peer-checked:block w-3 h-3 text-white"
-                        viewBox="0 0 12 12" fill="none"
-                      >
-                        <path
-                          d="M2 6l3 3 5-5"
-                          stroke="currentColor" strokeWidth="1.5"
-                          strokeLinecap="round" strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </label>
-                </td>
-                <td className="p-2 font-bold">
-                  {category.name}
-                </td>
-                <td className="p-2">
-                  {category.max_points}
-                </td>
-                <td className="p-2 font-medium">
-                  <span className={`${category.status === "ACTIVE" ? "bg-green-600" : "bg-red-600"} px-1.5 py-1 rounded-full text-xs`}>
-                    {category.status === "ACTIVE" ? "Activo" : "Inactivo"}
-                  </span>
-                </td>
-                <td className="flex gap-1 justify-center p-2">
+    <div className="text-gray-400 border-separate text-sm w-full h-screen overflow-y-scroll grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6 auto-rows-max">
+      {
+        pointCategoriesAssignments.length > 0 && pointCategoriesAssignments.map((category) => (
+          <div className="bg-dark-bg rounded-2xl shadow-md border border-gray-100 p-3 flex flex-col gap-4 max-h-96 overflow-y-auto">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-2xl font-bold leading-snug">{category.name}</h3>
+                <p className="text-sm text-gray-300">Puntos máximos: <span className="font-semibold">{category.max_points}</span></p>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <span className={`text-xs text-black font-bold text-center px-3 py-1 rounded-full ${category.status === "ACTIVE" ? "bg-green-400" : "bg-red-400"}`}>
+                  {category.status === "ACTIVE" ? "Activo" : "Inactivo"}
+                </span>
+                <div className="flex gap-2 bg-light-bg-secondary text-dark-bg px-2 py-1 rounded-full">
                   <IoEyeOutline
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
@@ -118,22 +58,44 @@ export const ListPointCategoriesAssignments = ({
                       setActionModal("delete");
                     }}
                   />
-                </td>
-              </tr>
-            ))
-          }
+                </div>
+              </div>
+            </div>
 
-          {
-            pointCategoriesAssignments && pointCategoriesAssignments.length <= 0 && (
-              <tr className="text-center">
-                <td colSpan={5} className="p-2">
-                  No hay categorías de puntos para mostrar.
-                </td>
-              </tr>
-            )
-          }
-        </tbody>
-      </table>
+            <div className="h-px bg-gray-100" />
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-sm text-gray-200"><IoBook /><span className="font-medium">Asignaciones en cursos</span></div>
+              <div className="flex overflow-y-auto">
+                {category.context?.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {category.context.map((c) => (
+                      <div key={c.id} className="bg-dark-bg-secondary/30 p-2 rounded-lg border border-gray-800">
+                        <div className="font-semibold flex gap-2 items-center">
+                          <IoPeople /> {c.course?.name}
+                        </div>
+                        <div className="text-xs text-gray-300 flex gap-2 items-center">
+                          <IoSchool /> {c.subject?.name}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-300">No hay asignaciones aún.</div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+      {
+        pointCategoriesAssignments && pointCategoriesAssignments.length <= 0 && (
+          <div className="col-span-full flex items-center justify-center h-96">
+            No hay categorías de puntos para mostrar.
+          </div>
+        )
+      }
     </div>
   )
 }
