@@ -28,7 +28,7 @@ export const ListPointCategoriesAssignments = ({
     <div className="text-gray-400 border-separate text-sm w-full h-screen overflow-y-scroll grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6 auto-rows-max">
       {
         pointCategoriesAssignments.length > 0 && pointCategoriesAssignments.map((category) => (
-          <div className="bg-dark-bg rounded-2xl shadow-md border border-gray-100 p-3 flex flex-col gap-4 max-h-96 overflow-y-auto">
+          <div className="bg-dark-bg rounded-2xl shadow-md border border-gray-100 p-3 flex flex-col gap-4 max-h-96 overflow-y-auto" key={category.id}>
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h3 className="text-2xl font-bold leading-snug">{category.name}</h3>

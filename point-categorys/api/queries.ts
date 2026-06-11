@@ -10,7 +10,7 @@ export const getPointCategories = async (page: number = 1) => {
   return response;
 };
 
-export const createOrUpdateAssignment = async (data: SaveAsisgnment, METHOD: 'POST' | 'PUT', URL: string) => {
+export const createOrUpdateAssignment = async (data: SaveAsisgnment, METHOD: 'POST' | 'PATCH', URL: string) => {
   const responseAssignments = await useApi<PointCategoriesResponse>(URL, METHOD, data);
   return responseAssignments;
 };

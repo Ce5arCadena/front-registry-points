@@ -157,7 +157,9 @@ export const CreateAndUpdatePointCategoryAssignment = () => {
           <button
             type="submit"
             className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
-            Asignar
+            {
+              formAssignmentPointCategory.pointCategoryContext ? "Actualizar" : "Asignar"
+            }
           </button>
 
           <button

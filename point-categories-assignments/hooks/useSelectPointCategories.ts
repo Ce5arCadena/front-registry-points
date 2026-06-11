@@ -103,9 +103,9 @@ export const useSelectPointCategories = () => {
 
     setLoading(true);
     try {
-      const URL = '/point-category-contexts';
-      const METHOD = 'POST';
-  
+      const URL = formAssignmentPointCategory.pointCategoryContext ? `/point-category-contexts/${formAssignmentPointCategory.pointCategoryContext}` : '/point-category-contexts';
+      const METHOD = formAssignmentPointCategory.pointCategoryContext ? 'PATCH' : 'POST';
+
       const data = {
         pointCategoryId: Number(formAssignmentPointCategory.pointCategory.value),
         course: Number(formAssignmentPointCategory.course.value),
@@ -146,7 +146,7 @@ export const useSelectPointCategories = () => {
     if(formAssignmentPointCategory.pointCategoryContext) {
       getSubjectsOptions(formAssignmentPointCategory.course.value ? Number(formAssignmentPointCategory.course.value) : 0);
     }
-  }, [formAssignmentPointCategory]);
+  }, [formAssignmentPointCategory.pointCategoryContext]);
 
   return {
     onSubmit,
