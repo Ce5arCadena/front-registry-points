@@ -4,9 +4,9 @@ import {
   idsPointCategoriesAssignmentsAtom,
 } from "../store/pointCategoryAssignmentStore";
 import { RiEdit2Line } from "react-icons/ri";
-import { IoBook, IoEyeOutline, IoPeople, IoSchool } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { useAtomValue, useSetAtom } from "jotai";
+import { IoBook, IoEyeOutline, IoPeople, IoSchool } from "react-icons/io5";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
 
 export const ListPointCategoriesAssignments = ({
@@ -37,25 +37,12 @@ export const ListPointCategoriesAssignments = ({
                 <span className={`text-xs text-black font-bold text-center px-3 py-1 rounded-full ${category.status === "ACTIVE" ? "bg-green-400" : "bg-red-400"}`}>
                   {category.status === "ACTIVE" ? "Activo" : "Inactivo"}
                 </span>
-                <div className="flex gap-2 bg-light-bg-secondary text-dark-bg px-2 py-1 rounded-full">
+                <div className="flex justify-center gap-2 bg-light-bg-secondary text-dark-bg px-2 py-1 rounded-full">
                   <IoEyeOutline
                     className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
                       setPointCategoryAssignment(category);
                       setActionModal("view");
-                    }}
-                  />
-                  <RiEdit2Line
-                    className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                    onClick={() => {
-                      setPointCategoryAssignment(category);
-                      setActionModal("edit");
-                    }}
-                  />
-                  <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                    onClick={() => {
-                      setPointCategoryAssignment(category);
-                      setActionModal("delete");
                     }}
                   />
                 </div>
@@ -70,12 +57,27 @@ export const ListPointCategoriesAssignments = ({
                 {category.context?.length ? (
                   <div className="flex flex-wrap gap-2">
                     {category.context.map((c) => (
-                      <div key={c.id} className="bg-dark-bg-secondary/30 p-2 rounded-lg border border-gray-800">
+                      <div key={c.id} className="bg-dark-bg-secondary/30 p-2 rounded-lg border border-gray-800 flex flex-col gap-1">
                         <div className="font-semibold flex gap-2 items-center">
                           <IoPeople /> {c.course?.name}
                         </div>
                         <div className="text-xs text-gray-300 flex gap-2 items-center">
                           <IoSchool /> {c.subject?.name}
+                        </div>
+                        <div className="flex gap-2 justify-center bg-light-bg-secondary text-dark-bg px-2 py-1 rounded-full">
+                          <RiEdit2Line
+                            className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                            onClick={() => {
+                              setPointCategoryAssignment(category);
+                              setActionModal("edit");
+                            }}
+                          />
+                          <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                            onClick={() => {
+                              setPointCategoryAssignment(category);
+                              setActionModal("delete");
+                            }}
+                          />
                         </div>
                       </div>
                     ))}
