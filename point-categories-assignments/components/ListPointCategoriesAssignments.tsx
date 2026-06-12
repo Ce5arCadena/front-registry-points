@@ -5,8 +5,8 @@ import {
   idsPointCategoriesAssignmentsAtom,
 } from "../store/pointCategoryAssignmentStore";
 import { RiEdit2Line } from "react-icons/ri";
-import { MdDeleteOutline } from "react-icons/md";
 import { useAtomValue, useSetAtom } from "jotai";
+import { MdPublishedWithChanges } from "react-icons/md";
 import { IoBook, IoEyeOutline, IoPeople, IoSchool } from "react-icons/io5";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
 
@@ -59,7 +59,7 @@ export const ListPointCategoriesAssignments = ({
                 {category.context?.length ? (
                   <div className="flex flex-wrap gap-2">
                     {category.context.map((c) => (
-                      <div key={c.id} className="bg-dark-bg-secondary/30 p-2 rounded-lg border border-gray-800 flex flex-col gap-1">
+                      <div key={c.id} className={`bg-dark-bg-secondary/30 p-2 rounded-lg border ${c.status === 'ACTIVE' ? 'border-green-600' : 'border-red-600'} flex flex-col gap-1`}>
                         <div className="font-semibold flex gap-2 items-center">
                           <IoPeople /> {c.course?.name}
                         </div>
@@ -88,7 +88,7 @@ export const ListPointCategoriesAssignments = ({
                               setActionModal("edit");
                             }}
                           />
-                          <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                          <MdPublishedWithChanges className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                             onClick={() => {
                               setFormAssignmentPointCategoryAtom({
                                 pointCategoryContext: c.id,
