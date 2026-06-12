@@ -25,7 +25,7 @@ export const ListPointCategoriesAssignments = ({
   const setFormAssignmentPointCategoryAtom = useSetAtom(formAssignmentPointCategoryAtom);
 
   return (
-    <div className="text-gray-400 border-separate text-sm w-full h-screen overflow-y-scroll grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6 auto-rows-max">
+    <div className="text-gray-400 border-separate text-sm w-full h-screen overflow-y-scroll grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 px-6 py-2 auto-rows-max">
       {
         pointCategoriesAssignments.length > 0 && pointCategoriesAssignments.map((category) => (
           <div className="bg-dark-bg rounded-2xl shadow-md border border-gray-100 p-3 flex flex-col gap-4 max-h-96 overflow-y-auto" key={category.id}>

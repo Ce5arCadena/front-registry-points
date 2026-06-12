@@ -1,20 +1,31 @@
-import { 
-  loadingAtom, 
-  currentPageAtom, 
-  pointCategoriesAssignmentsAtom, 
-  totalPointCategoriesAssignmentAtom, 
-  pointsCategorySelectAtom
+import {
+  endAtom,
+  startAtom,
+  loadingAtom,
+  pageCountAtom,
+  itemOffsetAtom,
+  currentPageAtom,
+  pointsCategorySelectAtom,
+  pointCategoriesAssignmentsAtom,
+  totalPointCategoriesAssignmentAtom,
 } from "../store/pointCategoryAssignmentStore";
 
-import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { getPointCategories } from "../../point-categorys/api/queries";
+import { type PaginateClickEvent } from "../../shared/interfaces";
+
+const PERPAGE = 6;
 
 export const usePointCategoryAssignment = () => {
   const navigate = useNavigate();
+  const setEnd = useSetAtom(endAtom);
+  const setStart = useSetAtom(startAtom);
   const setLoading = useSetAtom(loadingAtom);
+  const [pageCount, setPageCount] = useAtom(pageCountAtom);
+  const [itemOffset, setItemOffset] = useAtom(itemOffsetAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const setPointsCategorySelect = useSetAtom(pointsCategorySelectAtom);
   const [pointCategoriesAssignment, setPointCategoriesAssignment] = useAtom(pointCategoriesAssignmentsAtom);
@@ -39,12 +50,40 @@ export const usePointCategoryAssignment = () => {
     };
   };
 
+  const dataPointCategoriesAssignment = useMemo(() => {
+    if (!pointCategoriesAssignment) return [];
+    const endOffset = itemOffset + PERPAGE;
+    setStart(itemOffset + 1);
+    setEnd(Math.min(itemOffset + PERPAGE, pointCategoriesAssignment.length));
+    return pointCategoriesAssignment.slice(itemOffset, endOffset);
+  }, [itemOffset, pointCategoriesAssignment]);
+
+  const handlePageClick = (event: PaginateClickEvent) => {
+    if (event.nextSelectedPage === undefined) return;
+
+    if (event.nextSelectedPage === pageCount - 1 && pointCategoriesAssignment.length < totalPointCategoriesAssignment) setCurrentPage(prev => prev + 1);
+    const newOffset = (event.nextSelectedPage * PERPAGE) % pointCategoriesAssignment.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    setPageCount(Math.ceil(pointCategoriesAssignment.length / PERPAGE));
+  }, [pointCategoriesAssignment]);
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      getInitialData();
+    }
+  }, [currentPage]);
+
   useEffect(() => {
     setPointCategoriesAssignment([]);
     getInitialData();
   }, []);
-  
+
   return {
-    getInitialData
+    getInitialData,
+    handlePageClick,
+    dataPointCategoriesAssignment
   }
 }

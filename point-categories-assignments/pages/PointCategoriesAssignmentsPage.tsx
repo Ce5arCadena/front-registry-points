@@ -1,18 +1,25 @@
 import { Toaster } from "react-hot-toast";
 import { useAtom, useAtomValue } from "jotai";
 import Loading from "../../shared/components/Loading";
+import { Pagination } from "../../courses/components/Pagination";
 import { usePointCategoryAssignment } from "../hooks/usePointCategoryAssignment";
 import { ListPointCategoriesAssignments } from "../components/ListPointCategoriesAssignments";
 import { ModalViewPointCategoryAssignment } from "../components/ModalViewPointCategoryAssignment";
 import { CreateAndUpdatePointCategoryAssignment } from "../components/CreateAndUpdatePointCategoryAssignment";
-import { actionModalAtom, loadingAtom, pointCategoriesAssignmentsAtom } from "../store/pointCategoryAssignmentStore";
+import { actionModalAtom, endAtom, loadingAtom, pageCountAtom, pointCategoriesAssignmentsAtom, startAtom, totalPointCategoriesAssignmentAtom } from "../store/pointCategoryAssignmentStore";
 
 export const PointCategoriesAssignmentsPage = () => {
-  usePointCategoryAssignment();
+  const {
+    handlePageClick,
+    dataPointCategoriesAssignment
+  } = usePointCategoryAssignment();
 
+  const end = useAtomValue(endAtom);
+  const start = useAtomValue(startAtom);
   const loading = useAtomValue(loadingAtom);
+  const pageCount = useAtomValue(pageCountAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
-  const pointCategoriesAssignments = useAtomValue(pointCategoriesAssignmentsAtom);
+  const totalPointCategoriAssignment = useAtomValue(totalPointCategoriesAssignmentAtom);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -44,15 +51,27 @@ export const PointCategoriesAssignmentsPage = () => {
         </div>
 
         <ListPointCategoriesAssignments
-          pointCategoriesAssignments={pointCategoriesAssignments} 
+          pointCategoriesAssignments={dataPointCategoriesAssignment}
         />
+
+        {
+          dataPointCategoriesAssignment.length > 0 && (
+            <Pagination
+              end={end}
+              start={start}
+              pageCount={pageCount}
+              total={totalPointCategoriAssignment}
+              handlePageClick={handlePageClick}
+            />
+          )
+        }
 
         {
           actionModal === "view" && (
             <ModalViewPointCategoryAssignment />
           )
         }
-        
+
         {(actionModal === "create" || actionModal === "edit") && (
           <CreateAndUpdatePointCategoryAssignment />
         )}
