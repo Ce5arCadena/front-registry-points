@@ -9,19 +9,18 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { MdPublishedWithChanges } from "react-icons/md";
 import { IoBook, IoEyeOutline, IoPeople, IoSchool } from "react-icons/io5";
 import { type PointCategory } from "../../shared/interfaces/pointCategories";
+import { useChangeStatePointCategoryAssignment } from "../hooks/useChangeStatePointCategoryAssignment";
 
 export const ListPointCategoriesAssignments = ({
-  // toggleOne,
   pointCategoriesAssignments,
-  // getIdsPointCategories,
 }: {
-  // toggleOne: (id: number) => void,
   pointCategoriesAssignments: PointCategory[],
-  // getIdsPointCategories: () => void,
 }) => {
+  const {
+    changeStatusPointCategoriesById
+  } = useChangeStatePointCategoryAssignment();
   const setActionModal = useSetAtom(actionModalAtom);
   const setPointCategoryAssignment = useSetAtom(pointCategoryAssignmentAtom);
-  const pointCategoriesIds = useAtomValue(idsPointCategoriesAssignmentsAtom);
   const setFormAssignmentPointCategoryAtom = useSetAtom(formAssignmentPointCategoryAtom);
 
   return (
@@ -90,21 +89,7 @@ export const ListPointCategoriesAssignments = ({
                           />
                           <MdPublishedWithChanges className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                             onClick={() => {
-                              setFormAssignmentPointCategoryAtom({
-                                pointCategoryContext: c.id,
-                                pointCategory: {
-                                  value: category.id ? String(category.id) : '',
-                                  label: category.name,
-                                },
-                                course: {
-                                  value: c.course?.id ? String(c.course.id) : '',
-                                  label: c.course?.name || '',
-                                },
-                                subject: {
-                                  value: c.subject?.id ? String(c.subject.id) : '',
-                                  label: c.subject?.name || '',
-                                }
-                              });
+                              changeStatusPointCategoriesById(c.id);
                               setActionModal("delete");
                             }}
                           />
