@@ -1,12 +1,13 @@
 import { Toaster } from "react-hot-toast";
 import { useAtom, useAtomValue } from "jotai";
+
 import Loading from "../../shared/components/Loading";
 import { Pagination } from "../../courses/components/Pagination";
 import { usePointCategoryAssignment } from "../hooks/usePointCategoryAssignment";
 import { ListPointCategoriesAssignments } from "../components/ListPointCategoriesAssignments";
 import { ModalViewPointCategoryAssignment } from "../components/ModalViewPointCategoryAssignment";
 import { CreateAndUpdatePointCategoryAssignment } from "../components/CreateAndUpdatePointCategoryAssignment";
-import { actionModalAtom, endAtom, loadingAtom, pageCountAtom, pointCategoriesAssignmentsAtom, startAtom, totalPointCategoriesAssignmentAtom } from "../store/pointCategoryAssignmentStore";
+import { actionModalAtom, endAtom, loadingAtom, pageCountAtom, startAtom, totalPointCategoriesAssignmentAtom } from "../store/pointCategoryAssignmentStore";
 
 export const PointCategoriesAssignmentsPage = () => {
   const {
@@ -35,17 +36,6 @@ export const PointCategoriesAssignmentsPage = () => {
               }}
               className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
               Asignar Categoria de Puntos
-            </button>
-
-            <button
-              // disabled={pointCategoriesIds.length <= 0}
-              onClick={() => {
-                // changeStatusPointCategoriesByIds();
-              }}
-              className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 border cursor-pointer
-              hover:border-primary hover:text-primary
-                disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-current disabled:hover:text-white">
-              Cambiar de Estado
             </button>
           </div>
         </div>

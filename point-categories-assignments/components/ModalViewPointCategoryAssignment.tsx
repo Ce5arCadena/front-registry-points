@@ -38,7 +38,7 @@ export const ModalViewPointCategoryAssignment = () => {
             {pointCategoryAssignment.context?.length ? (
               <div className="flex flex-wrap gap-2">
                 {pointCategoryAssignment.context.map((c) => (
-                  <div key={c.id} className="bg-dark-bg-secondary/30 p-2 rounded-lg border border-gray-800">
+                  <div key={c.id} className={`bg-dark-bg-secondary/30 p-2 rounded-lg border ${c.status === 'ACTIVE' ? 'border-green-600' : 'border-red-600'} flex flex-col gap-1`}>
                     <div className="font-semibold flex gap-2 items-center">
                       <IoPeople/> {c.course?.name}
                     </div>
