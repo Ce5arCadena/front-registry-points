@@ -1,7 +1,8 @@
-import { useAtom, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useAtom, useSetAtom } from "jotai";
+
 import { getTeacherWithCourses } from "../api/queries";
 import { loadingAtom, teacherAtom } from "../store/registryPointsStore";
 
@@ -25,9 +26,15 @@ export const useRegistryPoints = () => {
     };
   };
 
+  const handleViewStudents = async (course: number, subject: number) => {
+    navigate(`courses/${course}/subjects/${subject}`);
+  };
+
   useEffect(() => {
     getInitialData();
   }, []);
 
-  return {};
+  return {
+    handleViewStudents
+  };
 }

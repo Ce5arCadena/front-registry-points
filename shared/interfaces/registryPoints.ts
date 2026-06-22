@@ -52,3 +52,39 @@ export interface PointCategoryContext {
   updated_at: Date;
   point_category: Subject;
 }
+
+// Estudiantes de registro de puntos con categorías de puntos para registro de puntos
+export interface StudentWithPointCategoriesResponse {
+  ok: number;
+  data: StudentsWithPointCategories;
+  message: string;
+}
+
+export interface StudentsWithPointCategories {
+  students: Student[];
+  categories: Category[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  max_points: number;
+  teacher_id: number;
+  school_id: number;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface Student {
+  id: number;
+  name: string;
+  last_name: string;
+  document: string;
+  phone: string;
+  grade_id: number;
+  school_id: number;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+}

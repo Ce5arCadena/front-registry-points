@@ -4,10 +4,12 @@ import { Toaster } from "react-hot-toast";
 import Loading from "../../shared/components/Loading";
 import { loadingAtom } from "../store/registryPointsStore";
 import { useRegistryPoints } from "../hooks/useRegistryPoints";
-import { ListCoursesWithSubjects } from "./ListCoursesWithSubjects";
+import { ListCoursesWithSubjects } from "../components/ListCoursesWithSubjects";
 
 export const RegistryPointPage = () => {
-  useRegistryPoints();
+  const {
+    handleViewStudents
+  } = useRegistryPoints();
 
   const loading = useAtomValue(loadingAtom);
 
@@ -18,11 +20,13 @@ export const RegistryPointPage = () => {
         <div className="bg-dark-bg-elevated border-l-8 rounded-r-md flex items-center justify-between p-2 rounded-l-xl border-primary">
           <div>
             <h1 className="text-2xl font-bold">Registro de puntos</h1>
-            <h3 className="font-medium text-gray-300">Seleccioná un curso y luego una asignatura para comenzar.</h3>
+            <h3 className="font-medium text-gray-300">Selecciona un curso y luego una asignatura para comenzar.</h3>
           </div>
         </div>
 
-        <ListCoursesWithSubjects/>
+        <ListCoursesWithSubjects
+          handleViewStudents={handleViewStudents}
+        />
 
         {
           loading && (

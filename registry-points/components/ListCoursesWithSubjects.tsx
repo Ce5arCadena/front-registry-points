@@ -4,7 +4,11 @@ import { IoBookOutline } from "react-icons/io5";
 
 import { teacherAtom } from "../store/registryPointsStore";
 
-export const ListCoursesWithSubjects = ({}) => {
+export const ListCoursesWithSubjects = ({
+  handleViewStudents
+}: {
+  handleViewStudents: (course: number, subject: number) => void
+}) => {
   const teacher = useAtomValue(teacherAtom);
 
   if (!teacher) return null;
@@ -14,7 +18,7 @@ export const ListCoursesWithSubjects = ({}) => {
       {
         teacher && teacher.grades.length > 0 ? (
           teacher.grades.map(course => (
-            <div className="bg-dark-bg rounded-lg shadow-md border border-primary p-3 flex flex-col gap-4 max-h-96 overflow-y-auto" key={course.id}>
+            <div className="bg-dark-bg rounded-lg shadow-md border border-primary p-3 flex flex-col gap-4 max-h-64 overflow-y-auto" key={course.id}>
               {/* header de la card */}
               <div className="">
                 <div className="flex gap-2 items-center text-white">
@@ -30,7 +34,9 @@ export const ListCoursesWithSubjects = ({}) => {
               {
                 course.subjects && course.subjects.length > 0 ? (
                   course.subjects.map(subject => (
-                    <div className="flex gap-2 items-center justify-between text-white border border-primary rounded-lg p-2 cursor-pointer transition-all ease-in-out duration-300 hover:bg-dark-bg-elevated" key={subject.id}>
+                    <div
+                      onClick={() => handleViewStudents(course.id, subject.id)} 
+                      className="flex gap-2 items-center justify-between text-white border border-primary rounded-lg p-2 cursor-pointer transition-all ease-in-out duration-300 hover:bg-dark-bg-elevated" key={subject.id}>
                       <div className="flex items-center gap-2">
                         <IoBookOutline />
                         <span className="font-semibold">
