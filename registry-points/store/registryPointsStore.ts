@@ -1,13 +1,16 @@
 import { atom } from "jotai";
-import { 
-    type Teacher, 
-    type StudentWithPointCategoriesResponse, 
+import {
+    type Teacher,
+    type StudentWithPointCategoriesResponse,
+    type DraftPoints,
 } from "../../shared/interfaces/registryPoints";
 
 export const loadingAtom = atom(false);
 export const actionModalAtom = atom("");
 export const teacherAtom = atom<Teacher>();
-export const studentsWithPointCategoriesAtom = atom<StudentWithPointCategoriesResponse>(); 
+export const studentsWithPointCategoriesAtom = atom<StudentWithPointCategoriesResponse>();
+export const draftPointsAtom = atom<DraftPoints>({});
+export const hasUnsavedChangesAtom = atom(false);
 
 // Paginación
 export const endAtom = atom(0);

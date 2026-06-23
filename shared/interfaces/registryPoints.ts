@@ -61,30 +61,21 @@ export interface StudentWithPointCategoriesResponse {
 }
 
 export interface StudentsWithPointCategories {
-  students: Student[];
-  categories: Category[];
+  students: RegistryPointStudent[];
+  point_category_contexts: RegistryPointCategory[];
 }
 
-export interface Category {
-  id: number;
-  name: string;
-  max_points: number;
-  teacher_id: number;
-  school_id: number;
-  status: string;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface Student {
+export interface RegistryPointStudent {
   id: number;
   name: string;
   last_name: string;
-  document: string;
-  phone: string;
-  grade_id: number;
-  school_id: number;
-  status: string;
-  created_at: Date;
-  updated_at: Date;
+  registered_points: Record<string, number | null>;
 }
+
+export interface RegistryPointCategory {
+  id: number;
+  name: string;
+  max_points: number;
+}
+
+export type DraftPoints = Record<number, Record<string, number>>;
