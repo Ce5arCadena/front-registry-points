@@ -4,6 +4,7 @@ export interface CoursesInterface {
     ok:      number;
     meta:    Meta;
     message: string;
+    errors?:  string[];
 }
 
 export interface ResponseCourseInterface {

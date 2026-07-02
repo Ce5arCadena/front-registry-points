@@ -39,7 +39,7 @@ export const ModalViewCourse = ({
             Asignaturas
           </h4>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {
               course?.subjects && course.subjects.length > 0 ? course?.subjects.map(subject =>
                 <div key={subject.id} className="

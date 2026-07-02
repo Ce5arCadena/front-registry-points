@@ -97,7 +97,7 @@ export const useCourses = ({
   const deleteCourse = async (id: number): Promise<boolean> => {
     setloading(true);
     try {
-      const responseDeleteCourse = await useApi<ResponseCourseInterface>(`/courses/${id}`, 'DELETE');
+      const responseDeleteCourse = await useApi<CoursesInterface>(`/courses/${id}`, 'DELETE');
       if (responseDeleteCourse.ok !== 200 && responseDeleteCourse.errors) {
         const errors = responseDeleteCourse.errors?.join(" ");
         toast.error(errors);
@@ -105,8 +105,9 @@ export const useCourses = ({
       }
 
       toast.success(responseDeleteCourse.message);
-      const newCourses = courses.filter(course => course.id !== id);
-      setCourses(newCourses);
+      setTotalCourses(responseDeleteCourse.meta.total);
+      setTotalPages(responseDeleteCourse.meta.last_page);
+      setCourses(responseDeleteCourse.data);
       setCourse(null);
       setActionModal("");
       return true;
