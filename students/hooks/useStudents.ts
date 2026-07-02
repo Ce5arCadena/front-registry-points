@@ -39,10 +39,10 @@ export const useStudents = () => {
     setIsSearch(true);
     setCourseId(course);
     try {
-      console.log(currentPage, course, students)
       const responseStudents = await useApi<StudentsInterface>(`/students?page=${currentPage}&gradeId=${course}`);
+      console.log(responseStudents)
       setTotalStudents(responseStudents.meta.total);
-      resetData ? setStudents([...responseStudents.data]) : setStudents(prev => [...prev, ...responseStudents.data]);
+      resetData ? setStudents(responseStudents.data) : setStudents(prev => [...prev, ...responseStudents.data]);
     } catch (error) {
       toast.error('Ha ocurrido un error al obtener los estudiantes. Comuniquese.');
       navigate('/auth/login');

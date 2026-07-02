@@ -10,7 +10,7 @@ export const ActionsStudents = ({
   setActionModal
 }: {
   courses: Course[],
-  getStudents: (id: number) => void,
+  getStudents: (id: number, resetData?: boolean) => void,
   setActionModal: (value: string) => void
 }) => {
   const setStudent = useSetAtom(studentAtom);
@@ -49,7 +49,7 @@ export const ActionsStudents = ({
         onChange={(e) => {
           if (!e.target.value) return;
           setCourseId(Number(e.target.value));
-          getStudents(Number(e.target.value));
+          getStudents(Number(e.target.value), true);
         }}
       >
         <option value="">Buscar por curso</option>
