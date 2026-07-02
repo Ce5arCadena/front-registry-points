@@ -20,10 +20,11 @@ export const saveStudentsPoints = async (course: number, subject: number, draftP
     id: Number(studentId),
     registered_points: points,
   }));
-  const response = await useApi<{ ok: boolean; message: string }>(
-    `/registry-points/courses/${course}/subjects/${subject}`,
+
+  const response = await useApi<StudentWithPointCategoriesResponse>(
+    `/registry-points`,
     'POST',
-    { students }
+    { points: students }
   );
   return response;
 };

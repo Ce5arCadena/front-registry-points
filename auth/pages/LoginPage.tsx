@@ -5,13 +5,12 @@ import WaveLogin from '../../shared/imgs/wave-login.svg';
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import { useApi } from "../../utils/useApi";
-import toast, { Toaster } from "react-hot-toast";
-import { ROLES, type RoleKey } from "../../shared/auth/roles";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useLogin } from "../hooks/useLogin";
+import Loading from "../../shared/components/Loading";
+import type { LoginData } from "../../shared/interfaces";
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
-import type { LoginData, LoginResponse } from "../../shared/interfaces";
 
 export const LoginPage = () => {
   const {
@@ -24,29 +23,8 @@ export const LoginPage = () => {
   });
   const passwordValue = watch('password');
   const [showPassword, setShowPassword] = useState(false); 
-
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<LoginData> = async (values) => {
-    try {
-      const responseLogin = await useApi<LoginResponse>('/auth/login', 'POST', values);
-      toast(responseLogin.message, {
-        icon: responseLogin.ok ? "✅" : "❌"
-      });
-      if (!responseLogin.ok) return;
-
-      localStorage.setItem('rol', responseLogin.data.rol);
-      localStorage.setItem('token', responseLogin.data.token);
-
-      const rol = responseLogin.data.rol;
-      navigate(ROLES[rol as RoleKey].defaultRoute);
-    } catch (error) {
-      toast.error('Ocurrió un error al realizar la petición', {
-        duration: 4000,
-        position: 'top-right'
-      });
-    };
-  };
+  
+  const { onSubmit, loading } = useLogin();
 
   return (
     <div className="bg-linear-to-b from-dark-bg to-dark-bg-elevated flex flex-col justify-between items-center rounded-2xl w-[25vw]">
@@ -147,6 +125,15 @@ export const LoginPage = () => {
           </div>
         </form>
       </div>
+
+      {
+        loading && (
+          <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
+            <Loading/>
+            <span>Por favor, espera.</span>
+          </div>
+        )
+      }
 
       {/* imagen wave */}
       <img src={WaveLogin} alt="Wave" className='w-full rounded-b-2xl'/>

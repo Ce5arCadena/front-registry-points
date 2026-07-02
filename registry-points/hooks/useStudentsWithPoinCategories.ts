@@ -1,17 +1,18 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
-import { getStudentsByCourseWithPointCategories, saveStudentsPoints } from "../api/queries";
 import {
+  teacherAtom,
+  loadingAtom,
   draftPointsAtom,
   hasUnsavedChangesAtom,
-  loadingAtom,
   studentsWithPointCategoriesAtom,
-  teacherAtom,
 } from "../store/registryPointsStore";
+import { getStudentsByCourseWithPointCategories, saveStudentsPoints } from "../api/queries";
 import type { DraftPoints, RegistryPointStudent } from "../../shared/interfaces/registryPoints";
 
+// Arma la estructura de los estudiantes para la tabla de asignación de puntos.
 const initializeDraft = (students: RegistryPointStudent[]): DraftPoints =>
   students.reduce((acc, student) => {
     acc[student.id] = Object.entries(student.registered_points).reduce(
@@ -25,9 +26,9 @@ export default function useStudentsWithPoinCategories(courseId: number, subjectI
   const navigate = useNavigate();
   const teacher = useAtomValue(teacherAtom);
   const setLoading = useSetAtom(loadingAtom);
-  const [studentsData, setStudentsWithPointCategories] = useAtom(studentsWithPointCategoriesAtom);
   const [draftPoints, setDraftPoints] = useAtom(draftPointsAtom);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useAtom(hasUnsavedChangesAtom);
+  const [studentsData, setStudentsWithPointCategories] = useAtom(studentsWithPointCategoriesAtom);
 
   const courseName = teacher?.grades.find(g => g.id === courseId)?.name ?? '';
   const subjectName = teacher?.grades
@@ -60,9 +61,10 @@ export default function useStudentsWithPoinCategories(courseId: number, subjectI
   const savePoints = async () => {
     setLoading(true);
     try {
-      await saveStudentsPoints(courseId, subjectId, draftPoints);
+      const response = await saveStudentsPoints(courseId, subjectId, draftPoints);
       toast.success('Puntos guardados correctamente.');
       setHasUnsavedChanges(false);
+      setStudentsWithPointCategories(response);
     } catch (error) {
       toast.error('Ha ocurrido un error al guardar los puntos. Inténtelo de nuevo.');
     } finally {

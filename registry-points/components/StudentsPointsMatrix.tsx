@@ -1,16 +1,4 @@
-import type { DraftPoints, RegistryPointCategory, RegistryPointStudent } from "../../shared/interfaces/registryPoints";
-
-interface StudentsPointsMatrixProps {
-  students: RegistryPointStudent[];
-  categories: RegistryPointCategory[];
-  draftPoints: DraftPoints;
-  hasUnsavedChanges: boolean;
-  courseName: string;
-  subjectName: string;
-  onPointChange: (studentId: number, categoryId: string, value: number) => void;
-  onSave: () => void;
-  onBack: () => void;
-}
+import type { DraftPoints, StudentsPointsMatrixProps } from "../../shared/interfaces/registryPoints";
 
 const getInitials = (name: string, lastName: string) =>
   `${name.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -32,9 +20,14 @@ export const StudentsPointsMatrix = ({
   onSave,
   onBack,
 }: StudentsPointsMatrixProps) => {
+  const stats = [
+    { label: "Estudiantes", value: students.length },
+    { label: "Categorías", value: categories.length },
+    { label: "Puntos asignados", value: totalAssigned(draftPoints) },
+  ];
+
   return (
     <div className="flex flex-col gap-4 h-full">
-      {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-400">
         <button
           onClick={onBack}
@@ -46,7 +39,6 @@ export const StudentsPointsMatrix = ({
         <span>{courseName} › {subjectName}</span>
       </div>
 
-      {/* Title */}
       <div className="bg-dark-bg-elevated border-l-8 rounded-r-md flex items-center p-2 rounded-l-xl border-primary">
         <div>
           <h1 className="text-2xl font-bold">
@@ -58,13 +50,8 @@ export const StudentsPointsMatrix = ({
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        {[
-          { label: "Estudiantes", value: students.length },
-          { label: "Categorías", value: categories.length },
-          { label: "Puntos asignados", value: totalAssigned(draftPoints) },
-        ].map(stat => (
+        {stats.map(stat => (
           <div key={stat.label} className="bg-dark-bg-elevated border border-gray-700 rounded-lg p-4">
             <p className="text-gray-400 text-sm">{stat.label}</p>
             <p className="text-2xl font-bold text-white">{stat.value}</p>
@@ -72,7 +59,7 @@ export const StudentsPointsMatrix = ({
         ))}
       </div>
 
-      {/* Matrix */}
+      {/* Tabla de estudiantes con categorías */}
       <div className="flex-1 overflow-auto border border-gray-700 rounded-lg">
         <table className="min-w-full text-sm text-white">
           <thead>
@@ -90,6 +77,7 @@ export const StudentsPointsMatrix = ({
           </thead>
           <tbody>
             {students.map((student, idx) => {
+              // Calcula que sea una fila con número par para darle un fondo diferente.
               const rowBg = idx % 2 === 0 ? 'bg-dark-bg' : 'bg-dark-bg-secondary';
               return (
                 <tr key={student.id} className={`border-b border-gray-700 ${rowBg}`}>
@@ -137,7 +125,6 @@ export const StudentsPointsMatrix = ({
         </table>
       </div>
 
-      {/* Footer */}
       <div className="flex items-center justify-between pt-1">
         <span className={`text-sm transition-opacity ${hasUnsavedChanges ? 'text-warning opacity-100' : 'opacity-0'}`}>
           ⚠ Cambios sin guardar

@@ -79,3 +79,15 @@ export interface RegistryPointCategory {
 }
 
 export type DraftPoints = Record<number, Record<string, number>>;
+
+export interface StudentsPointsMatrixProps {
+  students: RegistryPointStudent[];
+  categories: RegistryPointCategory[];
+  draftPoints: DraftPoints;
+  hasUnsavedChanges: boolean;
+  courseName: string;
+  subjectName: string;
+  onPointChange: (studentId: number, categoryId: string, value: number) => void;
+  onSave: () => void;
+  onBack: () => void;
+}

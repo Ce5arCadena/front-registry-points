@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
 import { useAtomValue } from "jotai";
 import { Toaster } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router";
 
 import Loading from "../../shared/components/Loading";
 import { loadingAtom } from "../store/registryPointsStore";
@@ -9,19 +9,19 @@ import { StudentsPointsMatrix } from "../components/StudentsPointsMatrix";
 import useStudentsWithPoinCategories from "../hooks/useStudentsWithPoinCategories";
 
 export const StudentsWithPointCategoriesPage = () => {
-  const { course, subject } = useParams();
   const navigate = useNavigate();
+  const { course, subject } = useParams();
   const loading = useAtomValue(loadingAtom);
 
   const {
-    studentsData,
-    draftPoints,
-    hasUnsavedChanges,
     courseName,
-    subjectName,
-    fetchStudentsWithCategories,
-    handlePointChange,
     savePoints,
+    draftPoints,
+    subjectName,
+    studentsData,
+    hasUnsavedChanges,
+    handlePointChange,
+    fetchStudentsWithCategories,
   } = useStudentsWithPoinCategories(Number(course), Number(subject));
 
   useEffect(() => {
