@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { TbLockPassword } from "react-icons/tb";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { FaChalkboardTeacher, FaRegIdCard } from "react-icons/fa";
 import { MdOutlineEmail, MdOutlineLocalPhone } from "react-icons/md";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 import { type FormCourseData, type Teacher } from "../../shared/interfaces/teachers";
-import { TbLockPassword } from "react-icons/tb";
 
 export const ModalCreateAndUpdateTeacher = ({
   teacher,
@@ -15,6 +17,8 @@ export const ModalCreateAndUpdateTeacher = ({
   createTeacher: (values: FormCourseData, method: string, url: string) => Promise<boolean>,
   setActionModal: (value: string) => void,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     reset,
     register,
@@ -205,7 +209,7 @@ export const ModalCreateAndUpdateTeacher = ({
             </div>
             <input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="new-password"
               {...register('password', {
                 required: {
@@ -220,6 +224,16 @@ export const ModalCreateAndUpdateTeacher = ({
               className="block w-full pl-9 pr-3 py-2.5 bg-dark-bg-secondary border text-dark-text text-sm rounded-lg focus:ring-1 focus:ring-secondary focus:border-secring-secondary outline-none placeholder:text-dark-text-secondary transition-all"
               placeholder="ejemplo@ejemplo.com"
             />
+            {
+              <div className="absolute inset-y-0 right-3 flex items-center pl-3">
+                {showPassword && (
+                  <AiOutlineEyeInvisible className="w-4 h-4 text-dark-text-secondary hover:cursor-pointer" onClick={() => setShowPassword(false)} />
+                )}
+                {!showPassword && (
+                  <AiOutlineEye className="w-4 h-4 text-dark-text-secondary hover:cursor-pointer" onClick={() => setShowPassword(true)} />
+                )}
+              </div>
+            }
           </div>
           {
             errors.password && (
@@ -239,7 +253,7 @@ export const ModalCreateAndUpdateTeacher = ({
 
           <button
             type="button"
-            onClick={() => setActionModal("")} 
+            onClick={() => setActionModal("")}
             className="
             text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-warning hover:text-warning
           ">

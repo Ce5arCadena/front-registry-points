@@ -33,7 +33,7 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseTeachers = await useApi<TeachersInterface>(`/teachers?page=${currentPage}`);
-      console.log(responseTeachers);
+
       setTotalTeachers(responseTeachers.meta.total);
       setTotalPages(responseTeachers.meta.last_page);
       setTeachers(prev => [...prev, ...responseTeachers.data]);
@@ -86,7 +86,7 @@ export const useTeachers = () => {
   const deleteTeacher = async (id: number): Promise<boolean> => {
     setloading(true);
     try {
-      const responseDeleteTeacher = await useApi<ResponseTeacherInterface>(`/teachers/${id}`, 'DELETE');
+      const responseDeleteTeacher = await useApi<TeachersInterface>(`/teachers/${id}`, 'DELETE');
 
       if (responseDeleteTeacher.errors && Array.isArray(responseDeleteTeacher.errors) && responseDeleteTeacher.errors.length > 0) {
         const errorsFormat = responseDeleteTeacher.errors.join(" ");
@@ -102,8 +102,9 @@ export const useTeachers = () => {
       };
 
       toast.success(responseDeleteTeacher.message);
-      const newTeachers = teachers.filter(teacher => teacher.id !== id);
-      setTeachers(newTeachers);
+      setTotalTeachers(responseDeleteTeacher.meta.total);
+      setTotalPages(responseDeleteTeacher.meta.last_page);
+      setTeachers(responseDeleteTeacher.data);
       setTeacher(null);
       setActionModal("");
       return true;
@@ -122,7 +123,7 @@ export const useTeachers = () => {
     setloading(true);
     try {
       const responseChangeStatus = await useApi<TeachersInterface>('/teachers/state', 'PATCH', { ids: selectedIds });
-      console.log(responseChangeStatus);
+    
       setTotalTeachers(responseChangeStatus.meta.total);
       setTotalPages(responseChangeStatus.meta.last_page);
       setCurrentPage(1);

@@ -4,6 +4,7 @@ export interface TeachersInterface {
     ok:      number;
     meta:    Meta;
     message: string;
+    errors?: string[] | Record<string, string[]>
 }
 
 export interface ResponseTeacherInterface {

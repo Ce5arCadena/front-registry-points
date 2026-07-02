@@ -119,12 +119,16 @@ export const ListTeachers = (
                       setActionModal("edit");
                     }}
                   />
-                  <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                    onClick={() => {
-                      setTeacher(teacher);
-                      setActionModal("delete");
-                    }}
-                  />
+                  {
+                    teacher.status === "ACTIVE" && (
+                      <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                        onClick={() => {
+                          setTeacher(teacher);
+                          setActionModal("delete");
+                        }}
+                      />
+                    )
+                  }
                 </td>
               </tr>
             ))
