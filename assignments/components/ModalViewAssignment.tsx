@@ -26,7 +26,7 @@ export const ModalViewAssignment = () => {
       />
 
       <div
-        className="bg-dark-bg-elevated rounded-lg border border-secondary overflow-y-auto min-w-96 pb-3 px-3 relative"
+        className="bg-dark-bg-elevated rounded-lg border border-secondary overflow-y-auto min-w-96 max-h-[80vh] pb-3 px-3 relative"
       >
         <div className="flex gap-2 items-center justify-between mb-2 w-full sticky top-0 bg-dark-bg-elevated pt-3 pb-1">
           <IoCloseCircleOutline

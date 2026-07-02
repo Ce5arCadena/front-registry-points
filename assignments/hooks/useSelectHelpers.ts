@@ -55,7 +55,6 @@ export const useSelectHelpers = () => {
 
   const handleChange = (newValue: SingleValue<{ value: number, label: string }>, type: Option) => {
     setValuesAssignment((prev) => {
-      console.log(prev, type, newValue)
       return {
         ...prev,
         [type]: {
@@ -82,7 +81,11 @@ export const useSelectHelpers = () => {
       const METHOD = valuesAssignment.assignment_id ? 'PUT' : 'POST'; 
       const URL = valuesAssignment.assignment_id ? `/teachers-subjects/${valuesAssignment.assignment_id}` : `/teachers-subjects`;
       const responseAssignments = await useApi<AssignmentsInterface>(URL, METHOD, data);
-      if (responseAssignments.errors && Object.keys(responseAssignments.errors).length > 0) {
+      if (responseAssignments.errors && Array.isArray(responseAssignments.errors)) {
+        const errorsFormat = responseAssignments.errors.join(" ");
+        toast.error(errorsFormat);
+        return false;
+      } else if (responseAssignments.errors && Object.keys(responseAssignments.errors).length > 0) {
         const errors = responseAssignments.errors;
         const errorsFormat = Object.keys(errors).map(item => {
           return (errors as Record<string, string[]>)[item][0] + "\n ";
