@@ -1,56 +1,22 @@
-import { useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
-import { useApi } from "../../utils/useApi";
+import { Toaster } from "react-hot-toast";
+
+import { useAdmin } from "../hooks/useAdmin";
 import TableList from "../components/TableList";
-import toast, { Toaster } from "react-hot-toast";
-import { ActionSchool } from "../store/AdminStore";
 import Loading from "../../shared/components/Loading";
 import { ModalAddSchool } from "../components/ModalAddSchool";
 import { ModalViewSchool } from "../components/ModalViewSchool";
 import { ModalDeleteSchool } from "../components/ModalDeleteSchool";
-import type { School, SchoolResponse, SchoolsInterface } from "../../shared/interfaces/schools";
 
 const Home = () => {
-  const [loading, setLoading] = useState(false);
-
-  const schoolAction = useAtomValue(ActionSchool);
-  const [schools, setSchools] = useState<School[]>([]);
-  const [showModalAddSchool, setShowModalAddSchool] = useState(false);
-
-  const deleteSchool = async (id: number) => {
-    setLoading(true);
-    try {
-      const URL = `/schools/${id}`;
-      const responseSchools = await useApi<SchoolResponse>(URL, 'DELETE');
-      toast(responseSchools.message, {
-        icon: responseSchools.ok ? "✅" : "❌"
-      });
-
-      if (responseSchools.ok) {
-        setSchools(() => {
-          return schools.filter(school => school.id !== id);
-        });
-      };
-    } catch (error) {
-      toast.error('Ha ocurrido un error al eliminar el colegio. Comuniquese.');
-    } finally {
-      setLoading(false);
-    };
-  };
-
-  const getSchools = async () => {
-    try {
-      const responseSchools = await useApi<SchoolsInterface>('/schools');
-      const dataSchool = responseSchools.ok && responseSchools.data?.length > 0 ? responseSchools.data : [];
-      setSchools(dataSchool);
-    } catch (error) {
-      toast.error('Ha ocurrido un error al obtener los colegios. Comuniquese.');
-    };
-  };
-
-  useEffect(() => {
-    getSchools();
-  }, []);
+  const {
+    loading,
+    schools,
+    onSubmit,
+    deleteSchool,
+    schoolAction,
+    showModalAddSchool,
+    setShowModalAddSchool,
+  } = useAdmin();
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -74,7 +40,7 @@ const Home = () => {
         {
           showModalAddSchool && (schoolAction !== "view" && schoolAction !== "delete") && (
             <ModalAddSchool 
-              setSchools={setSchools}
+              onSubmit={onSubmit}
               setShowModalAddSchool={setShowModalAddSchool}
             />
           )

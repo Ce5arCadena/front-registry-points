@@ -1,7 +1,5 @@
-import toast from "react-hot-toast";
-import { useApi } from "../../utils/useApi";
 import { useAtom, useAtomValue } from "jotai";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiLockPasswordLine } from "react-icons/ri";
 import Loading from "../../shared/components/Loading";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -10,7 +8,7 @@ import { ActionSchool, SchoolAtom } from "../store/AdminStore";
 import { EMAILREGEX, PASSWORDREGEX } from "../../shared/regex";
 import { MdOutlineMail, MdOutlineSchool } from "react-icons/md";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import type { SchoolResponse, FormSchoolData, School } from "../../shared/interfaces/schools";
+import type { FormSchoolData } from "../../shared/interfaces/schools";
 
 const TypesMessage = {
   edit: "Editar ",
@@ -18,12 +16,12 @@ const TypesMessage = {
 }
 
 export const ModalAddSchool = (
-  { 
-    setSchools,
+  {
+    onSubmit,
     setShowModalAddSchool 
   } : 
   { 
-    setSchools: React.Dispatch<React.SetStateAction<School[]>>,
+    onSubmit: (values: FormSchoolData) => Promise<boolean>,
     setShowModalAddSchool: (value: boolean) => void 
   }
 ) => {
@@ -39,69 +37,16 @@ export const ModalAddSchool = (
   } = useForm<FormSchoolData>({
     mode: 'onChange'
   });
-
-  const [loading, setLoading] = useState(false);
   
   const passwordValue = watch('password');
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit: SubmitHandler<FormSchoolData> = async(values) => {
-    if (Object.values(values).every(value => value === "")) {
-      toast.error("Debes enviar al menos un campo.");
-      return;
-    }
-
-    setLoading(true);
-    const METHOD = schoolAction === "edit" ? "PATCH" : "POST";
-    const URL = schoolAction === "edit" ? `/schools/${schoolAtomValue?.id}` : "/schools";
-
-    if (schoolAction === "edit") {
-      let newData = Object.entries(values).map(([key, value]) => {
-        if (value !== "") {
-          return {
-            [key]: value
-          }
-        }
-
-        return null
-      }).filter(value => value !== null);
-      values = Object.assign({}, ...newData);
-    }
-
-    try {
-      const responseSchool = await useApi<SchoolResponse>(URL, METHOD, values);
-
-      const message = responseSchool.errors && responseSchool.errors.length > 0 ? responseSchool.errors.join(" - ") : responseSchool.message;
-      toast(message, {
-        icon: responseSchool.ok ? "✅" : "❌"
-      });
-      if (!responseSchool.ok) return;
-
-      if (schoolAction === "edit") {
-        setSchools((prevSchools) => {
-          const schools = prevSchools.filter(school => school.id !== schoolAtomValue?.id);
-
-          return [
-            ...schools,
-            responseSchool.data as School
-          ];
-        });
-      } else {
-        setSchools((prevSchools) => {
-          return [
-            ...prevSchools,
-            responseSchool.data as School
-          ];
-        });
-        reset();
-      }
-    } catch (error) {
-      toast.error('Ocurrió un error al realizar la petición', {
-        duration: 4000,
-        position: 'top-right'
-      });
-    } finally {
-      setLoading(false);
+  const submitAddOrEditSchool: SubmitHandler<FormSchoolData> = async(values) => {
+    const success = await onSubmit(values);
+    if (success) {
+      reset();
+      setSchoolAction("");
+      setShowModalAddSchool(false);
     }
   };
 
@@ -133,7 +78,7 @@ export const ModalAddSchool = (
         }
         Colegio
       </h2>
-      <form className='w-[30%] flex flex-col gap-2' onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <form className='w-[30%] flex flex-col gap-2' onSubmit={handleSubmit(submitAddOrEditSchool)} autoComplete="off">
         {/* Nombre */}
         <div>
           <label htmlFor="name" className="block mb-2.5 text-sm font-medium text-dark-text">
@@ -253,15 +198,6 @@ export const ModalAddSchool = (
           </button>
         </div>
       </form>
-
-      {
-        loading && (
-          <div className="absolute bg-dark-bg-secondary/90 w-full h-full top-0 left-0 flex flex-col gap-6 justify-center items-center z-40">
-            <Loading/>
-            <span>Por favor, espera.</span>
-          </div>
-        )
-      }
     </div>
   )
 }
