@@ -1,7 +1,7 @@
 import {
+  type DraftPoints,
   type TeacherWithCoursesResponse,
   type StudentWithPointCategoriesResponse,
-  type DraftPoints,
 } from "../../shared/interfaces/registryPoints";
 import { useApi } from "../../utils/useApi";
 
@@ -15,7 +15,7 @@ export const getStudentsByCourseWithPointCategories = async (course: number, sub
   return response;
 };
 
-export const saveStudentsPoints = async (course: number, subject: number, draftPoints: DraftPoints) => {
+export const saveStudentsPoints = async (course: number, draftPoints: DraftPoints) => {
   const students = Object.entries(draftPoints).map(([studentId, points]) => ({
     id: Number(studentId),
     registered_points: points,
@@ -24,7 +24,7 @@ export const saveStudentsPoints = async (course: number, subject: number, draftP
   const response = await useApi<StudentWithPointCategoriesResponse>(
     `/registry-points`,
     'POST',
-    { points: students }
+    { points: students, grade: course }
   );
   return response;
 };

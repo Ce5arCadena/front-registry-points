@@ -46,7 +46,7 @@ export const StudentsWithPointCategoriesPage = () => {
             subjectName={subjectName}
             onPointChange={handlePointChange}
             onSave={savePoints}
-            onBack={() => navigate('/registry-points')}
+            onBack={() => navigate('/teacher/registry-points')}
           />
         )}
 

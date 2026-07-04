@@ -61,10 +61,11 @@ export default function useStudentsWithPoinCategories(courseId: number, subjectI
   const savePoints = async () => {
     setLoading(true);
     try {
-      const response = await saveStudentsPoints(courseId, subjectId, draftPoints);
-      toast.success('Puntos guardados correctamente.');
+      const response = await saveStudentsPoints(courseId, draftPoints);
+      toast.success(response.message);
       setHasUnsavedChanges(false);
-      setStudentsWithPointCategories(response);
+      setDraftPoints({});
+      navigate('/teacher/registry-points');
     } catch (error) {
       toast.error('Ha ocurrido un error al guardar los puntos. Inténtelo de nuevo.');
     } finally {
