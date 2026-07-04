@@ -108,12 +108,12 @@ export const ListAssignments = ({
                       setActionModal("edit");
                     }}
                   />
-                  <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                  {/* <MdDeleteOutline className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                     onClick={() => {
                       setPointCategory(category);
                       setActionModal("delete");
                     }}
-                  />
+                  /> */}
                 </td>
               </tr>
             ))

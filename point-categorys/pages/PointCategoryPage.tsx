@@ -4,12 +4,13 @@ import {
   loadingAtom, 
   pageCountAtom, 
   actionModalAtom, 
+  pointCategoryAtom,
   pointCategorysAtom, 
   idsPointCategoriesAtom,
   totalPointCategoriesAtom,
 } from "../store/pointCategoryStore";
 import { Toaster } from "react-hot-toast";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import Loading from "../../shared/components/Loading";
 import { usePointCategories } from "../hooks/usePointCategories";
 import { Pagination } from "../../courses/components/Pagination";
@@ -31,12 +32,11 @@ export const PointCategoryPage = () => {
   const start = useAtomValue(startAtom);
   const loading = useAtomValue(loadingAtom);
   const pageCount = useAtomValue(pageCountAtom);
+  const setPointCategory = useSetAtom(pointCategoryAtom);
   const pointCategories = useAtomValue(pointCategorysAtom);
   const [actionModal, setActionModal] = useAtom(actionModalAtom);
   const pointCategoriesIds = useAtomValue(idsPointCategoriesAtom);
   const totalPointCategories = useAtomValue(totalPointCategoriesAtom);
-
-  console.log(actionModal);
 
   return (
     <div className="border border-gray-700 text-white rounded-lg w-full h-full relative">
@@ -49,6 +49,7 @@ export const PointCategoryPage = () => {
             <button
               onClick={() => {
                 setActionModal("create");
+                setPointCategory(undefined);
               }}
               className="text-white px-3 py-1.5 rounded-lg transition-all duration-300 cursor-pointer border hover:border-primary hover:text-primary">
               Agregar Categoria de Puntos

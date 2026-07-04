@@ -59,34 +59,38 @@ export const ListPointCategoriesAssignments = ({
                   <div className="flex flex-wrap gap-2">
                     {category.context.map((c) => (
                       <div key={c.id} className={`bg-dark-bg-secondary/30 p-2 rounded-lg border ${c.status === 'ACTIVE' ? 'border-green-600' : 'border-red-600'} flex flex-col gap-1`}>
-                        <div className="font-semibold flex gap-2 items-center">
+                        <div className="font-semibold text-gray-300 flex gap-2 items-center">
                           <IoPeople /> {c.course?.name}
                         </div>
                         <div className="text-xs text-gray-300 flex gap-2 items-center">
                           <IoSchool /> {c.subject?.name}
                         </div>
                         <div className="flex gap-2 justify-center bg-light-bg-secondary text-dark-bg px-2 py-1 rounded-full">
-                          <RiEdit2Line
-                            className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
-                            onClick={() => {
-                              setFormAssignmentPointCategoryAtom({
-                                pointCategoryContext: c.id,
-                                pointCategory: {
-                                  value: category.id ? String(category.id) : '',
-                                  label: category.name,
-                                },
-                                course: {
-                                  value: c.course?.id ? String(c.course.id) : '',
-                                  label: c.course?.name || '',
-                                },
-                                subject: {
-                                  value: c.subject?.id ? String(c.subject.id) : '',
-                                  label: c.subject?.name || '',
-                                }
-                              });
-                              setActionModal("edit");
-                            }}
-                          />
+                          {
+                            c.status === 'ACTIVE' && (
+                              <RiEdit2Line
+                                className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
+                                onClick={() => {
+                                  setFormAssignmentPointCategoryAtom({
+                                    pointCategoryContext: c.id,
+                                    pointCategory: {
+                                      value: category.id ? String(category.id) : '',
+                                      label: category.name,
+                                    },
+                                    course: {
+                                      value: c.course?.id ? String(c.course.id) : '',
+                                      label: c.course?.name || '',
+                                    },
+                                    subject: {
+                                      value: c.subject?.id ? String(c.subject.id) : '',
+                                      label: c.subject?.name || '',
+                                    }
+                                  });
+                                  setActionModal("edit");
+                                }}
+                              />
+                            )
+                          }
                           <MdPublishedWithChanges className="text-lg cursor-pointer hover:text-primary-hover transition-all ease-in-out duration-300"
                             onClick={() => {
                               changeStatusPointCategoriesById(c.id);
