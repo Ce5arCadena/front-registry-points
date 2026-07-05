@@ -20,7 +20,7 @@ export const HomeTeacherAdmin = () => {
         </div>
 
         <div className="flex gap-4 flex-wrap">
-          <div className="flex items-center gap-3 bg-gray-900 border border-blue-500/40 rounded-lg px-5 py-4 min-w-[220px]">
+          <div className="flex items-center gap-3 bg-gray-900 border border-blue-500/40 rounded-lg px-5 py-4 min-w-55">
             <div className="bg-blue-500/10 p-3 rounded-lg">
               <HiOutlineTag className="text-blue-400 text-2xl" />
             </div>
@@ -30,7 +30,7 @@ export const HomeTeacherAdmin = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 bg-gray-900 border border-blue-500/40 rounded-lg px-5 py-4 min-w-[220px]">
+          <div className="flex items-center gap-3 bg-gray-900 border border-blue-500/40 rounded-lg px-5 py-4 min-w-55">
             <div className="bg-blue-500/10 p-3 rounded-lg">
               <HiOutlineClipboardDocumentCheck className="text-blue-400 text-2xl" />
             </div>

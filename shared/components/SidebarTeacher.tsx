@@ -8,16 +8,17 @@ export const SidebarTeacher = () => {
   const { logout } = useLogouts();
 
   return (
-    <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 transform transition-transform duration-300 ease-in-out">
+    <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 shadow-xl shadow-black/20 transform transition-transform duration-300 ease-in-out">
       <div className="flex flex-col h-full">
-        <header className="p-4 flex justify-between items-center border-b border-gray-700">
-          <NavLink className="font-semibold text-xl text-white" to="/teacher/home">
+        <header className="p-4 flex justify-between items-center border-b border-gray-700 bg-dark-bg-elevated/50">
+          <NavLink className="font-semibold text-xl text-white flex items-center gap-2" to="/teacher/home">
+            <span className="w-2 h-2 rounded-full bg-primary" />
             Bienvenido
           </NavLink>
         </header>
 
         <nav className="flex-1 overflow-y-auto p-4">
-          <ul className="space-y-2">
+          <ul className="space-y-1.5">
             <li>
               {
                 ROLES.TEACHER.routes.map(({defaultUrl, url, IconType, label}: NavItem) => {
@@ -26,8 +27,8 @@ export const SidebarTeacher = () => {
                       key={url}
                       to={`${url}`}
                       className={({ isActive }) =>
-                        `w-full text-left flex items-center gap-x-3 py-2 px-3 text-sm  rounded-lg transition-colors 
-                          ${isActive ? 'bg-light-bg text-dark-bg' : 'text-white'}
+                        `w-full text-left flex items-center gap-x-3 py-2.5 px-3 text-sm font-medium rounded-lg transition-all duration-200
+                          ${isActive ? 'bg-primary text-dark-bg shadow-md shadow-primary/30' : 'text-gray-300 hover:bg-dark-bg-elevated hover:text-white'}
                         `}
                     >
                       <IconType className="w-4 h-4" />
@@ -39,10 +40,10 @@ export const SidebarTeacher = () => {
           </ul>
         </nav>
 
-        <div className='p-4 flex flex-col'>
+        <div className='p-4 flex flex-col border-t border-gray-700'>
           <span
             onClick={logout}
-            className='flex gap-2 items-center hover:bg-primary/20 hover:rounded-md transition-all duration-300 ease-in-out cursor-pointer p-2 text-sm '>
+            className='flex gap-2 items-center hover:bg-red-500/10 hover:text-red-400 rounded-lg transition-all duration-200 ease-in-out cursor-pointer p-2.5 text-sm text-gray-300 font-medium'>
             <TbLogout2 className='w-4 h-4' /> Cerrar Sesión
           </span>
         </div>

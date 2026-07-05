@@ -9,50 +9,50 @@ export const ItemsNavigate = () => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <span className="text-lg text-left">Acciones Rápidas</span>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         <div 
-          className="rounded-md cursor-pointer min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2"
+          className="flex items-center gap-4 cursor-pointer bg-dark-bg-elevated border border-primary/40 rounded-lg px-5 py-4 min-w-55 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 hover:border-primary"
           onClick={() => navigate('/school/courses')}
         >
-          <span className="flex gap-2">
-            Ver Cursos
-          </span>
-          <span className="text-3xl font-bold">
+          <div className="bg-primary/10 p-3 rounded-lg">
             <GrUserAdd className="text-primary text-2xl" />
-          </span>
+          </div>
+          <div>
+            <p className="text-white font-semibold">Ver Cursos</p>
+          </div>
         </div>
         <div 
-          className="rounded-md cursor-pointer min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2"
+          className="flex items-center gap-4 cursor-pointer bg-dark-bg-elevated border border-primary/40 rounded-lg px-5 py-4 min-w-55 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 hover:border-primary"
           onClick={() => navigate('/school/students')}
         >
-          <span className="flex gap-2">
-            Ver Estudiantes
-          </span>
-          <span className="text-3xl font-bold">
+          <div className="bg-primary/10 p-3 rounded-lg">
             <GrStreetView className="text-primary text-2xl" />
-          </span>
+          </div>
+          <div>
+            <p className="text-white font-semibold">Ver Estudiantes</p>
+          </div>
         </div>
         <div 
-          className="rounded-md cursor-pointer min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2"
+          className="flex items-center gap-4 cursor-pointer bg-dark-bg-elevated border border-primary/40 rounded-lg px-5 py-4 min-w-55 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 hover:border-primary"
           onClick={() => navigate('/school/teachers')}
         >
-          <span className="flex gap-2">
-            Ver Maestros
-          </span>
-          <span className="text-3xl font-bold">
+          <div className="bg-primary/10 p-3 rounded-lg">
             <FaChalkboardTeacher className="text-primary text-2xl" />
-          </span>
+          </div>
+          <div>
+            <p className="text-white font-semibold">Ver Maestros</p>
+          </div>
         </div>
         <div 
-          className="rounded-md cursor-pointer min-w-40 min-h-24 bg-dark-bg-elevated shadow-2xs p-2 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 shadow-primary flex flex-col items-center gap-2"
+          className="flex items-center gap-4 cursor-pointer bg-dark-bg-elevated border border-primary/40 rounded-lg px-5 py-4 min-w-55 transition-all ease-in duration-200 hover:shadow-lg hover:shadow-secondary/80 hover:-translate-y-1 hover:border-primary"
           onClick={() => navigate('/school/subjects')}
         >
-          <span className="flex gap-2">
-            Ver Asignaturas
-          </span>
-          <span className="text-3xl font-bold">
+          <div className="bg-primary/10 p-3 rounded-lg">
             <MdOutlinePlaylistAdd className="text-primary text-2xl" />
-          </span>
+          </div>
+          <div>
+            <p className="text-white font-semibold">Ver Asignaturas</p>
+          </div>
         </div>
       </div>
     </div>
