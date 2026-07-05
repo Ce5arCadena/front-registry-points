@@ -44,7 +44,6 @@ export const useCourses = ({
       }
       setCourses(prev => [...prev, ...responseCourses.data]);
     } catch (error) {
-      console.log(error)
       toast.error('Ha ocurrido un error al obtener los cursos. Comuniquese.');
       navigate('/auth/login');
       return;
