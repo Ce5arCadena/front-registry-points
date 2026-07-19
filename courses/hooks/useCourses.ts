@@ -8,7 +8,7 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { useApi } from "../../utils/useApi";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
 
 export const useCourses = ({
@@ -32,6 +32,8 @@ export const useCourses = ({
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
+
+  const requestExecuted = useRef(false);
 
   const getCourses = async () => {
     setloading(true);
@@ -124,6 +126,8 @@ export const useCourses = ({
   }, [courses]);
   
   useEffect(() => {
+    if(requestExecuted.current) return
+    requestExecuted.current = true;
     getCourses();
   }, []);
 
