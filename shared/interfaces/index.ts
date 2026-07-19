@@ -11,6 +11,7 @@ export interface LoginResponse {
     data: {
         token: string;
         rol: string;
+        name: string;
     }
 }
 

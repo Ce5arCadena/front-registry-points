@@ -21,6 +21,7 @@ export const useLogin = () => {
 
       localStorage.setItem('rol', responseLogin.data.rol);
       localStorage.setItem('token', responseLogin.data.token);
+      localStorage.setItem('nameUser', responseLogin.data.name);
 
       const rol = responseLogin.data.rol;
       navigate(ROLES[rol as RoleKey].defaultRoute);

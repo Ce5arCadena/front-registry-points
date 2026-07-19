@@ -4,16 +4,20 @@ import { TbLogout2 } from "react-icons/tb";
 import { type NavItem } from '../interfaces';
 import { useLogouts } from '../../auth/hooks/useLogouts';
 
+
 export const SidebarTeacher = () => {
   const { logout } = useLogouts();
+  const nameUser = localStorage.getItem('nameUser') ?? '';
 
   return (
     <div className="h-screen w-64 bg-dark-bg border-r border-gray-700 shadow-xl shadow-black/20 transform transition-transform duration-300 ease-in-out">
       <div className="flex flex-col h-full">
         <header className="p-4 flex justify-between items-center border-b border-gray-700 bg-dark-bg-elevated/50">
-          <NavLink className="font-semibold text-xl text-white flex items-center gap-2" to="/teacher/home">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            Bienvenido
+          <NavLink className="font-semibold text-xl text-white flex items-center gap-2 min-w-0" to="/teacher/home">
+            <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+            <span className="truncate max-w-32">
+              Hola{nameUser ? `, ${nameUser.split(" ")[0]}` : ''}
+            </span>
           </NavLink>
         </header>
 
@@ -21,7 +25,7 @@ export const SidebarTeacher = () => {
           <ul className="space-y-1.5">
             <li>
               {
-                ROLES.TEACHER.routes.map(({defaultUrl, url, IconType, label}: NavItem) => {
+                ROLES.TEACHER.routes.map(({ defaultUrl, url, IconType, label }: NavItem) => {
                   return !defaultUrl &&
                     <NavLink
                       key={url}

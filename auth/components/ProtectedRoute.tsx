@@ -12,13 +12,14 @@ const ProtectedRoute = ({ children} : {children: React.ReactNode}) => {
         return <Navigate to='/auth/login' />;
     };
 
-    if (!rol) {
+    if (!rol || !(rol in ROLES)) {
         return <Navigate to='/auth/login' />;
     };
-    
-    const canNavigate = ROLES[rol as RoleKey].routes.some((route) => pathname.startsWith(route.url));
+
+    const currentRole = ROLES[rol as RoleKey];
+    const canNavigate = currentRole.routes.some((route) => pathname.startsWith(route.url));
     if (!canNavigate) {
-        return <Navigate to={ROLES[rol as RoleKey].defaultRoute} />;
+        return <Navigate to={currentRole.defaultRoute} />;
     };
 
     return children;

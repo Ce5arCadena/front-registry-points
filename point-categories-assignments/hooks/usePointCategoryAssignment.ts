@@ -11,9 +11,9 @@ import {
 } from "../store/pointCategoryAssignmentStore";
 
 import toast from "react-hot-toast";
-import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useAtom, useSetAtom } from "jotai";
+import { useEffect, useMemo, useRef } from "react";
 import { getPointCategories } from "../../point-categorys/api/queries";
 import { type PaginateClickEvent } from "../../shared/interfaces";
 
@@ -30,6 +30,8 @@ export const usePointCategoryAssignment = () => {
   const setPointsCategorySelect = useSetAtom(pointsCategorySelectAtom);
   const [pointCategoriesAssignment, setPointCategoriesAssignment] = useAtom(pointCategoriesAssignmentsAtom);
   const [totalPointCategoriesAssignment, setTotalPointCategoriesAssignment] = useAtom(totalPointCategoriesAssignmentAtom);
+
+  const didFetchInitial = useRef(false);
 
   const getInitialData = async () => {
     setLoading(true);
@@ -77,6 +79,9 @@ export const usePointCategoryAssignment = () => {
   }, [currentPage]);
 
   useEffect(() => {
+    if(didFetchInitial.current) return;
+    didFetchInitial.current = true;
+
     setPointCategoriesAssignment([]);
     getInitialData();
   }, []);

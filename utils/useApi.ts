@@ -18,12 +18,19 @@ export const useApi = async <T>(pathUrl: string = '', method = 'GET', body = {})
         const response = await fetch(`${urlBase}${pathUrl}`, options);
         const data = await response.json();
 
-        // TODO: Ver que pasa cuando vence el token, o que se borre del localstorage y ejecutar alguna acción 
+        if (response.status === 401) {
+            localStorage.removeItem('rol');
+            localStorage.removeItem('token');
+            localStorage.removeItem('nameUser');
+            window.location.href = '/auth/login';
+        }
+
         data.ok = response.ok;
         return data;
     } catch (error) {
         localStorage.removeItem('rol');  
         localStorage.removeItem('token');  
+        localStorage.removeItem('nameUser');
         throw new Error('Ocurrió un error al realizar la petición');
     };
 };

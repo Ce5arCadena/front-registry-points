@@ -12,9 +12,9 @@ import {
   idsPointCategoriesAtom,
 } from "../store/pointCategoryStore";
 import toast from "react-hot-toast";
-import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { useAtom, useSetAtom } from "jotai";
+import { useEffect, useMemo, useRef } from "react";
 import { type PaginateClickEvent } from "../../shared/interfaces";
 import { type FormPointCategory } from "../../shared/interfaces/pointCategories";
 import { changeStatesPointCategories, createPointCategories, getPointCategories } from "../api/queries";
@@ -34,6 +34,8 @@ export const usePointCategories = () => {
   const [pointCategories, setPointCategories] = useAtom(pointCategorysAtom);
   const [idsPointCategories, setIdsPointCategories] = useAtom(idsPointCategoriesAtom);
   const [totalPointCategories, setTotalPointCategories] = useAtom(totalPointCategoriesAtom);
+  
+  const didFetchInitial = useRef(false);
 
   const getInitialData = async () => {
     setLoading(true);
@@ -140,6 +142,9 @@ export const usePointCategories = () => {
   }, [currentPage]);
 
   useEffect(() => {
+    if (didFetchInitial.current) return;
+    didFetchInitial.current = true;
+
     setPointCategories([]);
     getInitialData();
   }, []);

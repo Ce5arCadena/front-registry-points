@@ -6,6 +6,7 @@ export const useLogouts = () => {
   const logout = () => {
     localStorage.removeItem("rol");
     localStorage.removeItem("token");
+    localStorage.removeItem("nameUser");
     navigate("/login");
   }
 

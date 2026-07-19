@@ -11,7 +11,7 @@ import {
   totalAssignmentsAtom,
 } from '../store/assignmentsStore';
 import toast from 'react-hot-toast';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { useApi } from '../../utils/useApi';
 import { useAtom, useSetAtom } from 'jotai';
@@ -33,6 +33,8 @@ export const useAssignments = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [assignments, setAssignments] = useAtom(assignmentsAtom);
   const [totalAssignments, setTotalAssignments] = useAtom(totalAssignmentsAtom);
+
+  const didFetchInitial = useRef(false);
 
   const getAssignments = async () => {
     setLoading(true);
@@ -93,6 +95,9 @@ export const useAssignments = () => {
   };
 
   useEffect(() => {
+    if (didFetchInitial.current) return;
+    didFetchInitial.current = true;
+
     setAssignments([]);
     getAssignments();
   }, []);
